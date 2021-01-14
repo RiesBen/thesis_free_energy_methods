@@ -1,0 +1,144 @@
+\makeatletter
+\def\input@path{{../}}
+\makeatother
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+\renewcommand{\path}{3_chapter_1/}
+\chapter[
+CBTI
+]{Alchemical Free-Energy Calculations by Multiple-replica $\lambda$-dynamics: The Conveyor Belt Thermodynamic Integration
+}
+\chaptermark{CBTI}
+\label{ch:cbti}
+
+\aquote{``Let us learn to dream, gentlemen, and then perhaps we
+shall learn the truth.''
+}
+{August Kekul\'e, 1865}
+
+\begin{abstract}
+A new method is proposed to calculate alchemical free-energy differences 
+based on molecular dynamics (MD) simulations, called the conveyor belt 
+thermodynamic integration (CBTI) scheme.
+%
+As in thermodynamic integration (TI), $K$ replicas of the system are 
+simulated at different values of the alchemical coupling parameter $\lambda$.
+%
+The number $K$ is taken to be even and the replicas are equally spaced
+on a forward-turn-backward-turn path, akin to a conveyor belt (CB)
+between the two physical end-states.
+%
+And as in $\lambda$-dynamics ($\lam$D), the $\lambda$-values associated with the 
+individual systems evolve in time along the simulation.
+%
+However, they do so in a concerted fashion, determined by the evolution
+of a single dynamical variable $\Lambda$ of period $2\pi$ controlling 
+the advance of the entire CB.
+%
+Thus, a change of $\Lambda$ is always
+associated with $K/2$ equispaced replicas moving forward and $K/2$ equispaced
+replicas moving backward along $\lambda$.
+%
+As a result, the effective free-energy profile of the 
+replica system along $\Lambda$ is periodic of period $2\pi K^{-1}$
+and the magnitude of its variations decreases rapidly
+upon increasing $K$, at least as $K^{-1}$ \radd{in the limit of large $K$}.
+%
+When \radd{a sufficient number of replicas is used}, 
+these variations become small, 
+which enables a complete and quasi-homogeneous coverage of the $\lambda$-range
+by the replica system, without application of any biasing potential. 
+If desired, a memory-based biasing potential can still be 
+added to further homogenize the sampling, the preoptimization of which 
+is computationally inexpensive.
+%
+The final free-energy profile along $\lambda$ is calculated similarly to TI,
+by binning of the Hamiltonian $\lambda$-derivative as a function of $\lambda$ 
+considering all replicas jointly, followed by quadrature integration. 
+The associated quadrature error can be kept very low owing to 
+the continuous and quasi-homogeneous $\lambda$-sampling.
+%
+The CBTI scheme can be viewed as a \radd{continuous/deterministic/dynamical}
+%dynamical 
+analog of the Hamiltonian
+replica-exchange/permutation (HRE/HRP) schemes, or as a correlated 
+multiple-replica analog of the \radd{$\lambda$D or} $\lambda$-local elevation umbrella 
+sampling ($\lambda$-LEUS) schemes.
+%
+Compared to TI, it shares the advantage of the latter schemes 
+in terms of enhanced orthogonal sampling, {\em i.e.} the availability of 
+variable-$\lambda$ paths to circumvent conformational barriers
+present at specific $\lambda$-values.
+%
+Compared to HRE/HRP, it permits a deterministic and continuous sampling
+of the $\lambda$-range, and bypasses the need to carefully
+preselect a $\lambda$-ladder \radd{and a swapping-attempt frequency}.
+%
+Compared to $\lambda$-LEUS, it eliminates (or drastically reduces) 
+the dead time associated with the preoptimization
+of a biasing potential.
+%
+The goal of this chapter is to provide the mathematical/physical formulation 
+of the proposed CBTI scheme, along with an initial application of the method 
+to the calculation of the hydration free energy of methanol.
+%
+\end{abstract}
+
+\clearpage
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Start the main part of the manuscript here.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%================================================================================
+\section{Introduction}
+%================================================================================
+
+\input{3_chapter_1/inc/intro.tex}
+
+%================================================================================
+\section{Theory}
+%================================================================================
+
+\input{3_chapter_1/inc/theory.tex}
+
+%================================================================================
+\section{Computational Details}
+%================================================================================
+
+\input{3_chapter_1/inc/methods.tex}
+
+%================================================================================
+\section{Results and Discussion}
+%================================================================================
+
+\input{3_chapter_1/inc/results.tex}
+
+\clearpage
+\newpage
+
+%================================================================================
+\section{Conclusion}
+%================================================================================
+
+\input{3_chapter_1/inc/conclusion.tex}
+
+\clearpage
+\pagebreak
+
+%================================================================================
+%\section{Appendix}
+%================================================================================
+\begin{ethappendix}
+\input{3_chapter_1/inc/appendix.tex}
+\end{ethappendix}
+\clearpage
+\pagebreak
+
+%% %================================================================================
+%% \begin{thebibliography}{74}
+%% \input{\path/inc/paper.lrs}
+%% \end{thebibliography}
+%% %================================================================================
+
+\end{document}
