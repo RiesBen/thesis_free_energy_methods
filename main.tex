@@ -24,6 +24,7 @@
 \usepackage{xfrac}
 \usepackage{csquotes}
 \usetikzlibrary{positioning}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Handling of the references
 
@@ -56,6 +57,7 @@
 % Special Itemization 
 \usepackage[inline]{enumitem}
 \usepackage{xstring}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Hyphenations
 \hyphenation{zustands-summe di-poles Cou-lomb ma-cro-sco-pic}
@@ -64,12 +66,18 @@
 % Personal Commands 
 \input{personal_commands.tex}
 %\pdfminorversion=7
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Cover import into the pdf
+\usepackage{pdfpages}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TITLE
 \title{Super Title%
 }
 
-\thesisnumber{????}
+\thesisnumber{Free Energy Methods with Biomols }
 \author{\textls{Benjamin Joachim Ries}}
 \birthdate{15.03.1991}
 \citizen{Germany}
@@ -93,30 +101,35 @@
 \begin{document}
 
  \frontmatter
+ \includepdf[pages=-]{1_frontback/frontcover.pdf}
+ 
  \maketitle
  
  \dedication{Here a nice dedication}
 
- \input{frontback/acknowledgements.tex}
+ \input{1_frontback/acknowledgements.tex}
 
  \tableofcontents
 
- \input{frontback/abstract.tex}
- \input{frontback/zusammenfassung.tex}
- \input{frontback/publications.tex}
+ \input{1_frontback/abstract.tex}
+ \input{1_frontback/zusammenfassung.tex}
+ \input{1_frontback/publications.tex}
 
  \mainmatter
-\subfile{chapter_intro/content.tex}
-\subfile{chapter_1/content.tex}
-\subfile{chapter_2/content.tex}
-\input{chapter_outlook/content.tex}
+\subfile{2_chapter_intro/content_introduction.tex}
+\subfile{3_chapter_1/content_chapter1.tex}
+%\subfile{4_chapter_2/content_chapter2.tex}
+%\subfile{5_chapter_3/content_chapter3.tex}
+%\subfile{6_chapter_4/content_chapter4.tex}
+%\subfile{7_chapter_5/content_chapter5.tex}
+\input{8_chapter_outlook/content_outlook.tex}
  
  \backmatter
  \begin{thebibliography}{999}
   \addcontentsline{toc}{chapter}{\bibname}
-  \input{frontback/lars.bib}
+  \input{1_frontback/all_ref.bib}
  \end{thebibliography}
- \input{frontback/cv.tex}
+ \input{1_frontback/cv.tex}
 
 \end{document}
 

@@ -1,0 +1,366 @@
+#!/bin/sh
+##
+#
+# lars_to_bib [-h] [-f format] [-c code printing] [-s reflist size] lars.txt  my_file.tex  my_file.lrs
+# 
+# Makes a bibliography file for latex (.lrs file) from 
+# the lars.txt file and a source latex file (works as 
+# a filter)
+#
+#
+#
+#
+# Options:
+#   -h          : print this header comment
+#   -f          : format the references for a given journal style
+#   -c          : if yes, lars codes will be printed (default); if no, no lars
+# 		  codes will be printed
+#   -s          : if yes, reflist will be (regardless of what you say in you tex file)
+#                 printed in small font size and with small linespacing (default);
+#                 if no, reflist will be printed as you say in your tex-file
+#
+#
+# Recognised formats:
+#
+#   default_title       : our default reference printing style
+#   default_no_title    : as the default format, but without titles
+#
+#   mol_simul_no_title        : molecular simulation without titles
+#   mol_simul_title           : molecular simulation with titles
+#
+#   j_chem_phys_no_title      : journal of chemical physics without titles
+#   j_chem_phys_title         : journal of chemical physics with titles
+#
+#   j_phys_chem_no_title      : journal of physical chemistry without titles
+#   j_phys_chem_title         : journal of physical chemistry with titles
+#
+#   j_comput_chem_no_title    : journal of computational chemistry without titles
+#   j_comput_chem_title       : journal of computational chemistry with titles
+#
+#   j_jacs_no_title    : jacs without titles
+#   j_jacs_title       : jacs with titles
+#
+#   j_jbsd_no_title    : jbsd without titles
+#
+#
+##
+
+
+ #**** DEFAULT ****#
+
+######### SET THE FORMAT HERE ###############
+
+format="default_title"
+#format="default_no_title"
+#format="j_phys_chem_title"
+#format="j_comput_chem_title"
+#format="j_phys_chem_no_title"
+#format="j_comput_chem_no_title"
+#format="j_jacs_title"
+#format="j_jacs_no_title"
+
+ccc="yes"
+sss="yes"
+
+#############################################
+
+# Maria: print Warning
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+echo "Be aware that you always have to recheck the book, book chapter"
+echo "and software (or other exotic) formats!"
+echo "Do manual corrections thereof in the bibliography file created by this script!"
+echo "For instance, in the case of books, some journals want something like this:"
+echo "<publisher> : <place in the world>"
+echo "In lars, however, there are no separate entries for this data."
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+echo "Are you genuinely aware of this?"
+echo "If yes, type 'y'"
+
+echo "Notes:"
+echo "- your answer should be no longer than one line"
+echo "- type <enter> to terminate your (one line) answer"
+echo "- type <ctrl-C> to terminate the program"
+echo "- the only recognized answers are 'y' for yes and 'n' for no"
+echo "  (<ctrl-C> is not considered as a recognized answer;"
+echo "   <enter> is not considered to be part of the answer)"
+echo "- non-recognized answers will result in the printing of"
+echo "  an informative warning message"
+echo "- the 'y' answer will enable the script to proceed further"
+echo "- the 'n' answer will trigger the interruption of the script"
+echo "  and the printing of another informative message, which should"
+echo "  greatly help you spot the problem"
+echo "- comments or complaints concerning this interactive part"
+echo "  of the script should be sent to maria@igc.phys.chem.ethz.ch"
+echo "- known bugs: entering an empty line will result in script failure"
+echo "- warning: you only have one attempt (unless you run the script"
+echo "  multiple times)"
+
+read aware
+
+
+if [ $aware = "y" ];  then
+
+
+# check options
+#10:
+if [ '#'$1'#' = '#-h#' ]; then
+  cat `which $0` | sed '/^#/!q'
+  exit
+fi
+#
+
+
+
+
+if [ '#'$1'#' = '#-f#' ]; then
+  shift
+  format=$1
+  shift
+#  goto 10
+
+  if [ '#'$1'#' = '#-c#' ]; then
+   shift
+   ccc=$1
+   shift
+  fi
+  if [ '#'$1'#' = '#-s#' ]; then
+   shift
+   sss=$1
+   shift
+  fi
+
+   if [ '#'$1'#' = '#-h#' ]; then
+    cat `which $0` | sed '/^#/!q'
+    exit
+   fi
+
+fi
+
+
+if [ '#'$1'#' = '#-c#' ]; then
+  shift
+  ccc=$1
+  shift
+#  goto 10
+
+  if [ '#'$1'#' = '#-f#' ]; then
+   shift
+   format=$1
+   shift
+  fi
+  if [ '#'$1'#' = '#-s#' ]; then
+   shift
+   sss=$1
+   shift
+  fi
+
+   if [ '#'$1'#' = '#-h#' ]; then
+    cat `which $0` | sed '/^#/!q'
+    exit
+   fi
+
+fi
+
+
+if [ '#'$1'#' = '#-s#' ]; then
+  shift
+  sss=$1
+  shift
+#  goto 10
+
+  if [ '#'$1'#' = '#-f#' ]; then
+   shift
+   format=$1
+   shift
+  fi
+  if [ '#'$1'#' = '#-c#' ]; then
+   shift
+   ccc=$1
+   shift
+  fi
+
+   if [ '#'$1'#' = '#-h#' ]; then
+    cat `which $0` | sed '/^#/!q'
+    exit
+   fi
+
+fi
+
+
+
+if [ '#'$1'#' = '#-s#' ]; then
+  shift
+  sss=$1
+  shift
+#  goto 10
+
+  if [ '#'$1'#' = '#-c#' ]; then
+   shift
+   ccc=$1
+   shift
+  fi
+  if [ '#'$1'#' = '#-f#' ]; then
+   shift
+   format=$1
+   shift
+  fi
+
+   if [ '#'$1'#' = '#-h#' ]; then
+    cat `which $0` | sed '/^#/!q'
+    exit
+   fi
+
+fi
+
+
+if [ '#'$1'#' = '#-f#' ]; then
+  shift
+  format=$1
+  shift
+#  goto 10
+
+  if [ '#'$1'#' = '#-s#' ]; then
+   shift
+   sss=$1
+   shift
+  fi
+  if [ '#'$1'#' = '#-c#' ]; then
+   shift
+   ccc=$1
+   shift
+  fi
+
+   if [ '#'$1'#' = '#-h#' ]; then
+    cat `which $0` | sed '/^#/!q'
+    exit
+   fi
+
+fi
+
+
+if [ '#'$1'#' = '#-c#' ]; then
+  shift
+  ccc=$1
+  shift
+#  goto 10
+
+  if [ '#'$1'#' = '#-s#' ]; then
+   shift
+   sss=$1
+   shift
+  fi
+  if [ '#'$1'#' = '#-f#' ]; then
+   shift
+   format=$1
+   shift
+  fi
+
+   if [ '#'$1'#' = '#-h#' ]; then
+    cat `which $0` | sed '/^#/!q'
+    exit
+   fi
+
+fi
+
+
+
+#done
+
+
+if [ $format != "default_title"  -a $format != "default_no_title" -a $format != "mol_simul_title"  -a $format != "mol_simul_no_title" -a $format != "j_phys_chem_no_title"  -a $format != "j_jacs_no_title"  -a $format != "j_jacs_title"  -a   $format != "j_comput_chem_no_title"  -a $format != "j_phys_chem_title" -a $format != "j_comput_chem_title" -a  $format != "j_chem_phys_no_title" -a $format != "j_chem_phys_title"  -a  $format != "j_biochem"   -a  $format != "j_tca"   -a $format != "jctc" -a $format != "j_jbsd_no_title" ]; then
+  echo "unrecognized format: " $format
+  exit
+fi
+
+
+if [ $ccc != "yes" -a $ccc != "no" ]; then
+  echo "unrecognized code printing choice: " $ccc
+  exit
+fi
+if [ $sss != "yes" -a $sss != "no" ]; then
+  echo "unrecognized reflist printing choice: " $sss
+  exit
+fi
+     echo ""
+     echo "Ok. You also made these decisions:"
+     if [ $ccc != "no" ]; then
+	echo " "
+	echo " * You wish to print lars-codes in your reflist."
+     else
+	echo " "
+	echo " * You do not wish to print lars-codes in your reflist."
+     fi
+     if [ $sss != "no" ]; then
+	echo " "
+	echo " * You wish to print your reflist in a small font size and with small linespacing (to save paper)."
+     else
+	echo " "
+	echo " * You do not wish to print your reflist in a small font size and with small linespacing."
+ 	echo " (Note that you could save paper by not specifying -s no.)"
+     fi
+
+
+
+
+if [ $# -ne 3 ]; then
+        echo "\n"
+  echo 'syntax: lars_to_bib [-h] [-f format] [-c code printing] [-s reflist size]  lars.txt  my_file.tex  my_file.lrs'
+  echo '(Note: In comparison to the former versions of lars_to_bib, the redirection operators are omitted.)'
+  exit
+fi
+
+### bib file:
+bibfile=$3
+###
+
+
+if [ ! -f $1 ]; then
+  echo 'file not found: ' $1
+  exit
+fi
+if [ ! -f $2 ]; then
+  echo 'file not found: ' $2
+  exit
+fi
+
+
+bin_dir=$(dirname $0)
+
+cat $1 | sed -n '/_BEGIN_REFS_/,/_END_REFS_/p' |\
+awk '{\
+  if ($1~"^[A-Z][A-Z][A-Z][A-Z]:"||$1~"^-") { printf "\n%s",$0} else {printf "%s",$0}\
+}' |\
+sed 's/  */ /g;s/ $//g;s/ & /, /g' > lars.tmp
+
+cat $2 | egrep -v '^%' |\
+awk -v "larsfile=lars.tmp" -v "larsfileori=$1" -v "format=$format" -v "ccc=$ccc" -v "sss=$sss" \
+-f $bin_dir/lars_to_bib.awk > ${bibfile}
+
+rm lars.tmp
+
+
+echo " "
+echo "Created bibfile "$3" in "$format" format."
+
+
+else
+   if [ $aware = "n" ];  then
+        echo "\n"
+        echo "Exiting.\n"
+        echo "Run the script again and carefully read the warning statement.\n"
+        echo "Make sure you genuinely understand the warning.\n"
+        echo "And when you do, answer 'y' instead of 'n'.\n"
+        exit 1
+   else
+        echo "\n"
+        echo "Exiting.\n"
+        echo "Run the script again and carefully read the notes preceding the question.\n"
+        echo "Look in particular at the point concerning 'recognized answers'.\n"
+        echo "We are sorry for the inconvenience.\n"
+        exit 1
+
+
+
+   fi
+fi 
+
