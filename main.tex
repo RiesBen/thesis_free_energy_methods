@@ -1,0 +1,122 @@
+%\documentclass[draft,a4paper,twoside,fleqn,11pt]{ethdissertation}
+\documentclass[publish]{ethdissertation}
+\batchmode
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Subfiles
+\usepackage{subfiles}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Combine with clearpage
+\usepackage{afterpage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Side captions
+\usepackage{sidecap}
+\renewcommand{\sidecaptionsep}{2em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Supporting INFO
+
+\usepackage{longtable}
+\usepackage{lscape}
+\newcommand{\si}{Supporting Information}
+\newlength{\oldtabcolsep}
+\setlength{\oldtabcolsep}{\tabcolsep}
+\usepackage{xfrac}
+\usepackage{csquotes}
+\usetikzlibrary{positioning}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Handling of the references
+
+\usepackage[sort,super,comma,compress]{natbib}
+\usepackage{natmove}
+\renewcommand{\bibname}{References}
+
+%% % Call as \square{\cite{key}} to work with lars
+%% \newcommand*{\square}[1]{%
+%%   \begingroup
+%%     \romannumeral-`\x % remove space at the beginning of \setcitestyle
+%%     \setcitestyle{numbers}%
+%%     [#1]%
+%%   \endgroup   
+%% }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math
+\usepackage{bigdelim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Footnotes
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tables
+\usepackage{multirow}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Special Itemization 
+\usepackage[inline]{enumitem}
+\usepackage{xstring}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hyphenations
+\hyphenation{zustands-summe di-poles Cou-lomb ma-cro-sco-pic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Personal Commands 
+\input{personal_commands.tex}
+%\pdfminorversion=7
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE
+\title{Super Title%
+}
+
+\thesisnumber{????}
+\author{\textls{Benjamin Joachim Ries}}
+\birthdate{15.03.1991}
+\citizen{Germany}
+
+\currenttitle{MSc. in Bioinformatics}
+
+\wantedtitle{ \textls{DOCTOR OF SCIENCES} of \textls{ETH ZURICH}
+
+\vspace{1em}
+
+(Dr. sc. ETH Zurich)
+}
+
+
+\examiner{Prof. Dr. Sereina Riniker}
+\coexaminer{Prof. Dr. Philippe H\"{u}nenberger}{Prof. Dr. Niels Hansen}
+
+\date{2019}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+ \frontmatter
+ \maketitle
+ 
+ \dedication{Here a nice dedication}
+
+ \input{frontback/acknowledgements.tex}
+
+ \tableofcontents
+
+ \input{frontback/abstract.tex}
+ \input{frontback/zusammenfassung.tex}
+ \input{frontback/publications.tex}
+
+ \mainmatter
+\subfile{chapter_intro/content.tex}
+\subfile{chapter_1/content.tex}
+\subfile{chapter_2/content.tex}
+\input{chapter_outlook/content.tex}
+ 
+ \backmatter
+ \begin{thebibliography}{999}
+  \addcontentsline{toc}{chapter}{\bibname}
+  \input{frontback/lars.bib}
+ \end{thebibliography}
+ \input{frontback/cv.tex}
+
+\end{document}
+

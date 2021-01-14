@@ -1,0 +1,115 @@
+\chapter{Zusammenfassung}
+
+Molekulardynamikcomputersimulationen (MD-\-Simulationen) sind 
+heutzutage ein n\"utzliches Mittel, um Ph\"{a}nomene 
+in der Chemie und Biologie zu studieren.
+%
+Die Geschichte chemischer Modelle sowie der methodische
+und theoretische Basis von MD-Simulationen wird
+im \ref{ch:intro}.~Kapitel pr\"{a}sentiert.
+
+Kapitel~\ref{ch:resa} besch\"{a}ftigt sich mit
+der Anwendung von MD-Simulationen auf Resorcin[4]arene in explizitem 
+L\"{o}sungsmittel. Diese K\"{a}figmolek\"{u}le k\"{o}nnen
+geschlossene/kontrahierte (\vase{}) und
+offene/ausgestreckte (\kite{}) Konformationen annehmen.
+%
+Die Gleichgewichte zwischen \vase{} und \kite{} von Resorcin[4]arenen,
+die auf Quinoxalin und Dinitrobenzen basieren, werden in verschiedenen
+Umgebungen (Vakuum, Chloroform und Toluol) bei drei verschiedenen
+Temperaturen (198.15, 248.15 und 298.15\unit{K}) untersucht.
+%
+Die Herausforderung, die Millisekunden-Zeitskala des \vase{}-\kite{}
+\"Ubergangs in der Simulation zu beobachten, wird durch die Berechnung
+relativer freier Enthalpien mit der \textit{ball-and-stick local-elevation 
+umbrella-sampling} (B\&S-LEUS)
+%, w\"ortlich \textit{Ball-und-Stab lokale-Hebung Schirm Sampling???) 
+Methode gemeistert, die die \"{U}berg\"ange zwischen den Konformationen 
+beschleunigt. Die berechneten freien Enthalpieunterschiede $\Delta G$
+stimmen qualitativ mit den experimentellen Werten und Tendenzen \"uberein.
+
+
+Kapitel~\ref{ch:cbti}-\ref{ch:cbus} pr\"{a}sentieren die Entwicklung
+des \textit{F\"orderbandschemas} (engl. conveyor belt scheme), welches
+eine Methode ist, um freie Enthalpie-Differenzen zu berechnen.
+%
+Die Arbeitsweise beruht auf dem Aneinanderkoppeln von $K$ Repliken eines Systems,
+die an verschiedenen Werten des Kopplungsparameters $\lam$ simuliert werden.
+%
+Die Anzahl $K$ sollte gerade gew\"ahlt werden und die Repliken werden
+im gleichen Abstand zueinander auf einem vor-und-zur\"uck Pfad angeordnet, was an ein F\"orderband
+zwischen zwei Endpunkten erinnert.
+%
+Wie in der $\lam$-Dynamikmethode ($\lam$D) \"andern sich die $\lam$-Werte der einzelnen 
+Systeme im Laufe der Simulation.
+%
+Dies geschieht allerdings in einer gemeinschaftlichen Art, welche durch die \"Anderung 
+einer einzigen dynamischen F\"orderbandvariablen $\Lamb$ mit Periode $2\pi$ bestimmt wird.
+%
+Daher bewirkt eine \"Anderung von $\Lamb$ immer eine Vorw\"artsbewegung entlang $\lam$ von einer H\"alfte der Repliken und eine R\"uckw\"artsbewegung entlang $\lam$ von der anderen.
+%
+Daraus resultiert ein effektives freies Enthalpieprofil des Replikensystems entlang $\Lamb$,
+welches sich durch geringere werdende Energiebarrieren auszeichnet, je gr\"osser $K$ ist.
+%
+Wenn eine gen\"ugende Anzahl $K$ an Repliken benutzt wird, werden diese Barrieren so klein,
+dass eine durchg\"angige und nahezu homogene Erfassung des gesamten $\lam$-Bereichs durch die 
+Repliken erreicht wird.
+
+Kapitel~\ref{ch:cbti} wendet dieses Schema auf alchemische freie Enthalpieberechnungen an.
+Deshalb wird es als \textit{F\"orderband thermodynamische Integration} (engl. conveyor belt thermodynamic integration, CBTI) bezeichnet. Eine
+mathematische/physikalische Formulierung des Schemas wird vorgelegt bevor eine ersten Anwendung der Methode auf die Berechnung der freien Hydratisierungs-Enthalpie
+f\"ur Methanol beschrieben wird.
+
+In Kapitel~\ref{ch:ortho} wird die CBTI Methode auf zwei andere Systeme angewandt, 
+n\"amlich auf ein Lys-X-Lys Tripeptid,
+wobei die zentrale Aminos\"aure Glu in Gly mutiert wird, und auf 
+Guanosintriphosphat, wobei ein Wasserstoffatom an der C8 Position in ein Bromatom 
+mutiert wird.
+%
+Mit beiden Systemen wurden Samplingprobleme festgestellt wegen grossen
+orthogonalen Barrieren entlang  der Torsionswinkel $\phi$ and $\psi$ der Peptidbindung (Tripeptid)
+oder entlang des Ribosentorsionswinkels $\chi$ (Guanosine).
+Die jeweiligen Vorz\"uge verschiedener Samplingmethoden, orthogonalen  Biases oder
+Sch\"atzer, um die Konvergenz zu verbessern, werden untersucht.
+%
+Es wird gezeigt, dass die thermodynische Integration nachteilig ist,
+weil die Simulationen bei konstantem $\lam$ stattfinden.
+%
+Durch eine \"Anderung des Sch\"atzers von der Simpson's Quadratur zu  MBAR 
+lassen sich die Ergebnisse nicht signifikant verbessern.
+%
+Sowohl Hamiltonian-Austausch zwischen Repliken als auch CBTI verbessern die 
+Resultate f\"ur das Tripeptid.
+%
+F\"ur Guanosintriphosphat wird eine Verbesserung nur duch die Anwendung
+eines orthogonalen Biases erreicht, wiederum am Effizientesten f\"ur
+den Hamiltonian-Austausch zwischen Repliken und CBTI.
+
+Das F\"orderbandschema wird im \ref{ch:cbus}.~Kapitel auf konformationelle
+freie Enthalpiedifferenzen ausgeweitet, was zu dem sogennanten
+\textit{conveyor belt umbrella sampling} (\CBUS) Schema f\"uhrt.
+%
+CBUS wird hier als Erstes auf die Berechnung von 45 freie Standard-Bindungsenthalpien
+zwischen 5 verschiedenen Alkaliionen und drei Kronenethern in drei verschiedenen
+L\"osungsmitteln angewandt.
+%
+Neben dem Vorstellen und Testen des neuen Schemas wird es auch mit anderen Methoden
+verglichen.
+%
+Wie erwartet f\"uhrt das einfache Z\"ahlen der Konformationen (direct counting)
+zu Konvergenzproblemen in der
+durchgef\"uhrten Simulationszeit und die erhaltenen Resultate sind daher
+unzuverl\"assig.
+%
+Andererseits sind die Resultate, die durch die traditionelle Umbrella Sampling und 
+die CBUS Methoden erhalten wurden, sehr \"ubereinstimmend.
+%
+Zus\"atzlich wurden exzellente \"Ubereinstimmung mit  mit fr\"uheren alchemischen 
+Berechnungen \"uber einen alchemischen Pfad erreicht und die Tendenzen 
+der experimentellen Daten wurden qualitativ reproduziert.
+
+Eine Schlussfolgerung und ein Ausblick auf zuk\"unftige Entwicklungen sind
+im Kapitel \ref{ch:outlook} aufgef\"uhrt.
+
+
+

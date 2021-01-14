@@ -1,0 +1,193 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This is a (brief) model paper using the achemso class
+%% The document class accepts keyval options, which should include
+%% the target journal and optionally the manuscript type.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[journal=jctcce,manuscript=article,12pt]{achemso}
+\batchmode
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Place any additional packages needed here.  Only include packages
+%% which are essential, to avoid problems later. Do NOT use any
+%% packages which require e-TeX (for example etoolbox): the e-TeX
+%% extensions are not currently available on the ACS conversion
+%% servers.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[version=4]{mhchem} % Formula subscripts using \ce{}
+\usepackage[T1]{fontenc}       % Use modern font encodings
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{colortbl}
+%\usepackage{citesort}
+\usepackage[export]{adjustbox}
+\usepackage{epstopdf}
+\usepackage{pdflscape}
+\usepackage{subcaption}
+\usepackage[ddmmyy,hhmmss]{datetime}
+\usepackage[nomessages]{fp}
+\usepackage{tikz} 
+\usepackage{pgfplots}
+\usepackage{csquotes}
+\pgfplotsset{compat=1.13}
+\usepackage{xifthen}
+\usepackage{tcolorbox}
+\usepackage{subfiles}
+\usepackage{longtable}
+\usepackage{xr}
+\usepackage{etoolbox}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{xstring}
+\usepackage{fancyhdr}
+\usepackage{multirow}
+\RequirePackage{epigraph}
+\renewcommand{\headrulewidth}{0pt} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% If issues arise when submitting your manuscript, you may want to
+%% un-comment the next line.  This provides information on the
+%% version of every file you have used.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\listfiles
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Place any additional macros here.  Please use \newcommand* where
+%% possible, and avoid layout-changing macros (which are not used
+%% when typesetting).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{./inc/personal_commands.tex}
+
+\externaldocument[SI-]{suppmat}
+%\externaldocument[SIB-]{inc/suppmatB}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Meta-data block
+%% ---------------
+%% Each author should be given as a separate \author command.
+%%
+%% Corresponding authors should have an e-mail given after the author
+%% name as an \email command. Phone and fax numbers can be given
+%% using \phone and \fax, respectively; this information is optional.
+%%
+%% The affiliation of authors is given after the authors; each
+%% \affiliation command applies to all preceding authors not already
+%% assigned an affiliation.
+%%
+%% The affiliation takes an option argument for the short name.  This
+%% will typically be something like "University of Somewhere".
+%%
+%% The \altaffiliation macro should be used for new address, etc.
+%% On the other hand, \alsoaffiliation is used on a per author basis
+%% when authors are associated with multiple institutions.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+\author{David F. Hahn}
+\affiliation[ETH]
+{Laboratory of Physical Chemistry, Department of Chemistry and Applied Biosciences, 
+ETH Z\"urich, Vladimir-Prelog-Weg 2, 8093 Z\"urich, Switzerland}
+%
+%
+
+%
+\author{Philippe H. H\"unenberger}
+\affiliation[ETH]
+{Laboratory of Physical Chemistry, Department of Chemistry and Applied Biosciences, 
+ETH Z\"urich, Vladimir-Prelog-Weg 2, 8093 Z\"urich, Switzerland}
+\email{phil@igc.phys.chem.ethz.ch}
+%\phone{+123 (0)123 4445556}
+%\fax{+123 (0)123 4445557}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The document title should be given as usual. Some journals require
+%% a running title from the author: this should be supplied as an
+%% optional argument to \title.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[CBUS]
+      {Intro\\
+        \large{\normalfont Document date: \today}}
+
+%Closing-opening (\vase{}-\kite{}) equilibrium of resorcin[4]arene cavitands
+%investigated using molecular dynamics simulations
+%with ball-and-stick local elevation umbrella sampling
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Some journals require a list of abbreviations or keywords to be
+%% supplied. These should be set up here, and will be printed after
+%% the title and author information, if needed.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\abbreviations{MD, MC, CBTI, OSP, TI, HRE, MC, $\lam$D, EXTI, BAR, MBAR, $\lam$MC, LEUS, LE, US, B\&S-LEUS, FEP, SC, EDS, CB}
+%\keywords{American Chemical Society, \LaTeX}
+
+\renewcommand\path{./}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The manuscript does not need to include \maketitle, which is
+%% executed automatically.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The "tocentry" environment can be used to create an entry for the
+%% graphical table of contents. It is given here as some journals
+%% require that it is printed as part of the abstract page. It will
+%% be automatically moved as appropriate.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \begin{tocentry}
+
+%% Some journals require a graphical entry for the Table of Contents.
+%% This should be laid out ``print ready'' so that the sizing of the
+%% text is correct.
+
+%% Inside the \texttt{tocentry} environment, the font used is Helvetica
+%% 8\,pt, as required by \emph{Journal of the American Chemical}
+%% The surrounding frame is 9\,cm by 3.5\,cm, which is the maximum
+%% permitted for  \emph{Journal of the American Chemical Society}
+%% graphical table of content entries. The box will not resize if the
+%% content is too big: instead it will overflow the edge of the box.
+
+%% This box and the associated title will always be printed on a
+%% separate page at the end of the document.
+
+%% \end{tocentry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The abstract environment will automatically gobble the contents
+%% if an abstract is not used by the target journal.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+\fancyhead[L]{To be submitted to: XXX}
+\thispagestyle{fancy}
+%  \tbref{TO BE WRITTEN LAST}
+%\input{inc/abstract.tex}
+\end{abstract}
+
+%\phicom{
+%TO LOOK AT:
+%- are there previous calculations (QM,MD) on resorcinarenes -
+%  to be mentioned in the intro
+%}
+
+\pagebreak
+%================================================================================
+\section{Introduction}
+\labsec{intro}
+%================================================================================
+
+\input{inc/intro.tex}
+
+
+
+%================================================================================
+\begin{thebibliography}{74}
+ \input{inc/paper.lrs}
+\end{thebibliography}
+%================================================================================
+
+
+\end{document}
+
+
+
+

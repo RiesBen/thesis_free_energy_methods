@@ -1,0 +1,356 @@
+\newcommand*\mycommand[1]{\texttt{\emph{#1}}}
+\newcommand{\nc}{\newcommand}
+
+\nc{\captitital}[1]{#1}
+
+\nc{\ie}{\textit{i.e.}}
+\nc{\via}{\textit{via}}
+\nc{\eg}{\textit{e.g.}}
+\nc{\vs}{\textit{vs.}}
+\newcommand{\cf}{\textit{cf.}}
+\nc{\suppmat}{}
+\nc{\suppmatv}{}
+
+%==============================================================================
+%==============================================================================
+% SPECIFIC TO CH 1
+%==============================================================================
+%==============================================================================
+
+\nc{\nitro}{\textsc{Nitro}}
+\nc{\quino}{\textsc{Quino}}
+
+\nc{\vase}{\textsc{Vase}}
+\nc{\oneopen}{\textsc{Oneopen}}
+%
+\nc{\twoopen}{\textsc{Twoopen}}
+%\nc{\twoopencone}{\textsc{Twoopen-cis-o}}
+%\nc{\twoopenctwo}{\textsc{Twoopen-cis-p}}
+%\nc{\twoopencco}{\textsc{Twoopen-cis-o}}
+%\nc{\twoopenccp}{\textsc{Twoopen-cis-p}}
+%\nc{\twoopent}{\textsc{Twoopen-trans}}
+
+\nc{\twoopencone}{\textsc{Twoopen}-{\em cis}-$o$}
+\nc{\twoopenctwo}{\textsc{Twoopen}-{\em cis}-$p$}
+\nc{\twoopencco}{\textsc{Twoopen}-{\em cis}-$o$}
+\nc{\twoopenccp}{\textsc{Twoopen}-{\em cis}-$p$}
+\nc{\twoopent}{\textsc{Twoopen}-{\em trans}}
+
+% David's
+%\nc{\ciso}{\textsc{cis-o}}
+%\nc{\cisp}{\textsc{cis-p}}
+%\nc{\trans}{\textsc{trans}}
+%
+% Phil's
+\nc{\ciso}{{\em cis-o}}
+\nc{\cisp}{{\em cis-p}}
+\nc{\trans}{{\em trans}}
+%
+\nc{\threeopencone}{\textsc{Threeopen} (\via{} \ciso{})}
+\nc{\threeopenctwo}{\textsc{Threeopen} (\via{} \cisp{})}
+\nc{\threeopent}{\textsc{Threeopen} (\via{} \trans{})}
+\nc{\threeopen}{\textsc{Threeopen}}
+\nc{\threeopenave}{\textsc{Threeopen} (Ave)}
+\nc{\kitecone}{\textsc{Kite} (\via{} \ciso{})}
+\nc{\kitectwo}{\textsc{Kite} (\via{} \cisp{})}
+\nc{\kitet}{\textsc{Kite} (\via{} \trans{})}
+\nc{\kite}{\textsc{Kite}}
+\nc{\kiteave}{\textsc{Kite} (Ave)}
+\nc{\dih}[3]{\IfEq{#3}{bar}{$\phi_{\mathrm{#1}\overline{#2}}$}{$\phi_{\mathrm{#1}#2}$}}
+
+\nc{\dihnobar}[2]{$\phi_{\mathrm{#1}#2}$}
+\nc{\dihbar}[2]{$\phi_{\mathrm{#1}\overline{#2}}$}
+
+% {N,Q}{V,C,T}{l,m,h}{Nsph}-{0,1,X}{0,1,X}{0,1,X}{0,1,X}
+\nc{\simu}[5]{\textsc{#1#2#3-#4}\textsc{-#5}}
+\nc{\simup}[4]{\textsc{#1#2#3}\textsc{-#4}}
+\nc{\simum}[5]{#1\_\textsc{#2#3#4}\textsc{-#5}}
+
+\nc{\refsimov}[4]{Movie \textsc{#1#2#3}\textsc{-#4}}
+\nc{\refsimovm}[5]{Movie #1\_\textsc{#2#3#4}\textsc{-#5}}
+
+
+%==============================================================================
+%==============================================================================
+% SPECIFIC TO CH 4
+%==============================================================================
+%==============================================================================
+
+\nc{\xim}{\xi_-}
+\nc{\xip}{\xi_+}
+\nc{\ximt}{\xi^{\mathrm{CB}}_-}
+\nc{\xipt}{\xi^{\mathrm{CB}}_+}
+\nc{\xic}{\xi_*}
+\nc{\xio}{\xi_o}
+\nc{\xiclose}{\xi_m}
+
+% PHIL
+% -----
+%
+\nc{\DCNT}{\textsc{DCNT}}
+\nc{\TRUS}{\textsc{TRUS}}
+\nc{\REUS}{\textsc{REUS}}
+\nc{\CBUS}{\textsc{CBUS}}
+%
+\nc{\DCAN}{\textsc{DCAN}} % Direct counting analysis
+\nc{\PMAT}{\textsc{PMAT}}
+\nc{\WHAM}{\textsc{WHAM}}
+\nc{\VFEP}{\textsc{VFEP}}
+\nc{\UINT}{\textsc{UINT}} % umbrella integration
+\nc{\TINT}{\textsc{TINT}} % true integration = force integration
+%
+
+
+\definecolor{colli}{HTML}{783632}
+\definecolor{colna}{HTML}{69BC4E}
+\definecolor{colk}{HTML}{7B49CA}
+\definecolor{colrb}{HTML}{BBAB4E}
+\definecolor{colcs}{HTML}{D052AE}
+\definecolor{colh2o}{HTML}{4D6433}
+\definecolor{coldmso}{HTML}{D44442}
+\definecolor{colch3oh}{HTML}{63B09D}
+\definecolor{colchcl3}{HTML}{58366F}
+\definecolor{col12c4}{HTML}{C77C3D}
+\definecolor{col15c5}{HTML}{798FC9}
+\definecolor{col18c6}{HTML}{CD8597}
+
+%% \newcommand{\ws}[1]{\IfEq{#1}{10_H2O}{{\color{colh2o} H$_2$O}}{\IfEq{#1}{11_DMSO}{{\color{coldmso} DMSO}}{\IfEq{#1}{12_CHCL3}{{\color{colchcl3} CHCl$_3$}}{\IfEq{#1}{13_CH3OH}{{\color{colch3oh} CH$_3$OH}}{%
+%% \IfEq{#1}{H2O}{{\color{colh2o} H$_2$O}}{\IfEq{#1}{DMSO}{{\color{coldmso} DMSO}}{\IfEq{#1}{CHCL3}{{\color{colchcl3} CHCl$_3$}}{\IfEq{#1}{CH3OH}{{\color{colch3oh} CH$_3$OH}}}}}}}}}}
+
+%% \newcommand{\wc}[1]{\IfEq{#1}{01_12C4}{{\color{col12c4} 12C4}}{\IfEq{#1}{02_15C5}{{\color{col15c5} 15C5}}{\IfEq{#1}{03_18C6}{{\color{col18c6} 18C6}}{%
+%% \IfEq{#1}{12C4}{{\color{col12c4} 12C4}}{\IfEq{#1}{15C5}{{\color{col15c5} 15C5}}{\IfEq{#1}{18C6}{{\color{col18c6} 18C6}}{%
+%% }}}}}}}
+%% \newcommand{\wi}[1]{\IfEq{#1}{01_LI+}{{\color{colli} Li$^+$}}{\IfEq{#1}{02_NA+}{{\color{colna} Na$^+$}}{\IfEq{#1}{03_K+}{{\color{colk} K$^+$}}{\IfEq{#1}{04_RB+}{{\color{colrb} Rb$^+$}}{\IfEq{#1}{05_CS+}{{\color{colcs} Cs$^+$}}{%
+%% \IfEq{#1}{LI+}{{\color{colli} Li$^+$}}{\IfEq{#1}{NA+}{{\color{colna} Na$^+$}}{\IfEq{#1}{K+}{{\color{colk} K$^+$}}{\IfEq{#1}{RB+}{{\color{colrb} Rb$^+$}}{\IfEq{#1}{CS+}{{\color{colcs} Cs$^+$}}{}}}}}}}}}}}
+
+
+\newcommand{\ws}[1]{\IfEq{#1}{10_H2O}{{ H$_2$O}}{\IfEq{#1}{11_DMSO}{{ DMSO}}{\IfEq{#1}{12_CHCL3}{{ CHCl$_3$}}{\IfEq{#1}{13_CH3OH}{{ CH$_3$OH}}{%
+\IfEq{#1}{H2O}{{ H$_2$O}}{\IfEq{#1}{DMSO}{{ DMSO}}{\IfEq{#1}{CHCL3}{{ CHCl$_3$}}{\IfEq{#1}{CH3OH}{{ CH$_3$OH}}}}}}}}}}
+
+\newcommand{\wc}[1]{\IfEq{#1}{01_12C4}{{12C4}}{\IfEq{#1}{02_15C5}{{15C5}}{\IfEq{#1}{03_18C6}{{18C6}}{%
+\IfEq{#1}{12C4}{{12C4}}{\IfEq{#1}{15C5}{{15C5}}{\IfEq{#1}{18C6}{{18C6}}{%
+}}}}}}}
+\newcommand{\wi}[1]{\IfEq{#1}{01_LI+}{{Li$^+$}}{\IfEq{#1}{02_NA+}{{Na$^+$}}{\IfEq{#1}{03_K+}{{K$^+$}}{\IfEq{#1}{04_RB+}{{Rb$^+$}}{\IfEq{#1}{05_CS+}{{Cs$^+$}}{%
+\IfEq{#1}{LI+}{{Li$^+$}}{\IfEq{#1}{NA+}{{Na$^+$}}{\IfEq{#1}{K+}{{K$^+$}}{\IfEq{#1}{RB+}{{Rb$^+$}}{\IfEq{#1}{CS+}{{Cs$^+$}}{}}}}}}}}}}}
+
+% phil prefers Ref. with superscripts...
+\nc{\squarit}[1]{#1}
+% David's way with square brackets...
+%\nc{\squarit}[1]{~\square{#1}}
+
+%==============================================================================
+% COLORS
+%==============================================================================
+
+\definecolor{m1}{HTML}{FF00FF}%{Magenta}%HTML}{FFB719}
+\definecolor{m2}{HTML}{264bCF}
+\definecolor{rec}{HTML}{83401B}
+\definecolor{ts}{HTML}{0069B4}
+\definecolor{hist}{HTML}{C86F3A}
+
+
+\definecolor{flap2}{HTML}{C8176B}
+\definecolor{flap2d1}{HTML}{F360A6}
+\definecolor{flap2d4}{HTML}{EB1278}
+\definecolor{flap2d2}{HTML}{AF0053}
+\definecolor{flap2d3}{HTML}{780039}
+\definecolor{flap4}{HTML}{EF7E1C}
+\definecolor{flap4d1}{HTML}{FFAC65}
+\definecolor{flap4d4}{HTML}{FF8013}
+\definecolor{flap4d2}{HTML}{D16100}
+\definecolor{flap4d3}{HTML}{904200}
+\definecolor{flap1}{HTML}{128B91}
+\definecolor{flap1d1}{HTML}{5BDCE2}
+\definecolor{flap1d4}{HTML}{11C7CF}
+\definecolor{flap1d2}{HTML}{01797F}
+\definecolor{flap1d3}{HTML}{005357}
+\definecolor{flap3}{HTML}{90DD1A}
+\definecolor{flap3d1}{HTML}{BEF963}
+\definecolor{flap3d4}{HTML}{9CF513}
+\definecolor{flap3d2}{HTML}{75C100}
+\definecolor{flap3d3}{HTML}{508400}
+
+\definecolor{colsdlo}{HTML}{A038DA}
+\definecolor{colsdmi}{HTML}{5F088F}
+\definecolor{colsdhi}{HTML}{440367}
+\definecolor{colchcl3lo}{HTML}{3BEA32}
+\definecolor{colchcl3mi}{HTML}{09AD00}
+\definecolor{colchcl3hi}{HTML}{067D00}
+\definecolor{coltollo}{HTML}{FFBC36}
+\definecolor{coltolmi}{HTML}{D68F00}
+\definecolor{coltolhi}{HTML}{9B6700}
+
+
+%==============================================================================
+% COMMENTS
+%==============================================================================
+
+\nc{\rem}[1]{}
+\nc{\remrem}[1]{}
+\nc{\phires}[1]{}
+\nc{\phicom}[1]{{\color{red}[PHIL: #1 ]}}
+\nc{\davcom}[1]{{\color{blue}[DAVID: #1 ]}}
+\nc{\tbdel}[1]{{\color{red}[TO BE DELETED: #1 ]}}
+\nc{\tbref}[1]{{\color{Gray}[TO BE REFINED: #1 ]}}
+
+\nc{\jovcom}[1]{}
+\nc{\jovadd}[1]{}
+\nc{\radd}[1]{#1}
+\nc{\revphil}[1]{#1}
+\nc{\revphildel}[1]{}
+%==============================================================================
+% MATH
+%==============================================================================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math
+\nc{\dd}{\mathrm{d}}
+\nc{\ee}{\mathrm{e}}
+\nc{\fvector}[1]{\mathbf{#1}}
+\nc{\fmatrix}[1]{\mathbf{\underline{#1}}}
+
+\nc{\vecThreeD}[3] {
+   \begin{pmatrix} #1 \\ #2 \end{pmatrix}
+}
+
+\nc{\lam}{\lambda}
+\nc{\Lamb}{\Lambda}
+
+\nc{\dhdl}{\frac{\partial \mathcal{H}}{\partial\lam}}
+\nc{\dhdlav}{\left\langle\frac{\partial \mathcal{H}}{\partial\lam}\right\rangle}
+
+\nc{\ham}{\mathcal{H}}
+\nc{\pot}{\mathcal{U}}
+\nc{\kin}{\mathcal{K}}
+\nc{\bia}{\mathcal{B}}
+\nc{\frc}{\mathcal{F}}
+
+\nc{\kb}{k_{\mathrm{B}}}
+\nc{\rv}{\mathbf{r}}
+\nc{\pv}{\mathbf{p}}
+\nc{\xv}{\mathbf{x}}
+\nc{\qv}{\mathbf{q}}
+\nc{\Fv}{\mathbf{F}}
+\nc{\xiv}{\boldsymbol{\xi}}
+
+\nc{\Xv}{\mathbf{X}}
+\nc{\lamv}{\boldsymbol{\lambda}}
+
+\nc{\Dv}{\mathbf{D}}
+\nc{\Cmat}{\underline{\mathbf{C}}}
+\nc{\unit}[1]{\ensuremath{\,\mathrm{#1}}}
+
+
+\nc{\std}{\standardstate}
+
+
+%==============================================================================
+% EQUATION MACROS
+%==============================================================================
+
+\nc{\beq}[1]{\begin{equation}\label{eq:#1}}
+\nc{\eeq}{\end{equation}}
+\nc{\refeq}[1]{Eq.~\ref{eq:#1}}
+\nc{\refeqs}[1]{Eqs.~\ref{eq:#1}}
+\nc{\refeqn}[1]{~\ref{eq:#1}}
+
+%==============================================================================
+% FIGURE MACROS
+%==============================================================================
+
+\nc{\reffig}[1]{Fig.~\ref{fig:#1}}
+\nc{\reffigs}[1]{Figs.~\ref{fig:#1}}
+\nc{\reff}[1]{\ref{fig:#1}}
+\nc{\reffign}[1]{\ref{fig:#1}}
+\nc{\reffignn}[1]{\ref{fig:#1}}
+
+\nc{\refsifig}[1]{Fig.~\ref{fig:#1}}
+\nc{\refsifigs}[1]{Figs.~\ref{fig:#1}}
+\nc{\refsifign}[1]{~\ref{fig:#1}}
+\nc{\refsifignn}[1]{\ref{fig:#1}}
+
+\nc{\refmainfig}[1]{Fig.~\ref{fig:#1}}
+\nc{\refmainfigs}[1]{Figs.\ref{fig:#1}}
+\nc{\refmainfign}[1]{\ref{fig:#1}}
+\nc{\refmainfignn}[1]{\ref{fig:#1}}
+
+%==============================================================================
+% TABLE MACROS
+%==============================================================================
+
+\nc{\reftab}[1]{Tab.~\ref{tab:#1}}
+\nc{\reftabs}[1]{Tabs.~\ref{tab:#1}}
+\nc{\reftabn}[1]{~\ref{tab:#1}}
+\nc{\reftabnn}[1]{\ref{tab:#1}}
+
+\nc{\refsitab}[1]{Tab.~\ref{tab:#1}}
+\nc{\refsitabs}[1]{Tabs.~\ref{tab:#1}}
+\nc{\refsitabn}[1]{~\ref{tab:#1}}
+\nc{\refsitabnn}[1]{\ref{tab:#1}}
+
+\nc{\refmaintab}[1]{Tab.~\ref{tab:#1}}
+\nc{\refmaintabs}[1]{Tabs.~\ref{tab:#1}}
+\nc{\refmaintabn}[1]{\ref{tab:#1}}
+\nc{\refmaintabnn}[1]{\ref{tab:#1}}
+
+
+%==============================================================================
+% SECTION MACROS
+%==============================================================================
+
+\nc{\refsec}[1]{Sect.~\ref{sec:#1}}
+\nc{\refsecs}[1]{Sects.~\ref{sec:#1}}
+\nc{\refsecn}[1]{~\ref{sec:#1}}
+
+
+\nc{\refsisec}[1]{Sect.~\ref{sec:#1}}
+\nc{\refsisecs}[1]{\ref{sec:#1}}
+\nc{\refsisecn}[1]{~\ref{sec:#1}}
+\nc{\refsisecnn}[1]{\ref{sec:#1}}
+
+\nc{\labsec}[1]{\label{sec:#1}}
+
+%==============================================================================
+% PLOTS
+%==============================================================================
+\providecommand{\path}{./}
+\newcommand{\subgraph}[3]{
+  \begin{minipage}[t]{2em}\subcaption{}\label{#1}\end{minipage}%
+  \hspace{-3em}
+  \begin{minipage}[t]{\dimexpr#3\linewidth\relax}
+  \centering
+%  \vspace{-.5\baselineskip}
+  \hfill \\
+  \resizebox{\textwidth}{!}{\input{\path/plt/#2}}
+  \end{minipage}%
+}
+
+\newcommand{\subgraphpng}[3]{
+  \begin{minipage}[t]{2em}\subcaption{}\label{#1}\end{minipage}%
+  \hspace{-2.5em}
+  \begin{minipage}[t]{\dimexpr#3\linewidth\relax}
+  \centering
+%  \vspace{-.5\baselineskip}
+  \hfill \\
+  \includegraphics[width=\textwidth]{\path/fig/#2}
+  \end{minipage}%
+}
+
+\newcommand{\subgrapheps}[4]{
+  \begin{minipage}[t]{.5em}\subcaption{}\label{#1}\end{minipage}%
+  \hspace{-.5em}
+  \begin{minipage}[t]{\dimexpr#3\linewidth\relax}
+  \centering
+  \vspace{-.5\baselineskip}
+  \hfill \\
+  \includegraphics[scale=#4]{\path/fig/#2}
+  \end{minipage}%
+}
+
+\nc\appsection[2]{%
+  \setcounter{equation}{0}%
+  %\setcounter{section}{0}
+  \setcounter{figure}{0}%
+  \setcounter{table}{0}%
+  \section{#2}%
+  \labsec{#1}
+}
