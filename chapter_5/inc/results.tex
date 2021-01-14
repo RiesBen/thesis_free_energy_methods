@@ -1,0 +1,1164 @@
+\labsec{results}
+%----------
+\subsection{Reference TI Calculations}
+%----------
+
+The curve for the average Hamiltonian derivative as a function of $\lambda$
+corresponding to the aqueous methanol-to-dummy mutation is shown in \reffig{ti:dhdl} (blue curve, scale on the left),
+as averaged over the ten repeats of the $100\unit{ns}$ TI calculation 
+with 129 equispaced $\lambda$-points.
+%($0.775\unit{ns}$ sampling per $\lambda$-point in each repeat).
+The corresponding running integral, \ie{} the free-energy profile $G(\lam)$, is also shown (orange curve, scale on the right).
+%
+In view of the large amount of statistics (total  $1\,\mu$s sampling,
+{\em i.e.} clearly an overkill for such a calculation), the curve 
+is perfectly smooth and extremely well converged.
+%
+The average Hamiltonian derivative is large and positive below about $0.5$ and
+becomes smaller and negative thereafter, leading to a maximum in
+the free-energy profile. The shape of these curves is determined
+both by the hydration physics of methanol and by the choice of
+the employed (soft-core) coupling scheme.
+%
+
+The convergence properties of these TI calculations
+%estimate with 129 $\lam$-points
+as a function of
+the total sampling time per repeat are illustrated in \reffig{ti:conv},
+in the form of running $\Delta G$ estimates for each of the
+ten repeats (dashed curves), along with the associated 
+mean and error (95\% confidence interval) on the mean over the repeats (thick blue curve and shaded area).
+%
+\radd{The latter mean and error at full sampling time, reported in \reftab{repeats},}
+evaluate to $21.43 \pm 0.21\,\mathrm{kJ}\,\mathrm{mol}^{-1}$.
+This result \radd{(with a minus sign)} is in quantitative agreement with the experimental value 
+\radd{for 
+%minus 
+the} hydration free 
+energy of methanol at $298.15\unit{K}$ and $1\unit{bar}$, namely\cite{CA81.1} $-21.4\unit{kJ\,mol^{-1}}$.
+
+
+\begin{figure}
+  \centering
+  \subgraph{fig:ti:dhdl}{dhdl_dg_ti_ene_ana.pgf}{0.32}%
+  \hfill%
+  \subgraph{fig:ti:conv}{conv_mad_129_ene_ana.pgf}{0.32}%
+  \hfill%
+  \subgraph{fig:ti:lampts}{conv_lampts_simps_ene_ana.pgf}{0.32}\\
+  \caption{\footnotesize
+  \captitital{Convergence properties of the TI calculations for the aqueous methanol-to-dummy mutation at 298.15 K and 1 bar with the 2016H66 force field.}
+%
+           \revphil{This figure provides the reference free-energy profile for the perturbation considered,
+                   and investigates the convergence properties of TI with different numbers $K_{\mathrm{TI}}$
+                     of equidistant $\lambda$-points (based on ten repeats of $100\unit{ns}$ TI calculations).}
+%
+           Panel (a) shows the average Hamiltonian derivative as a function of 
+                     $\lambda$ (blue curve, scale on the left) and the corresponding free-energy 
+                     profile (orange, scale on the right). The curves are
+                     averaged over ten repeats of $100\unit{ns}$ TI calculations 
+                     with 129 equidistant $\lambda$-points.
+% ($0.775\unit{ns}$ sampling per $\lam$-point
+%                     for each repeat). 
+           Panel (b) shows the running $\Delta G$ estimates for each of the ten repeats (dashed curves)
+                     as a function of the total sampling time $t$ per repeat, 
+                     along with the corresponding mean and error on the mean \radd{(95\% confidence interval)} over the repeats 
+                     (thick blue curve and shaded area).
+           Panel (c) shows $\Delta G$ estimates considering ten repeats of $100\unit{ns}$
+                     TI calculations using $K_{\mathrm{TI}}=2^n+1$ equidistant
+                     $\lambda$-points with $n$ = 1,2,...,7 
+%($100/K_{\mathrm{TI}}\unit{ns}$ sampling
+%                     per $\lam$-point for each repeat; 
+                     (individual colored circles),
+                     along with the corresponding mean and error on the mean \radd{(95\% confidence interval)} over the repeats 
+                     (blue crosses and error bars).
+%
+%           All $\Delta G$ estimates rely on Simpson quadrature.
+%
+%           The error on the mean is calculated \radd{from the standard deviation $\sigma$ of the mean
+%           as $\epsilon = 2.262 \sigma$},
+%%           where $\sigma$ is the standard deviation of the mean,
+%           corresponding to a two-sigma confidence interval of 95\%.
+           %
+           Figs. equivalent to Panel (b) for the TI calculations
+           with fewer $\lam$-points are provided in \reffig{avgti}.
+%
+           Numerical values at full sampling time are reported in \reftab{repeats}
+           and \reftab{ti}.
+%           In (c), the total sampling time per replica is determined by the number points selected
+%                      as $t = 100 M_{TI}/129$ ns.
+          }
+  \label{fig:ti}
+\end{figure}
+
+
+Corresponding graphs for TI calculations involving different numbers of equidistant $\lam$-points
+($K_{\mathrm{TI}}=2^n+1$ with $n=1,2,\dots,7$) at identical total sampling time 
+($100\unit{ns}$ for each of the ten repeats) are shown in \reffig{avgti}.
+%
+The \radd{associated $\Delta G$ means and errors} at full sampling time are reported numerically in \reftab{repeats} 
+(see \reftab{ti} for \radd{the values of the individual repeats}). 
+The results of \reftab{repeats} also include a comparison of different error estimates
+(all excluding the Student $t$-factor), namely:
+($i$) \radd{the standard deviation $\sigma$ of the mean over the repeats;}
+($ii$) \radd{a bootstrap error $\sigma_{\mathrm{B}}$ calculated from the concatenated trajectories of the repeats at each $\lam$-point;}
+($iii$) \radd{an alternative error $\sigma_{\mathrm{G}}$} obtained similarly 
+            by calculating the bootstrap errors on the average Hamiltonian derivatives 
+            at all $\lam$-points, and propagating them assuming a Gaussian distribution of 
+            the estimates, as proposed in Refs. \citenum{BH17.1,BH18.1}.
+%
+The three values turn out to be very similar, so that further discussions 
+will refer to the error $\epsilon$ defined as $\sigma$ amplified by the Student $t$-factor.
+%
+
+
+\begin{table}
+  \centering
+\caption{\footnotesize
+  \captitital{Repeat statistics over TI and CBTI calculations for the aqueous methanol-to-dummy mutation at $298.15\unit{K}$ and $1\unit{bar}$ with the
+  2016H66 force field.}
+  %
+  \revphil{This table investigates the convergence properties 
+           of the calculated free-energy change $\Delta G$
+           considering
+           TI calculations with different numbers of $\lambda$-points
+           along with a CBTI simulation with 16 replicas
+           (average and various error estimates, based on ten calculation repeats
+           involving each at a constant total single-system sampling time of 100 ns) 
+         }
+  %
+\radd{The TI calculations involved $K_{\mathrm{TI}}=2^n+1$ equispaced $\lam$-points 
+      with $n=1,2,...,7$.
+      The CBTI simulations involved $K=16$ 
+      replicas, along with $m_\Lamb=160\,\mathrm{u}\,\mathrm{nm}^2$ and $\tau_{\Lamb}=0.5\,\mathrm{ps}$ (no biasing potential).
+      In both cases, the total single-system sampling time was $100\unit{ns}$,
+      and the calculation was repeated ten times.
+%
+      Considering each set of repeats, the successive entries are:
+      the free-energy change $\Delta G_{\mathrm{avg}}$ averaged over the repeats;
+      the corresponding standard deviation $\sigma$ of the mean;
+      the associated error $\epsilon$ on the mean;
+      alternative error estimates $\sigma_{\mathrm{B}}$ and $\sigma_{\mathrm{G}}$ calculated by bootstrapping \radd{(no Student $t$-factor included)}.
+%
+  The quantity $\sigma$ is calculated by scaling the standard deviation of the ten $\Delta G$ values by the square-root of nine.
+%
+  The error estimate $\epsilon$ is then calculated as $\epsilon=2.262\sigma$, corresponding to a two-sigma confidence interval of $95\%$.
+%
+  The estimate $\sigma_{\mathrm{B}}$ corresponds to a bootstrap error calculated from the concatenated 
+  trajectories of the ten repeats \radd{(for TI, concatenated separately at each $\lambda$-point)}.
+%
+  The estimate $\sigma_{\mathrm{G}}$ (TI only) is obtained by calculating the bootstrap 
+  errors on the average Hamiltonian derivatives at all $\lam$-point, and propagating them assuming 
+  a Gaussian distribution of the estimates, as proposed in Refs. \citenum{BH17.1,BH18.1}.
+  %
+}
+  The $\Delta G$ values for the individual repeats can be found in \reftabs{ti} and \reftabn{cvbseed}.
+}   
+\label{tab:repeats}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{*{8}{c} | c}
+\hline
+ & \multicolumn{7}{c}{TI} & CBTI \\
+\hline
+   $n$ &                1 &                2 &                3 &               4 &                 5 &                6 &                7 &              - \\
+   $K_{\mathrm{TI}}$ or $K$ &                3 &                5 &                9 &               17 &               33 &               65 &              129 &             16 \\
+\hline
+\hline
+$\Delta G_{\mathrm{avg}}\,[\mathrm{kJ\,mol^{-1}}]$ &  15.61 &   4.81 &  18.97 &  21.65 &  21.45 &  21.40 &  21.43 &  21.39 \\
+$\epsilon\,[\mathrm{kJ\,mol^{-1}}]$ &   0.05 &   0.18 &   0.13 &   0.15 &   0.20 &   0.17 &   0.21 &   0.10 \\
+$\sigma\,[\mathrm{kJ\,mol^{-1}}]$ &   0.02 &   0.08 &   0.06 &   0.07 &   0.09 &   0.08 &   0.09 &   0.04 \\
+$\sigma_{\mathrm{B}}\,[\mathrm{kJ\,mol^{-1}}]$ &   0.03 &   0.06 &   0.05 &   0.05 &   0.07 &   0.08 &   0.09 &   0.05 \\
+$\sigma_{\mathrm{G}}\,[\mathrm{kJ\,mol^{-1}}]$ &   0.03 &   0.06 &   0.05 &   0.05 &   0.05 &   0.05 &   0.05  & -\\
+\end{tabular}
+}
+\end{table}
+
+
+
+%
+The effect of $K_{\mathrm{TI}}$ on the convergence properties is 
+illustrated graphically in \reffig{ti:lampts},
+which shows the $\Delta G$ estimates at full sampling time as a function of $K_{\mathrm{TI}}$
+for each of the ten repeats (individual colored circles),
+along with the associated mean and error on the mean over the repeats (blue crosses and error bars).
+%
+Using too few $\lambda$-points leads to quadrature errors, which are very significant for $n\leq 4$ ($K_{TI} \leq 17$), 
+{\em i.e.} the shape of the \radd{average} Hamiltonian derivative curve is not 
+well captured by the Simpson quadrature.
+%
+For $n \geq 5$ ($K_{\mathrm{TI}} \geq 33$), the quadrature error becomes essentially negligible
+compared to the sampling error. 
+
+
+Interestingly, at constant total sampling time, the latter error appears 
+to be essentially insensitive to the number of $\lam$-points employed, 
+with very similar $\Delta G$ estimates and error bars
+of $21.45\pm 0.20, 21.40\pm 0.17$ and $21.43\pm 0.21\unit{kJ\, mol^{-1}}$ 
+%for 
+%$n=5$, 6 or 7 (
+\radd{for $K_{\mathrm{TI}}=33$, 65 and 129, respectively (\reftab{repeats}).} 
+%
+Thus, 
+%in principle, 
+\revphil{for the system considered here and at constant total sampling time},
+the use of a larger 
+number of $\lam$-points with a reduced simulation time 
+is advantageous 
+%in TI 
+as it reduces the quadrature error without incurring any penalty in terms of sampling error.
+%
+However, it also induces an extra cost in the form of the preequilibration dead time, which is proportional 
+to the number of $\lam$-points employed. 
+%
+\revphil{
+In addition, the insensitivity of the sampling error to the number of 
+$\lam$-points may still break down when the simulation times 
+at the different $\lam$-points become shorter than the corresponding
+orthogonal relaxation times.
+}
+%
+
+
+The use of numerous $\lam$-points with insufficient preequilibration is the plague affecting 
+the slow-growth (SG) method\cite{BE85.3,ST86.1}, which is rather inaccurate in 
+pratice\cite{PE89.1,HE91.1,MA94.12} (large error and hysteresis), unless the results are exponentially 
+averaged over \revphil{repeats} with different \radd{Boltzmann-distributed} initial conditions,
+as in fast growth\cite{JA97.3,CR00.2,HE01.4,HU02.2} (FG). 
+%
+In essence, the CBTI scheme aims at achieving this limit of a very large number of $\lam$-points, 
+but without suffering from issues related to the preequilibration dead time (TI),
+to an insufficient preequilibration (SG), or to the requirement of \radd{exponential} averaging over initial conditions (FG).
+%
+
+
+
+%------------------------------------------------------------
+\subsection{Results using the CBTI Scheme}
+%------------------------------------------------------------
+
+The exploration of the influence of the CBTI 
+mass parameter $m_\Lambda$ and thermostat coupling 
+time $\tau_\Lambda$ considering different numbers $K$ 
+of replicas is presented in details in \refsec{othersim}. The results are summarized in \reftab{screen} (entries 1-10).
+%
+They show that when selected within reasonable ranges,
+the parameters $m_\Lambda$ and $\tau_{\Lambda}$ have only a limited 
+influence on the kinetic-energy exchange between the CB advance variable
+$\Lambda$ and the conformational degrees of freedom, on the 
+\radd{average}
+temperature $T_\Lambda$, on the diffusion constant $D_{\Lamb}$, and on the 
+calculated free-energy change $\Delta G$.
+%
+Based on this exploration, \revphil{a working}
+choice
+$m_{\Lamb}=40 K^{1/2}\,\mathrm{u}\,\mathrm{nm}^2$ 
+and $\tau_{\Lamb}=0.5\,\mathrm{ps}$ was selected for the following CBTI calculations.
+
+
+
+Using this parameter setting, CBTI calculations were performed using
+$K=8,16,32,64$ or 128 replicas \radd{along with $256K^{-1}\unit{ns}$ simulation} time for the replica system,
+\ie{} $256\unit{ns}$ total single-system sampling time in all cases.
+The detailed results are shown graphically in \reffig{thermo:04_cvb_thermo:008:10} - \reffig{thermo:04_cvb_thermo:128:10}
+and summarized numerically in \reftab{screen} (entries 11-15).
+Illustrative results for $K=8,32$ or 128 (entries 11, 13 and 15)
+are also shown in \reffigs{lam} and \reff{dynamics}, and discussed in details below.
+
+The time series and probability distributions of 
+ $\Lamb$ for these three simulations
+are displayed in \reffig{lam:caplam}.
+%
+For $K=8$ replicas (left panel), $\Lambda$ covers the entire range
+$[0,2\pi)$, but presents 8 regularly spaced probability peaks
+at integer multiples of $2\pi/8$. This corresponds
+to CB configurations where 
+two of the replicas are at the physical end-states $\lam=0$ and $\lam=1$,
+the six others being by pairs at $\lam=0.25$, $0.5$ and $0.75$.
+%
+\radd{The occurrence of such probability peaks} is not surprising considering the shape of the free-energy profile
+(\reffig{ti:dhdl}). This profile presents minima at $\lam=0$ and $\lam=1$, the former one being
+the fully interacting methanol state, which is particularly favored.
+%
+This significant inhomogeneity in the sampling of $\Lamb$ correlates with a 
+stepwise (hopping) dynamics in the $\Lambda$ time series.
+
+In contrast, for $K=128$ replicas (right panel), $\Lambda$ only spans a limited 
+subrange of the interval $[0,2\pi)$ and no longer presents regularly 
+spaced probability peaks.
+%
+%At full convergence, 
+\radd{For longer simulations},
+one would
+expect the \radd{probability} curve to also cover the entire $[0,2\pi)$ range 
+and present regularly spaced peaks 
+at integer multiples of $2\pi/128$,
+but these would be of much smaller magnitudes compared to the $K=8$ case.
+%
+For $K=128$, the effect of 
+\radd{these residual variations}
+%this residual inhomogeneity 
+becomes almost negligible, {\em i.e.} there is essentially 
+no driving force on the $\Lambda$ variable. As a result, instead of a 
+hopping dynamics, the $\Lambda$ variable now follows
+a purely diffusive (random-walk) trajectory.
+%
+
+
+The situation for $K=32$ replicas (middle panel) is intermediate.
+The $[0,2\pi)$ range is fully covered, but the distribution is 
+irregular, presenting some small indentations at $2\pi / 32$ spacing.
+%
+
+The reduction of the coverage and homogeneity in terms of $\Lamb$
+over the interval $[0,2\pi)$ when going from $K=8$ to 32, and then to 128,
+is not due to a progressively slower (hopping {\em vs.} diffusive)
+dynamics, but simply to the different time spans of the simulations
+(32, 8 and 2 ns, respectively), imposed by the constant total single-system sampling 
+time \radd{of $256\unit{ns}$} in the present simulations. 
+%
+This can be seen in \reffig{dynamics}.
+
+
+\begin{figure}
+    \centering
+    \subgraph{fig:lam:caplam}{caplambda_ts_hist_ene_ana.pgf}{.99}\\[-1em]
+    \subgraph{fig:lam:tildelam}{tildelambda_ts_hist_ene_ana.pgf}{.99}\\[-1em]
+    \subgraph{fig:lam:smalllam}{lambda_ts_hist_ene_ana.pgf}{.99}\\
+    \caption{\footnotesize\captitital{Time series and probability distributions of the relevant variables
+             in unbiased CBTI simulations of the aqueous methanol-to-dummy mutation
+             at 298.15 K and 1 bar with the 2016H66 force field.}
+%
+           \revphil{This figure compares the dynamics and distributions of the 
+                    CB variables $\Lambda$ (a), $\tilde{\Lambda}$ (b) and $\lambda$ (c)
+                    in CBTI simulations with $K=8$ (left), $32$ (middle) or $128$ (right) replicas
+                    (based on simulations with a total single-system sampling time of 256 ns).
+           }
+%
+%             The left, middle and right graphs correspond to simulations 
+%
+             Panel (a) shows the time series $\Lamb(t)$ and probability distribution $P(\Lamb)$
+                       of the CB advance variable $\Lamb$.
+%
+             Panel (b) shows the time series $\tilde{\Lamb}(t)$ and probability distribution $\tilde{P}(\tilde{\Lamb})$
+                       of the CB fractional advance variable $\tilde{\Lamb}$ (\refeq{tilde_lamb_def}).
+%
+             Panel (c) shows the time series $\lam(t)$ and probability distribution $p(\lambda)$
+                       of the coupling variable $\lambda$ for all replicas (\refeq{proba_of_lam}).
+%
+               In Panel (c), the time series is shown as a blue curve for one reference 
+                       replica $k=0$, and as individual colored points at $0.5\unit{ns}$ interval
+                       for the $K-1$ other replicas, \radd{and the probability distribution 
+             $p(\lambda)$ is calculated considering all replicas according to \refeq{proba_of_lam}}. 
+%
+               All probability distributions are normalized to one.
+%
+     \radd{The CBTI simulations relied on $m_\Lamb=40 K^{1/2}\,\mathrm{u}\,\mathrm{nm}^2$ and $\tau_{\Lamb}=0.5\,\mathrm{ps}$ (no biasing potential).}
+%
+            See also \reftab{screen} entries 11, 13 and 15 for relevant numerical results. 
+            Corresponding graphs also including $K=16$ and 64 can be found 
+            in \reffigs{thermo:04_cvb_thermo:008:10} - \reffign{thermo:04_cvb_thermo:128:10}.
+%
+   }
+\label{fig:lam}
+\end{figure}
+
+
+
+
+
+
+%
+\reffig{dynamics:vel} shows the time series and probability distribution of $\dot{\Lamb}$, the velocity associated with the $\Lamb$-variable.
+\radd{The 
+%expected 
+Maxwell-Boltzmann} distribution of \refeq{ana_vel} is also displayed for comparison.
+The observed width $\sigma_{\dot{\Lamb}}$ of the distribution is reported numerically in \reftab{screen}. 
+As expected from \refeq{ana_vel}, it is \radd{proportional to $m_{\Lamb}^{-1/2}$}  which, 
+in the present simulations, was itself made proportional to $K^{1/2}$ \revphil{(an arbitrary parameter
+choice justified in \refsec{othersim})}. Thus, the average magnitude of $\dot{\Lamb}$ decreases somewhat when going from $K=8$ to 32, and then to 128 (scaling \radd{factor $2^{-1/2} \approx 0.7$} each time).
+\reffig{acf} shows the \radd{normalized} autocorrelation functions $c_{\dot{\Lambda}}$ of $\dot{\Lambda}$ for different $m_{\Lamb}$ in the absence of thermostat coupling (entries 1-5 of \reftab{screen}). 
+The corresponding correlation times $\tau_{\dot{\Lambda}}$ are reported numerically in \reftab{screen}. Here, one observes that the correlation time 
+increases with \radd{$m_{\Lamb}$} as a result of the higher inertia of the CB.
+In addition, for the two lowest values \radd{of $m_{\Lamb}$}, the initial decay of $c_{\dot{\Lamb}}$ to negative values suggests that the velocities are frequently reversed at short time, when barriers cannot be crossed.
+\radd{Note, however, that this connection between $m_{\Lamb}$ and $\tau_{\dot{\Lambda}}$
+is} somewhat altered by the thermostat coupling in the other simulations (including those of entries 11-15 in \reftab{screen}).
+%
+\begin{figure}
+    \centering
+    \begin{minipage}[t]{2.2in}
+        \hfill \\
+    \input{\path/plt/autocorr_vel_ene_ana.pgf}%
+  \end{minipage}%
+    \begin{minipage}[t]{1.2in}
+        \hfill \\
+        \input{\path/plt/autocorr_vel_legend.pgf}
+  \end{minipage}\\
+
+    \caption{\footnotesize \captitital{\radd{Velocity autocorrelation} functions of the CB advance variable in unbiased CBTI
+      simulations of the aqueous methanol-to-dummy mutation at $298.15\unit{K}$
+      and $1\unit{bar}$ with the 2016H66 force field.}
+      %
+           \revphil{This figure shows the increase in the autocorrelation time
+                    of the CB velocity upon increasing the 
+                    mass parameter in CBTI simulations with $K=16$ replicas
+                    and no thermostat coupling.
+                   }
+%
+      The normalized autocorrelation function \radd{$c_{\dot{\Lambda}}$} of the velocity $\dot{\Lambda}$
+      is shown for different values of the mass-parameter $m_{\lambda}$, \radd{in the absence of}
+      thermostating of the $\Lambda$-variable ($\tau_{\Lambda}\rightarrow \infty$).
+%
+      See also \reftab{screen} entries 1-5 for relevant numerical results, including
+      the corresponding autocorrelation times $\tau_{\dot{\Lamb}}$.
+%
+      Corresponding graphs for all simulations listed in \reftab{screen} are shown 
+      in \reffigs{thermo:03_cvb_screen:016:1_0.01} - \reffign{thermo:04_cvb_thermo:128:10}
+   }
+\label{fig:acf}
+\end{figure}
+
+%
+\revphil{Because the two above trends act in opposite directions,
+the actual rate of diffusion along $\Lamb$ is not very different in the three simulations.}
+%
+\revphildel{[-- Redundant sentence removed --]}
+
+
+
+\radd{This is seen in \reffig{dynamics:dif}}, which shows the mean-square displacement \radd{$d_{\Lambda}$}
+of $\Lamb$ as a function of time. The curves are
+essentially linear, as expected from the Einstein model (\refeq{einstein}). 
+The corresponding diffusion constants $D_{\Lamb}$ are reported in \reftab{screen}, namely 
+$4.4$, $6.2$ and $2.3\unit{ns^{-1}}$ 
+for $K=8$, 32 and 128 replicas, respectively, \ie{} not dramatically different.
+A similar observation holds for the probability distribution of $\ddot{\Lambda}$, the acceleration associated with the $\Lamb$-variable, shown in \reffig{dynamics:acc}.
+%As discussed in Appendix B, 
+The choice of taking $m_{\Lambda}$ proportional to $K^{1/2}$ 
+was made here precisely to achieve a CB acceleration that is essentially independent of $K$ \radd{(see discussion in \refsec{quad})}.
+
+\begin{figure}
+    \centering
+    \subgraph{fig:dynamics:vel}{vel_ts_hist_ene_ana.pgf}{.99}\\[-1em]
+    \subgraph{fig:dynamics:acc}{acc_ts_hist_ene_ana.pgf}{.99}\\[-1em]
+    \subgraph{fig:dynamics:dif}{diffusion_ene_ana.pgf}{.99}
+    \caption{\footnotesize
+    \captitital{Dynamical properties of the CB advance variable in unbiased CBTI calculations of
+      the aqueous methanol-to-dummy mutation at 298.15 K and 1 bar with the 2016H66 force field.}
+           \revphil{This figure compares the dynamics and distributions of the 
+                    CB variables $\dot{\Lambda}$ (a) and $\ddot{\Lambda}$ (b), as well as the 
+                    mean-square displacement $d_{\Lambda}$ along $\Lambda$ (c),
+                    in CBTI simulations with $K=8$ (left), $32$ (middle) or $128$ (right) replicas
+                    (based on simulations with a total single-system sampling time of 256 ns).
+           }
+%
+%
+%             The left, middle and right graphs correspond to simulations 
+%             with $K=8$, $32$ or $128$ replicas, respectively.
+%
+             Panel (\subref{fig:dynamics:vel}) shows the time series $\dot{\Lamb}(t)$ and probability distribution $P_{\dot{\Lamb}}(\dot{\Lamb})$
+                       of the velocity associated with the CB advance variable $\Lamb$.
+%
+             Panel (\subref{fig:dynamics:acc}) shows the time series $\ddot{\Lamb}(t)$ and probability 
+                       distribution $P_{\ddot{\Lamb}}(\ddot{\Lamb})$ of the corresponding acceleration.
+                       % As can be seen the distribution of $P_{\ddot{\Lamb}}(\ddot{\Lamb})$ is 
+%roughly the same independent of $K$ due to scaling of $m_{\Lamb} \propto M^{1/2}$.
+             Panel (\subref{fig:dynamics:dif}) shows the mean-square displacement 
+             $d_{\Lamb}(t)$ of $\Lamb$ (\refeq{einstein}).
+%
+             In Panel (\subref{fig:dynamics:vel}), the probability distribution from the simulation (blue curve) is shown 
+together with the
+             analytical Maxwell-Boltzmann distribution $P^{\mathrm{MB}}_{\dot{\Lamb}}(\dot{\Lamb})$ of \refeq{ana_vel} (orange curve).
+             %
+             In Panel (\subref{fig:dynamics:dif}), the mean-square displacement $d_{\Lamb}$ from the simulation (blue curve)
+             is shown along with a linear least-squares fit over the interval 0 - $0.15\unit{ns}$ (brown dashed line).
+             %
+            All probability distributions are normalized to one. 
+%
+     \radd{The CBTI simulations relied on $m_\Lamb=40 K^{1/2}\,\mathrm{u}\,\mathrm{nm}^2$ and $\tau_{\Lamb}=0.5\,\mathrm{ps}$ (no biasing potential).}
+%            The CBTI simulations were performed using $m_{\Lamb}=40 M^{1/2}\,\mathrm{u}\,\mathrm{nm}^2$,            $\tau_{\Lamb}=0.5\,\mathrm{ps}$ and no biasing potential.
+          See also \reftab{screen},
+            entries 11, 13 and 15 for relevant numerical results. 
+            Corresponding graphs also including $K=16$ and 64 can be found in 
+            \reffigs{thermo:04_cvb_thermo:008:10} - \reffign{thermo:04_cvb_thermo:128:10}.
+%
+   }
+\label{fig:dynamics}
+\end{figure}
+
+%
+The evolution of $D_{\Lamb}$ with $K$ is clearly non-monotonic (see values for entries 11-15 in \reftab{screen}), 
+which results in large part from the two opposite effects mentioned above
+\radd{concerning the effect of $m_{\Lamb}$ on $\sigma_{\dot{\Lamb}}$ and $\tau_{\dot{\Lambda}}$.}
+%
+\revphil{On the one hand, $\sigma_{\dot{\Lamb}}$ ({\em i.e.} the average magnitude of the CB velocity)
+decreases upon increasing $m_{\Lamb}$,
+%(made here proportional to $K^{1/2}$), 
+and the dynamics along the $\Lamb$-variable becomes intrinsically slower.
+%
+On the other hand, $\tau_{\dot{\Lambda}}$ ({\em i.e.} the dynamical inertia of the CB)
+increases upon increasing $m_{\Lamb}$,
+and the ability to cross residual barriers in the $G_{\Lamb}(\Lamb)$ free-energy profile is enhanced.
+}
+%
+The magnitude of these barriers itself decreases upon increasing $K$. 
+In addition, inertia along $\Lamb$ is also affected by the thermostat coupling. 
+The combination of these effects is complex and the resulting trends in $D_{\Lamb}$ 
+upon varying $K$ would be difficult to rationalize in details. 
+Most importantly, however, they appear not to be extremely pronounced. 
+
+
+The time series and probability distributions
+of the CB fractional advance variable $\tilde{\Lamb}$ are shown in 
+\reffig{lam:tildelam}.
+% for the same three simulations.
+%
+In contrast to the distributions of $\Lamb$ over the range $[0,2\pi)$ \radd{(\reffig{lam:caplam})}, the distributions of $\tilde{\Lamb}$
+over the range $[0,\Delta \Lamb)$ are converged and cover the entire range, also for $K=128$. 
+%
+    For $K=8$, the distribution of $\tilde{\Lamb}$ is significantly biased towards 0 and $2\pi/8$,
+    \ie{} CB configurations with two of the replicas at the physical end-states.
+    For $K=32$, it is still somewhat biased towards 0 and $2\pi/32$, which corresponds to the same
+    situation.
+    And for $K=128$, the probability distribution becomes very close to homogeneous.
+%
+
+
+Finally, the time series and probability distributions
+of the coupling variable $\lambda$ are shown in \reffig{lam:smalllam} for all replicas.
+%in the same three simulations.
+%
+The time series is shown for one reference replica $k=0$ (blue curve) as well as 
+ the other replicas $k=1\,...\,K-1$ (individual colored points at 0.5\unit{ns} interval).
+%
+Compared to the reference replica, these representative points are merely 
+\radd{shifted by $2K^{-1}k$}, refolded by periodicity into the range $[0,2)$, 
+and \radd{the points in the range $[1,2)$ mirrored into the range $[0,1]$} 
+\radd{according to \refeqs{cb_lam_of_big_lam}-\refeqn{zigzag_fct}}.
+%
+The probability distribution $p(\lambda)$ is calculated 
+according to \refeq{proba_of_lam}, {\em i.e.} considering all replicas.
+%
+Although the $\Lamb$-space \radd{in the range $[0,2\pi)$} is \radd{sampled only partially given the simulation lengths} (\reffig{lam:caplam}), 
+the $\lam$-space in the range $[0,1]$ (\reffig{lam:smalllam}), just like the $\tilde{\Lamb}$-space
+in the range $[0,\Delta \Lamb)$ (\reffig{lam:tildelam}), is completely sampled in all cases.
+%
+However, for $K=8$, the barriers are still too high
+and the sampling is considerably biased towards
+$\lambda$-values that are integer multiples of $1/4$.
+The corresponding bias towards integer multiples of $1/16$ 
+is far less pronounced for $K=32$, and the simulation
+with $K=128$ is very close to a homogeneous sampling
+of $\lam$.
+
+
+In summary, the sampling of $\Lamb$ only needs to cover 
+a $\Delta \Lamb$ range to ensure the sampling 
+of all possible 
+$\tilde{\Lamb}$-values
+by the CB
+and thus,
+of all possible $\lam$-values
+by at least one replica.
+%
+However, the homogeneity of the sampling
+in $\lam$ depends crucially
+on $K$, quasi-homogeneous sampling requiring 
+a large number of replicas.
+%
+
+%
+This can be seen in \reffig{deltag},
+which shows in a logarithmic form the height $G^\star_{\Lamb}$ of the peaks
+ in $G_{\Lamb}(\Lamb)$ as a function
+of the number $K$ of replicas (see also \reffig{gprof} for the individual curves).
+%
+The dependency is approximately linear with a slope
+of minus one, suggesting that $G^\star_{\Lamb}$
+scales as $K^{-1}$. Such a scaling is expected based on the considerations
+made in \refsec{quad}. Note that the proportionality constant depends on the derivatives of $G(\lam)$
+at the two physical end-states. \radd{In a situation where these derivatives vanished,
+a scaling as $K^{-2}$ would be expected instead}.
+%
+
+\begin{figure}
+    \centering
+    \input{\path/plt/deltag_ene_ana.pgf}
+    \caption{\footnotesize
+    \captitital{Height $G^\star_{\Lamb}$ of the residual barriers in the 
+      free-energy profile $G_{\Lamb}(\Lamb)$ for unbiased CBTI
+      simulations of the aqueous methanol-to-dummy mutation at $298.15\unit{K}$
+      and $1\unit{bar}$ with the 2016H66 force field.}
+%
+           \revphil{This figure shows the progressive decrease in the height of the 
+                    barriers along $\Lambda$
+                    upon increasing the number $K$ of replicas in a CBTI simulation.
+                   }
+%
+      The data is represented in logarithmic form and a linear line of slope $-1$ is fitted to the filled 
+      circles (intercept $1.75$ \radd{at $\log_{10}(K)=0$}). The open circle was omitted 
+      from the fit because  $G^\star_{\Lamb}$ cannot be determined sufficiently accurately (\radd{within the} noise).
+      %
+      The simulations considered rely on $K=8,16,32,64$ or $128$ replicas,
+      \radd{along with $m_\Lamb=40 K^{1/2}\,\mathrm{u}\,\mathrm{nm}^2$ and $\tau_{\Lamb}=0.5\,\mathrm{ps}$ (no biasing potential).}
+%
+      The corresponding free-energy profiles $G_{\tilde{\Lamb}}(\tilde{\Lamb})$ are shown graphically in \reffig{gprof}.
+   }
+\label{fig:deltag}
+\end{figure}
+
+%------------------------------------------------------------
+\subsection{CBTI with Biasing Potential}
+%------------------------------------------------------------
+
+As seen above, simulations employing only few replicas may still be affected by a
+significant sampling inhomogeneity along $\lam$ due to high residual barriers along $\Lamb$.
+To prevent the undersampling of specific $\lam$-ranges in this case,
+a memory-based biasing potential can be employed. This renders the CBTI 
+method more robust since it becomes insensitive to the chosen number of replicas,
+and more compatible with possible constraints related to \eg{} the number of cores in a specific computing 
+node during the calculation.
+%
+As discussed in the Theory section, it is sufficient to define such a biasing potential 
+over a $[0,\Delta \Lamb / 2]$ range of $\tilde{\Lamb}$,
+and its magnitude is limited by the already largely homogeneous sampling of $\tilde{\Lamb}$.
+These features speed up the build-up procedure drastically, leading to a comparatively small
+ simulation time for the LE build-up phase relative to single-system $\lam$-LEUS.
+
+
+\reffig{leus} illustrates the sampling in \radd{a biased 
+compared to that in the unbiased CBTI simulation with
+$K=8$ replicas}.
+%
+%\revdavid{[DELETE (already in methods): 
+\radd{The biasing relied on $34$ 
+%equispaced 
+basis functions 
+over half the $\tilde{\Lamb}$-range $[0,\pi/4]$ 
+(17 free coefficients) 
+and a build-up phase of $0.15~\mathrm{ns}$ 
+(\ie{} only $1.2\,\mathrm{ns}$ total single-system build-up time).
+During this time, the replica system performed three double sweeps over all grid-points,
+leading to a biasing potential  
+with an energetic resolution of $10^{-6}\,\mathrm{kJ\,mol^{-1}}$ (\reffigs{leus:tildebias} and \reff{leus:bias}).
+}
+
+The $\Lamb$-sampling in the biased CBTI simulation is 
+much closer to uniform compared to that in the unbiased 
+one
+%simulation 
+(\reffig{leus:lhist} \textit{vs.} \reff{leus:lhistleus}),
+\ie{} the relative probabilities between most and least sampled $\Lamb$-values has been reduced
+from 70 to 4.6. 
+The time series of $\lam$ and the sampling distribution $p(\lam)$ show that the 
+motion of the conveyor belt was hindered in the unbiased simulation,
+which it is no longer the case in the biased one (\reffig{leus:llhist} 
+\textit{vs.} \reff{leus:llhistleus}).
+
+Alternative  build-up protocols were also
+explored for $K=8$ and $K=16$, differing in the number $N_{\mathrm{gp}}$ of grid points,
+in the duration $t_{\mathrm{LE}}$ of the build-up phase, and in the build-up parameters
+$c_{\mathrm{LE}}$ and $f_{\mathrm{red}}$. The corresponding results are shown graphically in \reffigs{leus:8} and \reffign{leus:16} and summarized numerically
+in \reftab{leus}. All the tested protocols reduce the sampling inhomogeneity to an acceptable level,
+although residual inhomogeneities are difficult to remove entirely. Compared to the TI results
+with a sufficient number of $\lam$-points (\reftab{repeats}, entries with $K_{\mathrm{TI}}\geq 33$) and the unbiased
+CBTI results with a sufficient
+% high
+number of replicas (\reftab{screen}, entries 12-15 with $K\geq 16$), the biased
+CBTI results with $K=8$ or 16 (entries 16 and 17 in \reftab{screen}) 
+deliver similar $\Delta G$ values and error bars, provided that 
+an appropriate
+%a 
+%sufficiently thorough 
+build-up protocol is employed. 
+
+\begin{figure}
+  \centering
+  \subgraph{fig:leus:tildebias}{tildememory_ene_ana.pgf}{0.4}
+  \subgraph{fig:leus:bias}{memory_ene_ana.pgf}{0.4}\\[-1.2em]%
+  \subgraph{fig:leus:lhist}{lambda_hist_ene_ana.pgf}{0.4}%
+  \subgraph{fig:leus:lhistleus}{lambda_leus_hist_ene_ana.pgf}{0.4}\\[-1.2em]
+  \subgraph{fig:leus:llhist}{lambda_ts_hist_008_ene_ana.pgf}{0.4}%
+  \subgraph{fig:leus:llhistleus}{lambda_ts_hist_008_leus_ene_ana.pgf}{0.4}\\[-1.2em]
+  \caption{\footnotesize
+    \captitital{Biasing potential and simulation results from
+             unbiased {\em vs.} biased CBTI calculations of the aqueous methanol-to-dummy mutation
+             at 298.15 K and 1 bar with the 2016H66 force field.}
+%
+           \revphil{This figure illustrates how the use of a biasing potential 
+                    permits to drastically reduce the sampling inhomogeneity of 
+                    CBTI simulations performed with a small number of replicas
+                    (here, $K=8$ replicas).
+}
+%
+%
+             Panels (\subref{fig:leus:tildebias}) and (\subref{fig:leus:bias}) show the biasing potential
+             along the $\tilde{\Lambda}$- and $\Lambda$-ranges, respectively.
+%
+             Panels (\subref{fig:leus:lhist}) and (\subref{fig:leus:lhistleus}) show the
+             probability distribution $P(\Lamb)$ of the CB advance variable $\Lamb$
+             in the unbiased and biased simulation, respectively.
+%
+             Panels (\subref{fig:leus:llhist}) and (\subref{fig:leus:llhistleus}) show
+             the time series $\lam(t)$ and probability distribution $p(\lambda)$
+             of the coupling variable $\lambda$ for all replicas
+             in the unbiased and biased simulation, respectively.
+%
+             In Panel (\subref{fig:leus:tildebias}), the symmetric biasing potential (blue curve) is represented
+             using 34 basis functions (curves of different colors) involving 17 free coefficients.
+%
+             In Panels (\subref{fig:leus:llhist}) and (\subref{fig:leus:llhistleus}), the time series is shown as a blue curve for one reference 
+             replica $k=0$, and as single colored points at $0.5\unit{ns}$ spacing 
+             for the $K-1$ other replicas, and the probability distribution 
+             $p(\lambda)$ is calculated considering all replicas according to \refeq{proba_of_lam}.
+%
+            All probability distributions are normalized to one. 
+%
+            The CBTI simulations were performed with or without biasing potential,
+            using $m_{\Lamb}=113\,\mathrm{u}\,\mathrm{nm}^2$ and $\tau_{\Lamb}=0.5\,\mathrm{ps}$.
+%
+            For the biased simulation, the biasing potential was constructed in a build-up phase
+            of $0.15\unit{ns}$ duration.
+%
+            Results for biased simulations with $K=16$ and alternative build-up protocols are shown
+            in \reffig{leus:8} and \reffig{leus:16}, the numerical results being
+            reported in \reftab{leus}.
+      }
+\label{fig:leus}
+\end{figure}
+
+
+
+
+%------------------------------------------------------------
+\subsection{CBTI Free-Energy Estimator} 
+%------------------------------------------------------------
+
+
+
+
+
+The calculation of free-energy differences from CBTI simulations according to
+\refeq{cbti_formula} relies on the choice of a number $J$ of bins. This number can be taken very large, thereby
+reducing the (rectangular) quadrature error to an essentially negligible amount,
+but should not exceed a threshold $J_{\mathrm{max}}$ where empty bins occur. 
+The influence of $J$ is illustrated in \reffig{dhdl}, which shows the average 
+Hamiltonian derivative curve obtained from the
+%\radd{$3.125\unit{ns}$ of the} 
+unbiased CBTI simulation with $K=32$ replicas (entry 13 in \reftab{screen}, \radd{restricted to 
+total 100 ns single-system sampling time})
+for $J=10$ (\reffig{dhdl:10}), $J=500$ (\reffig{dhdl:500}) and $J=5000$ (\reffig{dhdl:5000}).
+%
+A too low number of bins (\eg{} $J=10$) will lead to \radd{an insufficient number of integration points,
+thereby increasing the quadrature error}. 
+%
+A too high number of bins will lead to insufficient sampling of each bin, thereby
+increasing the statistical error. The optimal value of $J$ will depend on the
+%\revdavid{[DELETE: number of $\lam$-values sampled] 
+total sampling time and on the degree of homogeneity of the sampling
+along $\lam$.
+
+\begin{figure}
+    \centering
+    \subgraph{fig:dhdl:10}{dhdl_0_ene_ana.pgf}{0.32}%
+    \subgraph{fig:dhdl:500}{dhdl_1_ene_ana.pgf}{0.32}%
+    \subgraph{fig:dhdl:5000}{dhdl_2_ene_ana.pgf}{0.32}\\
+    \subgraph{fig:conv:bins}{conv_bins_ene_ana.pgf}{.5}\hfill\\
+    \caption{\footnotesize
+    \captitital{Influence of the number of bins used in the free-energy estimator for 
+      CBTI simulations of the aqueous methanol-to-dummy 
+      mutation at $298.15\unit{K}$ and $1\unit{bar}$ with the 2016H66 force field.}
+      %
+           \revphil{This figure illustrates how the number $J$ of bins employed in the estimator affects
+                   the quadrature and sampling quality (top)
+                   and the resulting estimated $\Delta G$ (bottom).
+}
+%
+%, a mass-parameter $m_{\Lamb}=226\,\mathrm{u\,nm^2}$ and a coupling time $\tau_{\Lamb}=0.5\unit{ps}$.
+      %
+      Panels (\subref{fig:dhdl:10}), (\subref{fig:dhdl:500}) and (\subref{fig:dhdl:5000})
+      show the \radd{average} Hamiltonian derivative curve constructed with different numbers $J$ of bins,
+      \radd{namely $J=10$ (\subref{fig:dhdl:10}), 100 (\subref{fig:dhdl:500}) or 5000 (\subref{fig:dhdl:5000})}.
+%
+      The curves are based on the
+%$3.125\unit{ns}$ 
+  CBTI simulation \radd{using $K=32$ replicas} (entry 13 in \reftab{screen}).
+%
+      Panel (\subref{fig:conv:bins}) shows the $\Delta G$ estimate from \refeq{cbti_formula} 
+      \radd{for CBTI simulations with $K=8$, 16, 32, 64 or 128 replicas (the two former either unbiased or biased; entries 11-17 in \reftab{screen})}
+      as a function of $J$ from 1 to $J_{\mathrm{max}}$, where $J_{\mathrm{max}}$ corresponds to 
+      the first occurence of empty bins. 
+      %
+\radd{All CBTI simulations were performed 
+            using $m_{\Lamb}=40K^{1/2}\,\mathrm{u}\,\mathrm{nm}^2$ and $\tau_{\Lamb}=0.5\,\mathrm{ps}$,
+            and their analysis is restricted here to 100 ns total single-system sampling time}.
+%
+%            The CBTI simulations were performed with or without biasing potential,
+%            using $m_{\Lamb}=113\,\mathrm{u}\,\mathrm{nm}^2$ and $\tau_{\Lamb}=0.5\,\mathrm{ps}$.
+%
+%%%      \radd{All the results are based on CBTI simulations of 100 ns total single-system sampling time.}
+    }
+\label{fig:dhdl}
+\end{figure}
+
+
+\radd{To investigate the influence of $J$ on the calculated $\Delta G$,
+this number was systematically increased from 1 to $J_{\mathrm{max}}$ in increments ranging 
+from 10 to 1000.
+%
+The results are shown in \reffig{conv:bins}},
+% shows the dependence of the calculated $\Delta G$ value on $J$ from 1 to $J_{\mathrm{max}}$
+considering the unbiased CBTI simulations with $K=8,16,32,64$ or 128 
+(entries 11-15 in \reftab{screen}, \radd{restricted to $100\unit{ns}$ total single-system sampling time})
+as well as the biased CBTI simulations with $K=8$ or 16 (entries 16 and 17 in \reftab{screen}, same restriction). 
+%
+For the unbiased simulation with $K=8$ (blue curve), the convergence of $\Delta G$ upon increasing $J$
+is irregular and the value of $J_{\mathrm{max}}$ is comparatively low (about 600),
+due to the inhomogeneous sampling along $\lam$. All other curves present qualitatively similar convergence
+features. For a low $J$ ($J<100$), the quadrature error leads to strong variations.
+For intermediate $J$ ($100\leq J \leq 3000$), the curve presents a plateau, \ie{} 
+the $\Delta G$ estimate becomes insensitive to changes in $J$.
+For larger $J$ ($3000< J \leq J_{\mathrm{max}}$, where $J_{\mathrm{max}}$ ranges from about 5000 to 8000)
+the curves become somewhat noisy again due to undersampled bins.
+%
+These results suggest that, as a rule of thumb, the value of $J$ for the application 
+of \refeq{cbti_formula} should be selected between at least about 100 and at most about $J_{\mathrm{max}}/2$.
+For most of the $\Delta G$ results presented in this chapter, \radd{a default value 
+%of 
+$J=500$  was selected
+as
+leading to a reasonably smooth Hamiltonian derivative curve (\reffig{dhdl:500}) while keeping the quadrature error negligible
+(except for the 
+%unbiased 
+CBTI simulation
+with $K=8$,
+where $J=200$ was used).
+}
+%
+\revphil{The results for the variants $\Delta G_{\mathrm{alt}}$ and $\Delta G_{\mathrm{app}}$ to
+$\Delta G$ from \refeq{cbti_formula} which do not require the specification of a number 
+of bins (\refeqs{cbti_formula_app1} and \refeqn{cbti_formula_average})
+are also included in \reftab{screen} for comparison. They are discussed in \refsec{CH2C}.}
+%
+\revphildel{[-- Variants moved to Appendix C --]}
+%%
+%\revphil{The estimates} $\Delta G_{\mathrm{alt}}$ and $\Delta G_{\mathrm{app}}$ were also calculated \revphil{for comparison},
+%using \refeqs{cbti_formula_app1} and \refeqn{cbti_formula_average} \revphil{of Appendix C}.
+%%The latter one is only expected to be accurate for quasi-homogeneous sampling of the $\lam$-range. 
+%%
+
+
+%------------------------------------------------------------
+\subsection{CBTI Convergence Properties}
+%------------------------------------------------------------
+
+The convergence properties of TI and CBTI are compared in \reffigs{ti:conv:repeat} and \reff{cbti:conv},
+which shows the $\Delta G$ values calculated from ten simulation 
+repeats (individual dashed curves) along with the corresponding
+mean and error \radd{(95\% confidence interval)} on the mean (thick blue curve and shaded area) 
+as a function of the total single-system sampling time per repeat.
+%
+The simulation protocols compared are TI with $K_{TI}=$129 $\lambda$-points 
+(\reffig{ti:conv:repeat}, which is identical to \reffig{ti:conv}) 
+and unbiased CBTI with $K=16$ (\reffig{cbti:conv}).
+%
+Note that in the latter case, the curves do not start at time zero
+because the application of \refeq{cbti_formula} with $J=500$ to estimate 
+$\Delta G$ only becomes possible when $J_{\mathrm{max}}$ exceeds $500$
+({\em i.e.} each of the 500 bins encompasses at least
+one sampled $\lambda$-value).
+%
+The \radd{mean $\Delta G$ values over the repeats} and the associated error bars at full
+single-system sampling time ($100\unit{ns}$ per repeat) are 
+reported in \reftab{repeats} (last two columns;
+see also \reftab{ti} and \reftab{cvbseed} for the results
+of the individual repeats).
+%
+
+\begin{figure}
+  \centering
+  \begin{minipage}{1.67in}
+  \subgraph{fig:ti:conv:repeat}{conv_mad_129_wide_ene_ana.pgf}{1.0}\\
+  \subgraph{fig:cbti:conv}{conv_mad_cvb_ene_ana.pgf}{1.0}
+  \end{minipage}%
+  \begin{minipage}{2.86in}
+  \subgraph{fig:comp:conv}{conv_datapts_ene_ana.pgf}{.585}%
+  \begin{minipage}[t]{1.14in}
+  \centering
+  \hfill \\
+  \scalebox{0.71}{\input{\path/plt/conv_datapts_legend.pgf}}
+  \end{minipage}\\
+  \subgraph{fig:comp:errors}{conv_errors_datapts_ene_ana.pgf}{.585}%
+  \begin{minipage}[t]{1.14in}
+  \centering
+  \hfill \\
+  \scalebox{0.71}{\input{\path/plt/conv_errors_datapts_legend.pgf}}
+  \end{minipage}
+  \end{minipage}
+  \caption{\footnotesize \captitital{Convergence properties of the CBTI calculations compared to other methods 
+    for the aqueous methanol-to-dummy 
+    mutation at $298.15\unit{K}$ and $1\unit{bar}$ with the 2016H66 force field.}
+    %
+           \revphil{This figure compares the convergence properties 
+           of the calculated free-energy change $\Delta G$
+           considering TI (a) {\em vs.} CBTI (b) based on ten repeats
+           of calculations involving 100 ns total single-system sampling time,
+           or considering CBTI (biased or unbiased) {\em vs.} TI, HRE, TI/EXTI and TI/MBAR
+           in terms of estimated $\Delta G$ (c) and error (d)
+           based on one calculation involving 100 ns total single-system sampling time.
+}
+%
+    Panel (\subref{fig:ti:conv:repeat}) is identical to \reffig{ti:conv}  and
+    shows the convergence of $\Delta G$ for TI calculations with $K_{\mathrm{TI}}=129$ $\lam$-points.
+%
+    Panel (\subref{fig:cbti:conv}) displays the corresponding
+      convergence of $\Delta G$ for unbiased CBTI calculations with $K=16$ replicas. 
+%
+    Panels (\subref{fig:ti:conv:repeat}) and (\subref{fig:cbti:conv})
+show the running $\Delta G$ estimates for each of the ten repeats (dashed curves)
+                     as a function of the total sampling time $t$ per repeat, 
+                     along with the corresponding mean and error on the mean \radd{(95\% confidence interval)} over the repeats 
+                     (thick blue curve and shaded area).
+%
+The final $\Delta G$ values for the individual 
+    repeats are reported in the \reftab{cvbseed},
+\radd{and the statistics over the repeats can be found in \reftab{repeats}}.
+%
+    Panel (\subref{fig:comp:conv}) compares convergence properties in terms of $\Delta G$  
+    based on single simulations.
+    %
+    Panel (\subref{fig:comp:errors}) displays the associated errors $\sigma_B$ calculated by bootstrapping \radd{(no Student $t$-factor included)}.
+    %
+\radd{ Panels (\subref{fig:comp:conv}) and (\subref{fig:comp:errors}) 
+consider 
+unbiased CBTI ($K=8, 32$ or 128),
+biased CBTI ($K=8$)
+HRE ($K_{\mathrm{HRE}}=65)$,
+along with TI with EXTI
+or MBAR estimators ($K_{\mathrm{TI}}=17$ and 129 virtual $\lambda$-points in both cases).
+}
+%
+    % 
+    The corresponding final $\Delta G$ estimates are reported in \revphil{\reftab{comp}}.
+    %
+    %% For TI (red), the convergence of 1 simulation using 129 equidistant $\lam$-points is shown. 
+    %% The Hamiltonian derivative at every $\lam$-point was integrated using Simpson's quadrature.
+    %% %
+    %% For HRE (dark green) employed $K=65$ replicas with exchange trials every 
+    %% $\tau_{\mathrm{HRE}}=0.2\,\mathrm{ps}$. The analysis was performed analogous to TI.
+    %% %
+    %% For EXTI (pink) and BAR (yellow), 17 equidistant $\lam$-points were simulated, but the 
+    %% Hamiltonian and Hamiltonian derivatives were evaluated at 129 equidistant $\lam$-points.
+    %% %
+    %% The corresponding values after $100\unit{ns}$ sampling are reported in \reftab{screen}.
+  }
+\label{fig:conv:pts}
+\end{figure}
+
+
+The comparison clearly evidences an enhanced convergence \radd{for CBTI at identical sampling time},
+both in terms of the running averages and of the final values.
+%
+These final values are $21.43\pm0.21\unit{kJ\,mol^{-1}}$ for TI, compared to $21.39\pm0.10\unit{kJ\,mol^{-1}}$ for CBTI,
+{\em i.e.} identical within error bars, but with \radd{an error reduced by about a factor two}
+for CBTI.
+%
+This improved convergence is likely due to the improved orthogonal sampling,
+{\em i.e.} the diffusion of the systems along $\lam$ permits to circumvent orthogonal
+barriers present at specific $\lam$-values.
+
+
+The same observation holds for the CBTI simulations involving different 
+numbers of replicas or/and a biasing potential. This is shown in \reffigs{comp:conv} and \reff{comp:errors}
+for $K=8$, 32 or 128 (unbiased) and for $K=8$ (biased). Here, a single simulation
+was performed (no repeats), and the running $\Delta G$ value (\reffig{comp:conv})
+is displayed along with the corresponding bootstrap error estimate
+(\reffig{comp:errors}; no Student $t$-factor included) as a function of the total single-system
+sampling time.
+%
+The $\Delta G$ estimates and bootstrap error bars 
+%\radd{(no Student $t$-factor included)} 
+at full single-system sampling time \radd{($100\unit{ns}$)} are 
+reported in \reftab{comp} (second and third columns).
+%
+Except for the unbiased CBTI simulation with $K=8$,
+where the sampling along $\lambda$ is still heterogeneous,
+all the CBTI protocols follow very similar error curves upon increasing
+the sampling time \radd{(\reffig{comp:errors})}, with final errors of $0.12-0.16\unit{kJ\,mol^{-1}}$.
+%
+In contrast, the convergence of TI is significantly slower,
+with corresponding final errors of $0.17-0.30\unit{kJ\,mol^{-1}}$ \radd{(fourth column in \reftab{comp})}.
+%
+
+
+\begin{table}
+  \caption{\footnotesize\captitital{Free-energy estimates from the CBTI calculations compared to other methods 
+    for the aqueous methanol-to-dummy mutation at $298.15\unit{K}$ and $1\unit{bar}$ with the 2016H66 force field.}
+    %
+  \revphil{This table compares the convergence properties 
+           of the calculated free-energy change $\Delta G$
+           considering CBTI (biased or unbiased), TI, HRE, EXTI and MBAR      
+           calculations with different numbers of replicas (all at a constant total single-system sampling time of 100 ns).
+  }
+%
+\radd{
+The CBTI calculations involved $K$ replicas, along with
+$m_{\Lamb}=40 K^{1/2}\,\mathrm{u}\,\mathrm{nm}^2$ and  $\tau_{\Lamb}=0.5\,\mathrm{ps}$ (with or without biasing potential).
+The TI calculations involved $K_{\mathrm{TI}}$ equispaced $\lam$-points.
+The HRE calculations involve $K_{\mathrm{HRE}}$ equispaced $\lam$-points, along with $\tau_{\mathrm{HRE}}=0.2\,\mathrm{ps}$.
+%
+For EXTI and MBAR, the calculations relied on $K_{\mathrm{TI}}$ equispaced real $\lambda$-points,
+and consideration of 129 equispaced virtual $\lam$-points.
+%
+      In all cases, the total single-system sampling time was $100\unit{ns}$.
+}
+%
+%    All calculations relied on $100\,\mathrm{ns}$ total single-system sampling time. 
+%    The protocols considered different numbers of replicas $K$, $K_{\mathrm{TI}}$ or $K_{\mathrm{HRE}}$.
+%    %
+    The corresponding convergence properties are illustrated graphically in \reffig{conv:pts}.
+%
+    Additional numerical results regarding the CBTI simulations are reported in \reftab{screen}, entries 11-15
+    (unbiased CBTI) and entries 16-17 (biased CBTI).
+    %
+%%     CBTI-LEUS simulations employed $m_{\Lamb}=113$ for $K=8$ and $m_{\Lamb}=160$ for $K=16$. A build-up force constant
+%% of $c_{\mathrm{LE}}=0.001\,\mathrm{kJ\,mol^{-1}}$ was used, which was multiplied with a factor $f_{\mathrm{red}}=0.1$ after every double sweep over the range $[0,\pi/M[$. 
+%% The total number of gridpoints used for the construction of the biasing potential were 264 ($K=8$) and 
+%% 272 ($K=16$) based on 17  ($K=8$) and 9 ($K=16$) coefficients.
+%% The biasing potential was allowed to build up during a simulation time of $t_{\mathrm{LE}}=150\,\mathrm{ps}$ 
+%% (\ie{} $1.2\,\mathrm{ns}$ total simulation time) for $K=8$ and $t_{\mathrm{LE}}=70\,\mathrm{ps}$ 
+%% (\ie{} $1.12\,\mathrm{ns}$ total simulation time) for $K=16$, during which the CB performed 3 double sweeps over the range $[0,\pi/M[$ 
+%% (both replica systems). 
+%% %
+%% For TI (first repeat of the 10 repeats), 129 equidistant $\lam$-points were simulated. The Hamiltonian
+%% derivative was integrated using Simpson quadrature rule considering 9, 17, 33, 65 and 129 equidistant points, 
+%% where the total simulation time of $100\unit{ns}$ was distributed equally over all considered points.
+%% %
+%% HRE (column 5) were run using  $K=17,33~\text{or}~65$ replicas with exchange trials every 
+%% $\tau_{\mathrm{HRE}}=0.2\,\mathrm{ps}$. The analysis was performed analogous to TI.
+%% %
+%% EXTI (column 6) relied on 9 or 17 simulated $\lam$-points, but the Hamiltoninan derivative was predicted at
+%%  129 equidistant $\lam$ points. The Hamiltonian derivative curve was integrated using trapezoidal quadrature.
+%% %
+%% Likewise, the MBAR (column 7) employs 9 or 17 simulated $\lam$-points, but the Hamiltoninan is predicted 
+%% for every configuration at 129 equidistant $\lam$ points. The energies of all $\lam$-points 
+%% are finally combined using the MBAR-formula to lead to the final free-energy.
+  }
+  \label{tab:comp}
+\begin{center}
+\resizebox{\textwidth}{!}{
+  \begin{tabular}{ccccccc}
+\hline
+& \multicolumn{6}{c}{$\Delta G\,[\mathrm{kJ\,mol^{-1}}]$}\\
+\hline
+ $K$, $K_{\mathrm{TI}}-1$ &              CBTI &          CBTI &               TI &              HRE &             EXTI &             MBAR  \\
+ or $K_{\mathrm{HRE}}-1$  &            (unbiased)   &          (biased) \\
+\hline
+\hline
+%   8 & 21.69 (0.40) & 21.48 (0.16) & 19.22 (0.18) &      -       & 21.24 (0.12) & 21.37 (0.14) \\
+%  16 & 21.42 (0.16) & 21.30 (0.13) & 21.87 (0.17) & 21.52 (0.16) & 21.12 (0.05) & 21.17 (0.14) \\
+%  32 & 21.44 (0.14) &         -    & 21.48 (0.20) & 21.39 (0.15) &       -      & -            \\
+%  64 & 21.32 (0.14) &         -    & 21.18 (0.24) & 21.47 (0.13) &       -      & -            \\
+% 128 & 21.43 (0.12) &         -    & 21.45 (0.30) &      -       &       -      & -            \\
+% UPD ON 12.11
+    8 & 21.69 (0.40) & 21.48 (0.16) & 19.22 (0.18) &      -       & 21.24 (0.37) & 21.37 (0.15) \\
+   16 & 21.42 (0.16) & 21.30 (0.13) & 21.87 (0.17) & 21.52 (0.16) & 21.12 (0.14) & 21.17 (0.13) \\
+   32 & 21.44 (0.14) &         -    & 21.48 (0.20) & 21.39 (0.15) &       -      & -            \\
+   64 & 21.32 (0.14) &         -    & 21.18 (0.24) & 21.47 (0.13) &       -      & -            \\
+  128 & 21.43 (0.12) &         -    & 21.45 (0.30) &      -       &       -      & -            \\
+%
+  \end{tabular}
+}
+\end{center}
+\end{table}
+
+%------------------------------------------------------------
+\subsection{Comparison of CBTI with other Methods}
+%------------------------------------------------------------
+
+
+The $\Delta G$ values and associated bootstrap errors (no Student $t$-factor included)
+calculated using various CBTI protocols are compared to the 
+results of other approaches in \reftab{comp}.
+%
+The comparison involves calculations relying on $100\,\mathrm{ns}$ total 
+single-system sampling time, {\em i.e.} essentially identical computational costs.
+%
+The protocols compared are
+unbiased CBTI (with $K=8, 16, 32, 64$ or 128),
+biased CBTI (with $K=8$ or $16$),
+TI (with $K_{\mathrm{TI}}=9, 17, 33, 65$ or 129),
+HRE (with $K_{\mathrm{HRE}}=17, 33$ or 65),
+\radd{along with TI/EXTI and TI/MBAR
+(both with $K_{\mathrm{TI}}=9$ or $17$, and using 129 virtual $\lambda$-points).}
+%
+More details on the HRE, TI/EXTI and TI/MBAR calculations can 
+be found in \reffigs{hre} - \reffign{barlam}.
+
+
+
+
+\radd{As previously discussed,
+the results of the TI calculations with $K_{\mathrm{TI}}=9$ or 17 
+are affected by large quadrature errors (see \reffig{ti:lampts} and \reftab{repeats}), 
+and those of the unbiased CBTI simulation with $K=8$,
+are affected by a significant heterogeneity of the 
+sampling along $\lambda$ (see \reffig{lam}).}
+% and second column of \reftab{comp}).}
+%
+Excepting these three calculations, all free-energy estimates \radd{of \reftab{comp}}
+are essentially compatible, taking into account that the error bars exclude a
+Student $t$-factor.
+%
+
+
+The convergence of the HRE ($K_{\mathrm{HRE}}=65)$, TI/EXTI ($K_{\mathrm{TI}}=17$) and TI/MBAR ($K_{\mathrm{TI}}=17$)
+protocols are also compared to those of TI ($K_{\mathrm{TI}}=129$), unbiased CBTI ($K=8, 32$ or 128) and biased CBTI ($K=8$) 
+in  \reffigs{comp:conv} and \reff{comp:errors}.
+%
+Considering \reffig{comp:errors}, the uncertainty of the unbiased CBTI simulation
+with $K=8$ is found to be particularly large, owing to the sampling heterogeneity. 
+Excepting this simulation, the uncertainty \radd{is the largest for the TI estimate.}
+%
+The different CBTI protocols reduce the error by about a factor two
+compared to TI, presumably due to enhanced orthogonal sampling.
+%
+This sampling advantage is shared by HRE, for which the error curve is very similar.
+%
+Advanced free-energy estimators such as EXTI and MBAR also improve the convergence 
+over plain TI in a different way, namely by increasing the statistical 
+%but for a different reason, 
+efficiency of the $\Delta G$ estimation. 
+%
+\revphil{The error reduction is also about a factor two compared to TI,
+which is probably not entirely coincidental.
+%
+If two fixed-$\lambda$ simulations are trapped in different 
+orthogonal configurational wells in TI, the variable-$\lambda$
+approaches (CBTI, HRE) will promote well-transitions,
+whereas the advanced-estimator approaches (EXTI, MBAR)
+will import statistical information on the other well
+from the neighboring $\lambda$-point.
+%
+One might refer to these two types of effects
+orthogonal-sampling {\em vs.} orthogonal-statistics
+advantages, respectively.
+%
+For the simple system considered here,
+both results in comparable convergence improvements.
+%
+This suggests that the two effects may not be cumulative
+if one generalizes the current
+%ly used 
+CBTI estimator of \refeq{cbti_formula} to an EXTI- or MBAR-type estimator.
+}
+%may 
+%might further enhance the accuracy of the calculated $\Delta G$ estimates
+%by increasing the statistical efficiency of the estimation.}
+%
+%\revphil{
+%The fact that the corresponding error reduction is also 
+%about a factor two compared to TI is probably coincidental
+%}.
+%
+%%%However, the error in EXTI may be underestimated since the predicted $\lam$-points  are possibly correlated which was neglected in the error calculation.
+%
+%\radd{Thus, if CBTI benefits like HRE from an orthogonal sampling advantage,

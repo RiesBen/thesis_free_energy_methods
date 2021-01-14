@@ -1,0 +1,509 @@
+%------------------------------------------------------------
+\subsection{Test System}
+%------------------------------------------------------------
+
+As an initial application of the proposed CBTI scheme, we considered here 
+a relatively simple perturbation, namely the conversion of methanol
+from a fully interacting molecule to a dummy skeleton (no intermolecular interactions) 
+in an aqueous environment at $P=1\unit{bar}$ and $T=298.15\unit{K}$.
+%
+The calculations were performed using 
+\radd{a modified version of the 
+GROMOS11 program \cite{VA11.7,SC12.1,KU12.1} along with}
+the parameters of the GROMOS-compatible 2016H66 force field\cite{HO16.1} for methanol\cite{HO11.1} (united atom, rigid bonds, flexible bond angle)
+and the simple point charge (SPC) model\cite{BE81.1} for water (fully rigid).
+%
+Since the dummy skeleton retains the intramolecular interactions (here, only the bond angle),
+the calculated free-energy change $\Delta G$ corresponds directly to minus the hydration 
+free energy of methanol.
+
+
+Possible issues related to the existence of a singularity\cite{SI93.1,BE94.1,ZA94.1} 
+and the insufficient solute-solvent kinetic-energy exchange\cite{SH03.4,SH05.7,MO07.2,LI08.8} 
+close to $\lambda=1$ were alleviated in the usual way,
+by means of a soft-core scheme\cite{BE94.1} for the alchemical coupling 
+and of stochastic dynamics\cite{LA08.6,VA88.1} (SD) for thermostating the solute and solvent conformational 
+degrees of freedom.
+%
+In most CBTI simulations, the \radd{instantaneous} temperature $T_\Lambda$ of the CB advance variable
+$\Lambda$ was also controlled separately by means of a 
+Nos\'e-Hoover chain thermostat\cite{MA92.1} 
+\radd{at 298.15 K} \revphil{(eight successive thermostat variables)},
+with a coupling time $\tau_{\Lamb}$.
+
+%------------------------------------------------------------
+\subsection{Simulations Sets}
+%------------------------------------------------------------
+
+The exploration of the CBTI scheme and the comparison of its
+performance with that of existing methods was carried out in five successive 
+steps:
+%
+($1$) establishing reference TI results;
+($2$) analyzing the influence of the CBTI parameters (number $K$ of replicas along with the
+       mass-parameter $m_\Lambda$ and thermostat coupling time $\tau_\Lambda$ 
+       of the CB advance variable);
+($3$) investigating the use of a biasing potential;
+($4$) examining the features of the TI-like free-energy estimator (effect of the number $J$ of integration bins and use of equations without specification of $J$);
+($5$) comparing the results of CBTI with those of existing methods.
+
+
+The reference TI calculations (Step 1) were performed using $K_{\mathrm{TI}}=2^n+1$ 
+equidistant $\lambda$-points covering the range $[0,1]$  with $n$ = 1,2,...,7.
+They involved initial configurations equilibrated for $0.2\,\mathrm{ns}$ 
+starting from the equilibrated configuration at the previous $\lam$-point,
+\radd{and a simulation time of $100 K_{\mathrm{TI}}^{-1}$ ns per $\lambda$-point.}
+%
+Each of these calculations, \radd{involving a total single-system sampling time of 100 ns},
+was repeated ten times using different random initial velocities. 
+%
+The integration over the average Hamiltonian derivative 
+was 
+%then 
+performed based on \refeq{ti_formula} using the Simpson quadrature rule\cite{JO10.2,BR11.5,BR11.6}.
+
+
+To explore the influence of the CBTI parameters (Step 2), various 
+combinations of $K$, $m_\Lambda$ and $\tau_\Lambda$ were considered in 
+three series of calculations, namely:
+%
+($i$) the choices $m_{\Lambda}=$16,160,800,1600 or 3200$\,\mathrm{u}\,\mathrm{nm}^2$
+       (where $\mathrm{u}$ stands for atomic mass unit, {\em i.e.} g mol$^{-1}$),
+      along with $K=16$ replicas in the absence of thermostat coupling 
+      for $\Lambda$, {\em i.e.} with $\tau_\Lambda\rightarrow\infty$;
+%%      ($10\unit{ns}$ simulations of the replica system after $0.2\unit{ns}$ equilibration);
+%
+($ii$) the choices $\tau_\Lambda={0.05,0.1,0.5,1~\text{or}~2}\,\mathrm{ps}$
+       along with $K=16$ replicas and $m_{\Lambda}=160\,\mathrm{u}\,\mathrm{nm}^2$;
+%%      ($10\unit{ns}$ simulations of the replica system after $0.2\unit{ns}$ equilibration);
+%
+($iii$) the choices $K=8,16,32,64~\text{or}~128$
+       along with 
+       $m_{\Lamb}=40 K^{1/2}\,\mathrm{u}\,\mathrm{nm}^2$ 
+       and $\tau_{\Lambda}=0.5\,\mathrm{ps}$;
+%% ($256 K^{-1}\unit{ns}$ simulations of the replica system after $0.2\unit{ns}$ equilibration).
+%
+%
+The parameters (and results) of these three series of simulations, including their durations $t_{\mathrm{sim}}$, are summarized  in \reftab{screen} (entries 1-15).
+%
+\radd{All these simulations were preceded by $0.2\unit{ns}$ equilibration}.
+%
+\revphil{
+For the the third series (entries 11-15), $m_{\Lambda}$ was made proportional 
+to $K^{1/2}$, an arbitrary parameter choice justified by arguments provided 
+in \refsec{othersim}, and the five simulations relied on the 
+the same total single-system sampling time of 256 ns.}
+%
+%
+This exploration showed that the CBTI method is rather robust with respect to the choice of its parameters.
+The values $K=16$, $m_\Lamb=160\,\mathrm{u}\,\mathrm{nm}^2$ and $\tau_{\Lamb}=0.5\,\mathrm{ps}$ 
+were retained as 
+%an optimal combination
+\revphil{a good combination}
+for the alchemical perturbation considered.
+\radd{For comparison with the TI results of Step 1,}
+ten repeats of the calculation 
+involving this specific choice were performed using different random initial velocities
+and 
+\radd{a total single-system sampling time of 100 ns after $0.2\unit{ns}$ equilibration}.
+%
+%($6.25\unit{ns}$ simulations of the replica system after $0.2\unit{ns}$ equilibration, \ie{}  total $100\unit{ns}$ single-system sampling time).
+%
+
+The application of CBTI with a biasing potential (Step 3)
+was investigated in the context of simulations with $K=8$ or 16, 
+both with $m_{\Lamb}=40 K^{1/2}\,\mathrm{u}\,\mathrm{nm}^2$ and  $\tau_{\Lamb}=0.5\,\mathrm{ps}$.
+%
+For $K=8$, the biasing potential $\mathcal{B}$ (\refeq{cb_big_lam_eq_mot_bias}) was constructed 
+using $N_{\mathrm{gp}}=34$ basis functions centered at equidistant grid-points \radd{$i=0,...,N_{\mathrm{gp}}-1$}
+over the $\tilde{\Lamb}$-range $[0,\pi/4)$. 
+%
+The coefficients of the basis-functions $i$ \radd{and $N_{\mathrm{gp}}-1-i$}
+\radd{with $i=0,...,N_{\mathrm{gp}}/2-1$}
+were constrained to be identical, 
+considering the expected even symmetry of $\tilde{P}(\tilde{\Lamb})$.
+%
+In terms of the CB advance variable $\Lamb$, this means that the biasing potential relied in effect on $K(N_{\mathrm{gp}}-1)=264$ local functions covering the $\Lamb$-range $[0,2\pi)$, these functions being defined by only 17 independent coefficients. 
+For $K=16$, $\mathcal{B}$ 
+relied on $N_{\mathrm{gp}}=18$ basis functions 
+%centered 
+%at equidistant grid-points 
+over the $\tilde{\Lamb}$-range $[0,\pi/8)$, leading to $272$ functions over the $\Lamb$-range $[0,2\pi)$ 
+%and
+defined by 9 independent coefficients.
+%
+Second-order splines\cite{DE01.6,HA07.12} (of range $\pm 2 \delta$ with $\delta=\pi/132$ or $\pi/136$ for $K=8$ and $16$, respectively) were 
+employed\cite{BI14.1} as basis functions. An initial build-up 
+force constant $c_{\mathrm{LE}}=10^{-3}\,\mathrm{kJ\,mol^{-1}}$ was used, which was multiplied by a reduction factor $f_{\mathrm{red}}=0.1$ 
+after each double-sweep of \radd{half} the \radd{$\tilde{\Lambda}$-range $[0,\pi K^{-1}]$.}
+% 
+The duration $t_{\mathrm{LE}}$ of the LE build-up phase for 
+the replica system 
+\radd{was $=0.15\,\mathrm{ns}$ for $K=8$ and 
+$0.07\,\mathrm{ns}$ for $K=16$,
+corresponding to only $1.1-1.2\,\mathrm{ns}$ 
+total single-system simulation time.
+%\revdavid{[DELETE:,
+%which was sufficient three double-sweeps in both cases.]}
+}
+%
+The parameters (and results) of these two simulations are summarized in \reftab{screen} (entries 16 an 17).
+%
+The duration $t_{\mathrm{sim}}$ of the US sampling phases for 
+the replica system were $22\unit{ns}$,
+corresponding to total single-system sampling 
+times of $176\unit{ns}$ and $352\unit{ns}$ for $K=8$ and $16$, respectively. 
+%
+
+
+\begin{table}
+\caption{
+  \textit{Influence of the CBTI parameters in 
+%\revdavid{[DELETE: unbiased]}
+ simulations 
+  of the aqueous methanol-to-dummy mutation at 298.15 K and 1 bar with the 
+  2016H66 force field.}
+%
+  \revphil{This table investigates the influence of the parameters selected for the CBTI scheme
+           on the temperature and dynamics of the CB advance 
+           variable $\Lambda$ and on the calculated free-energy change $\Delta G$
+           (for the latter, considering a constant total single-system sampling time of 100 ns).
+           }
+%
+  \radd{For each simulation,} the successive entries are:
+  the index of the simulation (sim),
+  the number $K$ of replicas,
+  the simulation time $t_{\mathrm{sim}}$ for the replica system,
+  the mass-parameter $m_{\Lambda}$,
+  the thermostat coupling time $\tau_{\Lambda}$ ($\infty$ indicates that no coupling is applied),
+  the average temperature $T_\Lambda$,
+  the root-mean-square fluctuation ${\sigma}_{\dot{\Lamb}}$ of $\dot{\Lambda}$,
+  the autocorrelation time $\tau_{\dot{\Lamb}}$ of $\dot{\Lamb}$,
+  the diffusion coefficient $D_\Lambda$ (\refeq{einstein}),
+  the free-energy difference $\Delta G$ calculated using \refeq{cbti_formula} with $J=500$ (except for entry 11, $J=200$),
+  the alternative free-energy difference $\Delta G_{\mathrm{alt}}$ calculated
+  using \refeq{cbti_formula_app1},
+  and the approximate free-energy difference $\Delta G_{\mathrm{app}}$ calculated
+  using \refeq{cbti_formula_average}.
+  %
+  Error estimates obtained by bootstrapping \radd{(no Student $t$-factor included)} are also reported between parentheses
+  for $\Delta G$, $\Delta G_{\mathrm{alt}}$
+  and $\Delta G_{\mathrm{app}}$.
+%
+  \radd{Note that the simulations differ in terms of total single-system sampling time $Kt_{\mathrm{sim}}$.
+        To enable a fair comparison, the free energy-changes and associated errors have been calculated 
+        after truncating the all simulations to $100\unit{ns}$ single-system sampling time evenly distributed 
+        over all replicas.}
+  %
+%%
+%  To make the free-energy differences and associated errors comparable, the values are calculated for all simulations
+%  considering only $100\unit{ns}$ single-system sampling time evenly distributed over all replicas.
+%
+  Associated graphs for the distributions \radd{$P(\Lambda)$ of $\Lambda$}, 
+$P_{\dot{\Lambda}}$ of $\dot{\Lamb}$ and $P_{\ddot{\Lamb}}$ of $\ddot{\Lamb}$, as well as the mean-square displacements
+  $d_{\Lamb}$ of $\Lamb$ and autocorrelation functions $c_{\dot{\Lamb}}$ of $\dot{\Lamb}$
+  can be found in \reffigs{lam}, \reff{dynamics} \radd{and \reff{leus}, or} in Figs. \reffig{thermo:03_cvb_screen:016:1_0.01} - 
+\reffig{thermo:04_cvb_thermo:128:10} \radd{and \reffig{leus:8}-\reffig{leus:16}}.
+%
+ Simulations $11$, $13$, $15$, \radd{$16$ and $17$} are discussed in the main text.
+ The other simulations are discussed in \refsec{othersim}.
+}   
+\label{tab:screen}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{*{12}{c}}
+\hline
+sim & $K$ & $t_{\mathrm{sim}}\,[\mathrm{ns}]$ & $m_{\Lambda} [\mathrm{u\,nm^2}]$ & $\tau_{\Lambda} [\mathrm{ps}]$ & $T_{\Lambda} [\mathrm{K}]$ & $\sigma_{\dot{\Lambda}}\,[\mathrm{ps^{-1}}]$ & $\tau_{\dot{\Lambda}}\,[\mathrm{ps}]$ & $D_{\Lambda} [\mathrm{ns^{-1}}]$ & $\Delta G\,[\mathrm{kJ\,mol^{-1}}]$ &  $\Delta G_{\mathrm{alt}}\,[\mathrm{kJ\,mol^{-1}}]$ & $\Delta G_{\mathrm{app}}\,[\mathrm{kJ\,mol^{-1}}]$ \\
+%&&&&&&&&&  (\refeq{cbti_formula})  & (\refeq{cbti_formula_app1}) &  (\refeq{cbti_formula_average}) \\
+\hline
+    1 &    16 &    10 &    16 & $\infty$ &      308.0 &       0.40 &       0.02 &       16.7 &      21.14 (0.16) &      21.23 (0.17) &      20.21 (0.32) \\ 
+    2 &    16 &    10 &   160 & $\infty$ &      297.9 &       0.12 &       0.61 &       13.2 &      21.27 (0.17) &      21.32 (0.15) &      20.29 (0.31) \\ 
+    3 &    16 &    10 &   800 & $\infty$ &      296.3 &       0.05 &       1.90 &       10.2 &      21.25 (0.15) &      21.34 (0.16) &      20.27 (0.32) \\ 
+    4 &    16 &    10 &  1600 & $\infty$ &      304.0 &       0.04 &       3.47 &       10.3 &      21.28 (0.15) &      21.25 (0.17) &      20.32 (0.32) \\ 
+    5 &    16 &    10 &  3200 & $\infty$ &      297.7 &       0.03 &       5.63 &        7.4 &      21.23 (0.16) &      21.24 (0.18) &      20.11 (0.31) \\ 
+\hline
+    6 &    16 &    10 &   160 &  0.05 &      284.0 &       0.12 &       0.37 &        6.9 &      21.23 (0.16) &      21.04 (0.15) &      20.22 (0.31) \\ 
+    7 &    16 &    10 &   160 &  0.10 &      291.7 &       0.12 &       0.36 &        7.4 &      21.48 (0.13) &      21.41 (0.16) &      20.47 (0.29) \\ 
+    8 &    16 &    10 &   160 &  0.50 &      296.4 &       0.12 &       0.41 &        9.1 &      21.42 (0.14) &      21.48 (0.16) &      20.45 (0.30) \\ 
+    9 &    16 &    10 &   160 &  1.00 &      299.4 &       0.12 &       0.49 &       12.9 &      21.57 (0.16) &      21.48 (0.17) &      20.59 (0.30) \\ 
+   10 &    16 &    10 &   160 &  2.00 &      296.8 &       0.12 &       0.56 &       13.1 &      21.48 (0.13) &      21.73 (0.15) &      20.45 (0.29) \\ 
+\hline
+   11 &     8 &    32 &   113 &  0.50 &      298.4 &       0.15 &       0.23 &        4.4 &      21.69 (0.40) &      21.69 (0.44) &      15.65 (0.31) \\ 
+   12 &    16 &    16 &   160 &  0.50 &      298.3 &       0.12 &       0.41 &       10.2 &      21.42 (0.16) &      21.48 (0.17) &      20.45 (0.33) \\ 
+   13 &    32 &     8 &   226 &  0.50 &      300.6 &       0.10 &       0.38 &        6.2 &      21.44 (0.14) &      21.33 (0.15) &      21.34 (0.32) \\ 
+   14 &    64 &     3 &   320 &  0.50 &      297.2 &       0.09 &       0.31 &        2.5 &      21.32 (0.14) &      21.27 (0.14) &      21.29 (0.30) \\ 
+   15 &   128 &     2 &   452 &  0.50 &      304.1 &       0.08 &       0.24 &        2.3 &      21.43 (0.12) &      21.61 (0.14) &      21.41 (0.32) \\ 
+\hline
+   16 &     8 &    22 &   113 &  0.50 &      296.4 &       0.15 &       0.43 &       15.3 &      21.48 (0.16) &      21.61 (0.17) &      19.65 (0.34) \\ 
+   17 &    16 &    22 &   160 &  0.50 &      299.3 &       0.12 &       0.43 &        9.4 &      21.30 (0.13) &      21.43 (0.16) &      20.61 (0.34) \\ 
+\end{tabular}
+}
+\end{table}
+
+
+
+%
+To examine the features of the TI-like free-energy estimator (Step 4),
+the number $J$ of integration bins
+used in the rectangular quadrature to calculate $\Delta G$ (\refeq{cbti_formula}) was varied  considering the simulations of Steps 2 and 3 above (17 simulations of \reftab{screen}). 
+%
+%
+%
+The resulting $\Delta G$ values were also compared to those 
+of the variants $\Delta G_{\mathrm{alt}}$ (\refeq{cbti_formula_app1}) 
+and $\Delta G_{\mathrm{app}}$ (\refeq{cbti_formula_average}) \revphil{proposed in \refsec{CH2C}}.
+
+
+
+Finally, the results of the CBTI simulations were compared to 
+those of other methods (Step 5), namely TI or HRE using Simpson quadrature
+as estimator as well as TI using EXTI and MBAR as estimator.
+%
+%
+%XXX MOVED FROM BELOW
+%Finally, the results of CBTI were compared to those of existing methods,
+%namely TI and HRE using Simpson quadrature as free-energy estimator or TI
+%using EXTI and MBAR.
+%
+\radd{For Simpson quadrature,} the TI simulations relied on $K_{\mathrm{TI}}=3,5,9,17,65$ or 129 equispaced $\lam$-points,
+and the HRE simulations relied on $K_{\mathrm{HRE}}=17,33~\text{or}~65$ equispaced replicas 
+with exchange attempts every $\tau_{\mathrm{HRE}}=0.2\,\mathrm{ps}$.
+%
+\radd{The use of EXTI and MBAR was explored based on TI-like
+simulations relying on $K_{\mathrm{TI}}=9$ and $17$ equispaced $\lam$-points.
+%
+For EXTI, the \radd{average} Hamiltonian derivative was extrapolated 
+%\revdavid{[DELETE: using OSP ]
+}
+during the $K_{\mathrm{TI}}$ simulations to 129 equispaced virtual $\lam$-points,
+and the latter 129 values used in the Simpson quadrature.
+%
+For MBAR, the Hamiltonian was calculated at 129 equispaced virtual
+$\lam$-points considering all the configurations sampled in the $K_{\mathrm{TI}}$, 
+and the data combined using the MBAR equation\cite{SH08.7} as implemented in pymbar\cite{CH17.16}.
+%
+All the above comparisons were performed at a total single-system 
+sampling time of $100\unit{ns}$ distributed evenly over all replicas.
+
+
+
+\radd{Error bars on the calculated $\Delta G$ values
+were estimated in two different ways.}
+%
+For the \radd{calculations involving ten repeats (all TI calculations plus one CBTI simulation),
+%
+the standard deviation $\sigma$ of the mean was calculated 
+by scaling that of the ten estimates by the square-root of nine,
+and the error $\epsilon$ on the mean was calculated 
+as $\epsilon=2.262 \sigma$, where $2.262$
+is the Student $t$-factor\cite{ST08.9} for nine degrees of freedom 
+and a two-sigma confidence interval of $95\%$.
+}
+%
+For the \radd{individual calculations that were not repeated},
+the statistical error was estimated
+by bootstrapping\cite{EF79.1,EF98.1} \radd{(no Student $t$-factor included)} 
+\radd{using 100 bootstrap samples.
+%
+If $K$ replicas (CBTI) or $\lambda$-points (all other methods) 
+have generated as many sets of $L$ data points, a sample consists 
+here of $K$ sets of  $L$ data points selected randomly 
+(possibly multiple times) from the $K$ original data sets.
+}
+%
+\revphil{Note that for TI/EXTI and TI/MBAR, it is essential to perform 
+the bootstrapping based on the data from the $K_{\mathrm{TI}}$ real 
+$\lambda$-points, and not from the $129 K_{\mathrm{TI}}$ predicted values
+(the latter procedure would result in underestimated errors 
+due to correlation in the derived data).}
+%
+\radd{The bootstrapping error will only be accurate 
+provided that the data from the simulations, written to file every $2\unit{ps}$, 
+is uncorrelated in time.}
+%
+\radd{Normalized autocorrelation} functions and characteristic times for the \radd{average} Hamiltonian derivative
+in the different TI-simulations are provided in
+%
+\reffig{ti:tcf} and \reftab{tcf} to support this assumption. 
+
+
+
+%
+%> The result of EXTI is now 21.12 (0.14) kJ mol^-1, which is in about the same
+%> order of magnitude as all other methods.
+%>
+%> There is still a little issue:
+%> I used 100 bootstrap samples of the simulated points and predicted the
+%> non-simulated points from the same bootstrap sample (as discussed last
+%> Thursday). Now, I calculated the error in two different ways:
+%> - I took the 100 bootstrap samples per simulated point and calculated the
+%> error on the dH/dl on all 129 (predicted) lam-points. Then I calculated the
+%> error on the final Delta G by error propagation. *This still leads to an
+%> error which is much smaller (0.03kJ mol^-1)* I assume, that the error
+%> propagation is not correct because it neglects the cross-correlation between
+%> the lambda-points which is definitely there because of the prediction.
+%> - For each bootstrap sample of all simulated lam-points, I calculated a dHdl
+%> curve and a Delta G. Then the bootstrap error is the standard deviation  of
+%> the 100 Delta G values. This yields to the 0.14 kJ mol^-1. This is cleaner,
+%> you don't have to do error propagation and it is the same way as I calculated
+%> the error for the other methods.
+%>
+%> In the plots and tables I used error #2, which is more trustworthy in my
+%> opinion. I will have a look whether I can improve the error propagation that
+%> error #1 is also in the same range.
+%>
+%>
+%
+
+
+
+
+
+
+%------------------------------------------------------------
+\subsection{Simulation Parameters}
+%------------------------------------------------------------
+
+
+The simulations involved a cubic computational box containing one methanol
+and 1000 water molecules under periodic boundary conditions
+in the isothermal-isobaric ensemble at 
+$P=1\unit{bar}$ and $T=298.15\unit{K}$.
+%
+They were performed using SD 
+by integrating the Langevin equation of motion\cite{LA08.6}
+using the leap-frog scheme\cite{HO70.1} (SD variant\cite{VA88.1}) with a timestep $\Delta t=2\,\mathrm{fs}$
+and a friction coefficient $\gamma=10\,\mathrm{ps^{-1}}$.
+%
+Since the kinetics of the system is irrelevant in this work, SD instead of thermostated MD was used to 
+avoid problems related to insufficient solute-solvent kinetic-energy exchange\cite{SH03.4,SH05.7,MO07.2,LI08.8}
+close to $\lambda=1$ (dummy-skeleton state).
+The value of $\gamma$ corresponds 
+%effectively 
+to the  coupling time of $0.1\unit{ps}$
+commonly employed in GROMOS simulations\cite{VA96.1,VA11.7} relying on a weak-coupling\cite{BE84.1} thermostat.
+%
+The average pressure was maintained close to its reference value
+by isotropic weak coupling\cite{BE84.1} using a molecular virial, 
+a coupling time $\tau_{P}=0.5\,\textrm{ps}$
+and a compressibility $\kappa=4.575\cdot10^4\,\mathrm{kJ}\,\mathrm{mol}^{-1}\,\mathrm{nm}^{-3}$
+as commonly used in GROMOS for aqueous biomolecular systems\cite{VA96.1,VA11.7}.
+%
+The bond rigidity  of methanol and the full rigidity of water were enforced by
+application of the SHAKE algorithm\cite{RY77.1} with a relative 
+geometric tolerance of $10^{-4}$. 
+%
+The energies and 
+%\radd{average} 
+Hamiltonian derivatives
+were written to file every $2\unit{ps}$ for analysis.
+%
+
+
+The non-bonded interactions were handled by means of a molecule-based
+twin-range cutoff scheme\cite{BE86.3}
+with short- and long-range cutoff distances set
+to $0.8$ and $1.4\unit{nm}$, respectively, and an update frequency of
+5 timesteps for the short-range pairlist and intermediate-range
+interactions. The molecule center was the center of geometry for methanol and the oxygen atom for water.
+A reaction-field correction\cite{BA73.1,TI95.1} was applied to account for the mean effect of the electrostatic interactions beyond the long-range cutoff distance, using a relative
+dielectric permittivity of $61$ as appropriate for the SPC model~\cite{HE01.1}.
+%
+To alleviate issues related to the existence of a singularity\cite{SI93.1,BE94.1,ZA94.1} 
+close to $\lambda=1$ (dummy-skeleton state), the alchemical transformation
+relied on a soft-core scheme\cite{BE94.1},
+applied with the parameters $\alpha_{\mathrm{LJ}}=0.5$ and $\alpha_{\mathrm{CRF}}=0.5\,\mathrm{nm}^2$.
+%
+
+For the CBTI calculations, the propagation of the $\Lamb$ variable
+(\refeq{cb_big_lam_eq_mot}) preceded that 
+of the conformational degrees of freedom, and was performed with the same 
+timestep $\Delta t$.
+%
+More precisely, the following 
+leap-frog steps were carried out in sequence:
+$\dot{\Lamb}(t-\Delta t/2) \rightarrow \dot{\Lamb}(t+\Delta t/2)$,
+$\Lamb(t) \rightarrow \Lamb(t+\Delta t)$,
+calculate $\lamv$ from $\Lambda$ using \refeq{cb_lam_of_big_lam},
+$\dot{\rv}(t-\Delta t/2) \rightarrow \dot{\rv}(t+\Delta t/2)$
+and
+$\rv(t) \rightarrow \rv(t+\Delta t)$.
+%
+Unless otherwise specified (explorative simulations), 
+\radd{the CBTI simulations 
+relied on a
+mass-parameter $m_\Lambda$
+set to $m_{\Lamb}=40 K^{1/2}\,\mathrm{u}\,\mathrm{nm}^2$,
+%where $K$ is the number of replicas, and
+%the temperature of the $\Lambda$-variable was controlled separately
+%by means of a Nos\'e-Hoover chain thermostat\cite{MA92.1}
+%involving eight successive thermostat variables at a reference temperature of $298.15\unit{K}$
+%and with a 
+on a coupling time $\tau_{\Lambda}$ set to $0.5\unit{ps}$,
+and 
+%
+%And unless otherwise specified 
+%(investigation of the effect of $J$ and unbiased CBTI simulation with $K=8$), 
+on the use of $J=500$ bins 
+for evaluating
+$\Delta G$ based on \refeq{cbti_formula}
+($J=200$ for the unbiased simulation with $K=8$).
+}
+
+
+%------------------------------------------------------------
+\subsection{Trajectory Analysis}
+%------------------------------------------------------------
+
+The dynamics of the replica system in the CBTI simulations was characterized by monitoring
+the distribution $P$ of the $\Lambda$ variable,
+the average temperature $T_{\Lamb}$, 
+the distribution $P_{\dot{\Lamb}}$ of $\dot{\Lamb}$, 
+the associated root-mean-square fluctuation $\sigma_{\dot{\Lamb}}$, 
+the \radd{normalized} autocorrelation function $c_{\dot{\Lambda}}$ of $\dot{\Lamb}$, 
+the associated autocorrelation time $\tau_{\dot{\Lambda}}$, 
+\radd{the mean-square displacement $d_{\Lamb}$ of $\Lamb$ as a function of time},
+the associated diffusion coefficient $D_{\Lambda}$, 
+and 
+the distribution $P_{\ddot{\Lambda}}$ of $\ddot{\Lambda}$.
+%
+%
+%
+
+
+The distribution $P_{\dot{\Lamb}}$ of $\dot{\Lamb}$ can be compared to the analytical one-dimensional Maxwell-Boltzmann velocity distribution\cite{MA60.1}
+%
+\beq{ana_vel}
+P^{\mathrm{MB}}_{\dot{\Lamb}}(\dot{\Lamb})=\left ( \frac{\beta m_{\Lamb}}{2\pi} \right )^{\frac{1}{2}} \mathrm{e}^{-\frac{\beta m_{\Lamb}}{2} \dot{\Lamb}^2}.
+\eeq
+%
+
+
+The diffusion coefficient $D_{\Lamb}$ was calculated from the mean-square displacement $d_{\Lamb}$ of $\Lamb$ as a function of time $t$ according to the one-dimensional Einstein equation\cite{EI05.1}
+%
+\begin{multline}
+  \label{eq:einstein}
+  D_{\Lamb}=\lim\limits_{t\rightarrow \infty} \frac{d_{\Lamb}(t)}{2t} \\
+  \text{with} \qquad d_{\Lamb}(t)=\left \langle \left[\Lamb(\tau + t) -\Lamb (\tau)\right ]^2 \right \rangle_{t},
+\end{multline}
+%
+where $\langle \cdot\cdot\cdot \rangle_{t}$ denotes averaging over $\tau$ (all possible time origins) at constant $t$. Note that this equation must be applied to the unbounded variable $\Lamb$, \ie{}  without refolding to the reference interval $[0,2\pi)$.
+The infinite-time limit was replaced in practice by a linear least-squares fit over the time range 0 to $0.15\unit{ns}$.
+%
+\revphildel{[-- Redundant paragraph removed --]}
+
+
+%To investigate the influence of the number $J$ of bins used 
+%to calculate the free-energy differences $\Delta G$ in CBTI according to \refeq{cbti_formula},
+%this number was systematically increased from 1 to $J_{\mathrm{max}}$ in increments ranging 
+%from 10 to 1000, where $J_{\mathrm{max}}$ is the highest value of $J$ for which empty bins never occur.
+%%
+%%
+%\revphil{The estimates} $\Delta G_{\mathrm{alt}}$ and $\Delta G_{\mathrm{app}}$ were also calculated \revphil{for comparison},
+%using \refeqs{cbti_formula_app1} and \refeqn{cbti_formula_average} \revphil{of Appendix C}.
+%%The latter one is only expected to be accurate for quasi-homogeneous sampling of the $\lam$-range. 
+%%
+%
+
+
+All the graphs presented in this chapter were generated with Python (www.python.org) and the Matplotlib library.\cite{HU07.7}
+
