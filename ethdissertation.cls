@@ -141,11 +141,13 @@
 %% \end{minipage}
 % \bigskip
 %}
+\definecolor{ChapterGreen}{HTML}{1e8449 }
+
 \titleformat{\chapter}[display] %?
  {\bfseries\LARGE}
  { 
  \begin{minipage}[96pt]{1.1\textwidth}
-   \filleft \color{Blue}{\fontsize{96}{96} \selectfont \thechapter}
+   \filleft \color{ChapterGreen}{\fontsize{96}{96} \selectfont \thechapter}
  \end{minipage}
  }
  {-54pt}
