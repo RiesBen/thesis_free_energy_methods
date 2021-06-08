@@ -1,10 +1,17 @@
 
-
 Ensembler is implemented in Python3\cite{VanRossum2009} and available on GitHub\cite{Github2020}  (\textit{\hyperlink{https://github.com/rinikerlab/Ensembler}{rinikerlab/Ensembler}}). 
 The repository is based on the template of the MolSSI cookie-cutter\cite{Naden2018} and comprises a code folder, an example folder for tutorials, example models contained in the provided Jupyter notebooks,\cite{Kluyver2016} an automatic pytest suite,\cite{Krekel2004} and the automatically generated sphinx \cite{Brandl2008} documentation. 
 The code is continuously integrated via GitHub Actions,\cite{githhubAction20} providing information about code quality, test correctness, test coverage, and generation of an up-to-date documentation. 
 Ensembler uses only open-source packages like the SciPy library\cite{Virtanen2020, VanDerWalt2011, Meurer2017, Mckinney2010, Hunter2007} and Jupyter notebooks.\cite{Kluyver2016} 
 In the following, a user and a developer perspective are provided for the code structure. 
+
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{fig/implementation/export.pdf}
+	\caption{Unified modeling language (UML) class diagram of the five Ensembler base classes. The \textit{potential class} defines the potential-energy functions to be explored and generates the required derivatives automatically (Figure \ref{fig:code_example_potential}). The implementation of a \textit{potential class} (red) is based on the symbolic mathematical language of SymPy.\cite{Meurer2017} The \textit{sampler classes} (cyan) are used for the sampling of potential-energy functions. \textit{Condition classes} (purple) can have different functions, e.g. application of periodic boundary conditions,\cite{Cheatham1995, Leach2001} thermostats, or restraints. The \textit{system classes} (orange) serve as the scaffold for the potential, sampler, and condition classes. In this structure, all components, parameters, and the results of a simulation are stored. The \textit{Ensemble class} (blue) can be used to perform advanced simulation techniques, e.g. using multiple walkers that explore the energy landscapes of the same or different systems as in replica-exchange approaches.\cite{Sugita1999, Sugita2000, Yamauchi2017} The \textit{analysis package} includes free-energy methods such as the Zwanzig equation\cite{Zwanzig1954} or BAR\cite{Bennett1976}. A set of visualization functions is provided in the \textit{visualization package} to enable an intuitive way of inspecting simulations or exploring potentials-energy functions. This includes plots, animations, and interactive widgets.}
+	\label{fig:UML-Diagramm}
+\end{figure}
+
 
 %-------------------------------------------------------
 \subsection{User level}

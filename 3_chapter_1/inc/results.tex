@@ -2,6 +2,25 @@
 %-------------------------------------------------------------------------------------------------------------------------
 \section{Application Example: Simple Simulations}
 %-------------------------------------------------------------------------------------------------------------------------
+
+
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth, height=1.75in]{fig/codeExamples/four_well.pdf} 
+		\caption{}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth, height=1.75in]{fig/codeExamples/Potential_code.png}
+		\caption{}
+	\end{subfigure}
+	\caption{A four-well potential-energy surface visualized by the standard visualization function of Ensembler. (a) Potential-energy function (blue) and the automatically generated spatial gradient (orange) over a given coordinate range. (b) Source code to define the potential-energy function and the coordinate range to be visualized. These parameters are passed to the built-in plotting function in the \textit{potential classes} of Ensembler.}
+	\label{fig:code_example_potential}
+\end{figure}
+
+
+
 In the following, simple code examples are shown to introduce the usage of Ensembler. In addition, an application example is provided to illustrate the use of Ensembler for teaching about free-energy methods. 
 The code for these examples can be found in the GitHub repository \textit{\hyperlink{https://github.com/rinikerlab/Ensembler}{https://github.com/rinikerlab/Ensembler/examples}}.
 
@@ -10,23 +29,23 @@ The code for these examples can be found in the GitHub repository \textit{\hyper
 	\begin{subfigure}{\textwidth}
 		\caption{Standard Langevin Simulation}
 		\centering
-		\includegraphics[width=0.85\linewidth]{fig/dummy.png} 
+		\includegraphics[width=0.85\linewidth]{fig/codeExamples/langevin_simulation.pdf} 
 	\end{subfigure}
 	\vspace{2.5mm}
 	\begin{subfigure}{\textwidth}
 		\caption{Langevin Simulation with Local Elevation/Metadynamics}
 		\centering
-		\includegraphics[width=0.85\linewidth]{fig/dummy.png}
+		\includegraphics[width=0.85\linewidth]{fig/codeExamples/metaDynamics_simulation.pdf}
 	\end{subfigure}
 	\vspace{2.5mm}
 	\begin{subfigure}{\textwidth}
 		\caption{Example Source Code}
 		\centering
-		\includegraphics[width=0.85\linewidth]{fig/dummy.png}
+		\includegraphics[width=0.85\linewidth]{fig/codeExamples/Simulation_code.png}
 	\end{subfigure}
-	\caption{Langevin simulation of a four-well potential energy-function: Results when sampling (1000 steps) with the standard SD integrator (a) or with local elevation\cite{Huber1994}/metadynamics\cite{Laio2002} (b). The left panel shows the potential-energy surface (black), the sampled range (orange), as well as the start point (blue) and end point (red). The middle panel shows the sampled space as a violin/box plot with the start point (blue) and end point (red). The right panel shows the shift $\Delta r_t$ = $r_{t+1}$ - $r_t$ as a function of simulation time $t$.
-		(c) Source code to perform the simulations. First, the four-well \textit{potential class} and the Langevin \textit{sampler class} are initiated. Next, they are wrapped by a \textit{system class}, which executes the simulation. Note that only one line has to be added to use the enhanced sampling technique (marked in bold). Visualizations are generated with built-in functions.}
-	\label{fig:code_example_simulations}
+\caption{Langevin simulation of a four-well potential energy-function. Results when sampling (1000 steps) with the standard SD integrator (a) or with local elevation\cite{Huber1994}/metadynamics\cite{Laio2002} (b). The left panel shows the potential-energy surface (black), the sampled range (orange), as well as the start point (blue) and end point (red). The middle panel shows the sampled space as a violin/box plot with the start point (blue) and end point (red). The right panel shows the shift $\Delta r_t$ = $r_{t+1}$ - $r_t$ as a function of simulation time $t$.
+	(c) Source code to perform the simulations. First, the four-well \textit{potential class} and the Langevin \textit{sampler class} are initiated. Next, they are wrapped by a \textit{system class}, which executes the simulation. Visualizations are generated with a built-in functions. Note that only one line has to be added to use the enhanced sampling technique (marked in bold).}
+\label{fig:code_example_simulations}
 \end{figure}
 
 In typical applications of Ensembler, the user selects a potential-energy function from the available ones. In the following example, a potential-energy function with four wells is selected and initialized with chosen parameters. 
@@ -58,20 +77,20 @@ If the phase-space overlap between the two end states is not sufficient, more ad
 	\centering
 	\begin{subfigure}{.45\textwidth}
 		\caption{}
-		\includegraphics[width=\linewidth]{fig/dummy.png} 
+		\includegraphics[width=\linewidth]{fig/FE_example/freeEnergyPertubation.pdf} 
 	\end{subfigure}
 	\begin{subfigure}{.45\textwidth}
 		\caption{}
-		\includegraphics[width=\linewidth]{fig/dummy.png} 
+		\includegraphics[width=\linewidth]{fig/FE_example/linear_coupled.pdf} 
 	\end{subfigure}
 	\newline
 	\begin{subfigure}{.45\textwidth}
 		\caption{}
-		\includegraphics[width=\linewidth]{fig/dummy.png} 
+		\includegraphics[width=\linewidth]{fig/FE_example/EDS_sampling.pdf} 
 	\end{subfigure}
 	\begin{subfigure}{.45\textwidth}
 		\caption{}
-		\includegraphics[width=\linewidth]{fig/dummy.png} 
+		\includegraphics[width=\linewidth]{fig/FE_example/hlEDS_sampling.pdf} 
 	\end{subfigure}
 	\caption{Illustration of different free-energy methods implemented in Ensembler. (a) For FEP\cite{Zwanzig1954} and BAR\cite{Bennett1976}, the two end states (grey and black) are sampled separately (green and blue). (b) To increase the phase-space overlap, the two end states can be coupled as a linear combination of their Hamiltonians using a coupling parameter $\lambda$. This allows the generation of intermediate states (grey to black) and sampling of those (colored points). (c) An alternative method is EDS,\cite{Christ2007, Christ2008a, Christ2009} where a reference-state Hamiltonian (blue line) is sampled (blue points), which envelopes the end states. By setting the reference-state parameters to $s$~=~0.3 and energy offsets~=~[0,0], all relevant phase-space regions can be sampled. (d) A recently developed approach called $\lambda$-EDS\cite{Koenig2020} introduces a $\lambda$-dependence in the EDS method (blue, orange and green line). Colored points indicate sampling. The reference-state parameters were set to $s$~=~0.3 and energy offsets~=~[0,0], and three different lambda values 0.25,0.5, 0.75 were chosen.}
 	\label{fig:FE_sampling}
@@ -104,16 +123,18 @@ We refer to the Jupyter notebook in the Ensembler GitHub repository for the sour
 	\caption{Estimated free-energy difference for the model system shown in Figure \ref{fig:FE_sampling}. Sampling was performed with Monte Carlo (MC)\cite{Hastings1970} for 10'000 steps in each simulation. Each calculation was replicated five times and the averaged result is shown together with the standard deviation.
 		The duration of the computations (without visualizations) was estimated directly in the Jupyter notebook and is given relative to the FEP simulation (absolute duration = 2.0 seconds). The performance was tested on a Lenovo Thinkpad T420s with an Intel i5-2520 ($2.5~\text{GHz}$) CPU and $8~\text{GB}$ RAM. The RAM usage for the full Jupyter notebook execution was in total $578~\text{MB}$.}
 	\label{tab:FE_results}
-	\begin{tabular}{l|r | c| r r}
-		Method & Average $\Delta$F [$k_B T$] & Deviation from & \multicolumn{2}{c}{Speed (rel. to FEP)}\\
-		&       & analytical result [$k_B T$] & Simulation & Analysis \\
-		\hline
-		\textit{analytical} & 1.275 & - & - & -  \\
-		FEP\cite{Zwanzig1954} & $6.579 \pm  1.009$ & 5.305 & 1.0 & 0.1  \\
-		BAR\cite{Bennett1976} & $2.437 \pm  0.500$ & 2.437 & 3.0 & 2.1 \\
-		FEP 10-$\lambda$-points &  $1.406 \pm 0.431$ & 0.131 & 14.0 & 0.7 \\
-		TI\cite{Kirkwood1935} 10-$\lambda$-points& $1.242 \pm 0.015$ & 0.033 & 14.0 & 0.04\\
-		EDS\cite{Christ2007, Christ2008a, Christ2009} &  $0.958 \pm 0.110$ & 0.317 & 2.4 &  0.2 \\
-		$\lambda$-EDS\cite{Koenig2020} $\lambda=0.5$ & $ 0.987 \pm  0.111$ & 0.287 & 3.1 & 0.2\\
-	\end{tabular}
+	\resizebox{\columnwidth}{!}{%
+		\begin{tabular}{l|r | c| r r}
+			Method & Average $\Delta$F [$k_B T$] & Deviation from & \multicolumn{2}{c}{Speed (rel. to FEP)}\\
+			&       & analytical result [$k_B T$] & Simulation & Analysis \\
+			\hline
+			\textit{analytical} & 1.275 & - & - & -  \\
+			FEP\cite{Zwanzig1954} & $6.579 \pm  1.009$ & 5.305 & 1.0 & 0.1  \\
+			BAR\cite{Bennett1976} & $2.437 \pm  0.500$ & 2.437 & 3.0 & 2.1 \\
+			FEP 10-$\lambda$-points &  $1.406 \pm 0.431$ & 0.131 & 14.0 & 0.7 \\
+			TI\cite{Kirkwood1935} 10-$\lambda$-points& $1.242 \pm 0.015$ & 0.033 & 14.0 & 0.04\\
+			EDS\cite{Christ2007, Christ2008a, Christ2009} &  $0.958 \pm 0.110$ & 0.317 & 2.4 &  0.2 \\
+			$\lambda$-EDS\cite{Koenig2020} $\lambda=0.5$ & $ 0.987 \pm  0.111$ & 0.287 & 3.1 & 0.2\\
+		\end{tabular}
+	}
 \end{table}
