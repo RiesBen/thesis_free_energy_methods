@@ -1,0 +1,83 @@
+
+\subsubsection{Pairwise}
+We could calculate the free energy with for the M030- centered graph.
+the free energy is good!
+%Free Energy Calculation
+
+\begin{table}[H]
+\caption{Pairwise Hydration Free Energies with one base molecule}
+\begin{center}
+\footnotesize
+\begin{tabular}{ c c |c |c|c|}
+  \multicolumn{2}{c|}{Ligands} & \multicolumn{1}{c|}{Experiment\cite{Huang2012}} &\multicolumn{1}{c|}{ATB}&\multicolumn{1}{c|}{TI}\\ 
+    $i$ & $j$ & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$]  \\
+  \hline
+        \_O6T &  M030 &  18.53  & $26.22 \pm $  &  $18.56 \pm $\\
+        \_O70 &  M030 &   8.28  &  14.43  &   8.28\\
+        \_O71 &  M030 &  16.60  &  22.38  &  16.60\\
+        \_P8I &  M030 &   9.33  &  15.34  &   9.33\\
+        6J29 &  M030 &   47.77  &  48.23  &  47.77\\
+        6KET &  M030 &   30.55  &  36.09  &  30.55\\
+        8018 &  M030 &   10.37  &  22.83  &  10.37\\
+        E1VB &  M030 &   -1.73  &   5.20  &  -1.73\\
+        F313 &  M030 &   25.61  &  30.18  &  25.61\\
+        G078 &  M030 &    5.92  &   6.45  &   5.92\\
+        G277 &  M030 &   14.75  &  16.98  &  14.75\\
+        M030 &  M097 &  -16.58  & -18.60  & -16.58\\
+        M030 &  M218 &  -20.46  & -24.90  & -20.46\\
+        M030 &  S002 &  -10.43  & -14.90  & -10.43\\
+        M030 &  TVVS &  -23.69  & -26.10  & -25.69\\
+  \hline
+        \multicolumn{2}{c|}{RMSE} &          & 6.71      & 4.43\\
+        \multicolumn{2}{c|}{MAE} &           & 5.46      & 3.34 \\
+        \multicolumn{2}{c|}{$r^2_{\text{Pearson}}$} & & 0.97  & 0.98 \\
+        \multicolumn{2}{c|}{$r^2_{\text{Spearman}}$} &  & 0.94 & 0.96  \\
+\end{tabular}
+\end{center}
+\label{SItab: RE-EDS_FE_RingCycleOpening_ddF}
+\end{table}
+
+%Coordinate analysis - Translation
+
+%Coordinate analysis - Rotation
+
+\subsubsection{Multistate}
+Some information
+\subsubsection{6Ligands}
+
+%Free Energy Calculation
+
+
+\begin{table}[H]
+\caption{Multistate Hydration Free Energies for the first set containing six ligands}
+\begin{center}
+\footnotesize
+\begin{tabular}{ c c |c |c|c|c|}
+  \multicolumn{2}{c|}{Ligands} & \multicolumn{1}{c|}{Experiment\cite{Huang2012}} &\multicolumn{1}{c|}{ATB}&\multicolumn{1}{c|}{TI}&\multicolumn{1}{c|}{RE-EDS}\\ 
+    $i$ & $j$ & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$]  \\
+  \hline
+        \_O6T &  6KET &  -9.75  &  -9.78  & -11.27 &  -10.65 \\
+        \_O6T &  F313 &   7.90  &  -3.39  &  -7.09 &   -6.40 \\
+        \_O6T &  G277 &  -1.90  &   9.24  &   3.62 &    6.37 \\
+        \_O6T &  M030 &  18.53  &  26.22  &  18.56 &   18.27 \\
+        \_O6T &  M097 &   1.76  &   7.62  &   2.21 &    2.83 \\
+        6KET  &  F313 &   0.75  &   5.91  &   4.72 &    4.25 \\
+        6KET  &  G277 &   7.85  &  19.11  &  14.98 &   17.02 \\
+        6KET  &  M030 &  28.28  &  36.09  &  30.55 &   28.93 \\
+        6KET  &  M097 &  11.51  &  17.49  &  12.98 &   13.49 \\
+        F313  &  G277 &   7.10  &  13.20  &  10.94 &   12.77 \\
+        F313  &  M030 &  27.53  &  30.18  &  25.61 &   24.68 \\
+        F313  &  M097 &  10.76  &  11.58  &   9.17 &    9.24 \\
+        G277  &  M030 &  20.43  &  16.98  &  14.75 &   11.90 \\
+        G277  &  M097 &   3.66  &  -1.62  &  -1.69 &   -3.54 \\
+        M030  &  M097 & -16.77  & -18.60  & -16.58 &  -15.44 \\
+  \hline
+        \multicolumn{2}{c|}{RMSE} &          & 6.75   & 5.25 & 6.03 \\
+        \multicolumn{2}{c|}{MAE} &           & 5.76   & 3.73 & 4.48 \\
+        \multicolumn{2}{c|}{$r^2_{\text{Pearson}}$} & & 0.91  & 0.91 & 0.88 \\
+        \multicolumn{2}{c|}{$r^2_{\text{Spearman}}$} & & 0.84 & 0.84 &  0.81 \\
+
+\end{tabular}
+\end{center}
+\label{SItab: RE-EDS_FE_RingCycleOpening_ddF}
+\end{table}

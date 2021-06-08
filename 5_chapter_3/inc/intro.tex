@@ -1,0 +1,37 @@
+%General
+Relative Alchemical Free Energy (RAFE) Calculations on an atomistic level are on the verge of becoming a common tool in virtual high-throughput screening (vHTS) \cite{Cournia2017}. 
+A lot of investment in the past and current approaches can be observed into the improvement of method robustness and usability by adding criteria, that support judging the outcome of RAFE estimations and automatization of the approaches
+
+%Scaffold Hopping
+The challenges to RAFE calculations are increasing by adding more and more complex transitions from one to another state, leading to the so called scaffold hopping. 
+
+%% Single, Hybrid and dual topology
+In practice there can be three topology types differentiated: single topology, hybrid topology, and dual topology.
+
+
+
+In the following we will describe the topology types with an alchemical transition from one ligand to another one (state A and state B).
+
+%%% single topology
+The single topology approach contains exactly the same set of atom coordinates for both states and switches them from one atom type to another. Differences in the molecular graphs can be realized with using dummy atom types.
+soft-bonds - FEP+ \cite{Wang2017, Yu2017, Shivakumar2010}
+
+"Two main approaches exist for calculating ΔΔGsite, the free energy of transforming A into B in the binding site: the single topology approach and the dual topologies approach. In the single topology approach, there is one ligand molecule in all simulations, which morphs from being in state A (having a particular chemical structure and interaction parameters), to a different state B, where the structure and interaction parameters are different.4–13 In some transformations, there could be atoms on A that have no direct analog on B." \cite{Rocklin2013}
+
+%%% hybrid topology
+The hybrid approach diverges from the single topology approach by adding atoms for the substituent if they are not the same .... \cite{}.
+
+%%%Dual Topology
+"In the dual topologies approach, the computational morphing process carries along two ligand molecules at the same time throughout all simulations.14–16 Using this method, the simulations begin with both a “real” ligand A and a “dummy” ligand B, and over the course of the alchemical transformation, A becomes the dummy ligand while B becomes the real ligand. "
+\cite{Rocklin2013}
+
+The Dual-Topology approach is adding two independent sets of atom-coordinates for molecules differing in the states. This approach allows the largest possible .
+%%%% Restraint problem
+There are different ways how the state molecules are kept in a similar coordinate space, in order to guarantee efficient sampling.  
+One way is to define harmonic  
+
+For this approach, there are sub variants for how the 
+QligFEP \cite{Jespers2019}
+
+%%Single vs. Dual Topology
+
