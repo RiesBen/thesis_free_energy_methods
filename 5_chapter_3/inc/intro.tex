@@ -1,255 +1,37 @@
-Classical molecular dynamics (MD) simulations provide insight into (bio-)molecular systems at atomic resolution, thereby explaining and complementing experimental observations. This often involves the calculation of free-energy differences\cite{CH10.1,CH11.8,HA14.1}, which characterize the relative stabilities of two or more macroscopic states of the system. These states may differ thermodynamically (different pressures, temperatures or numbers of molecules), conformationally (different regions in a space spanned by a set of specific generalized coordinates) or alchemically (different Hamiltonian functions). 
+%General
+Relative Alchemical Free Energy (RAFE) Calculations on an atomistic level are on the verge of becoming a common tool in virtual high-throughput screening (vHTS) \cite{Cournia2017}. 
+A lot of investment in the past and current approaches can be observed into the improvement of method robustness and usability by adding criteria, that support judging the outcome of RAFE estimations and automatization of the approaches
 
-Alchemical free-energy calculations involve atom mutations or interaction alterations that have no experimental counterpart. However, by comparing the results of two such calculations in different environments (\eg{} mutation of a molecule into another one in vacuum or in a solvent) \textit{via} a thermodynamic cycle\cite{VA87.4,JO88.3}, the calculated values can be converted to experimentally accessible differences (\eg{} relative solvation free energies of the two molecules in the given solvent). This indirect pathway \textit{via} a cycle typically offers a strong sampling advantage relative to the calculation over a direct conformational path (\eg{} reversibly displacing the two molecules from vacuum into the solvent across the liquid surface), while giving the same result at full convergence\cite{CO14.1,MA17.14,BA18.2}. Over the last decades, numerous methods have been proposed to calculate alchemical free-energy differences between states $A$, $B$, $C$, ... of a molecular system involving the same numbers of atoms but different Hamiltonian functions. They can be roughly classified as reference-state methods and pathway-dependent methods\cite{SH07.13}.
+%Scaffold Hopping
+The challenges to RAFE calculations are increasing by adding more and more complex transitions from one to another state, leading to the so called scaffold hopping. 
 
-In reference-state methods, a single simulation is performed at a reference state $R$ and the relative free energy of a target state $A$ is calculated using one-step free-energy perturbation\cite{ZW54.1,MA95.2,LI96.1,MA99.10,SC99.3,RA12.6,RA17.5,BO17.2} (OSP) as a free-energy estimator. The state $R$ may be unphysical, in which case the free-energy difference between two physical states $A$ and $B$ is obtained by comparing the results of two such calculations ($R$ to $A$ and $R$ to $B$). The accuracy of the method, \ie{} its convergence at finite sampling times, depends crucially on the extent of Boltzmann-weighted phase-space overlap between the reference and target
-states\cite{LU01.1,LU01.2,HA10.3,BO17.2},
-% NEW: HA10.3
-%
-\ie{} whether configurations relevant for $A$ are well sampled in $R$. Methods to enhance this overlap include in particular: 
-($i$) the use of a reference state with soft-core\cite{BE94.1} (SC) sites\cite{MA95.2,OO03.1,OO04.2,KH11.2} 
-or other softened force-field terms\cite{MA91.4,ME16.1,WA18.13,XI18.3};
-% NEW: WA18.13 XI18.3
-%
-($ii$) the construction of a reference state encompassing all the target states, as in enveloping distribution sampling\cite{CH07.6,CH08.3,CH09.1,CH09.3} (EDS);
-($iii$) the extension to the use of multiple reference states\cite{KH11.2}, along with the application of 
-the (multi-state\cite{SH08.7}) Bennet acceptance ratio\cite{BE76.3,SH03.5} (BAR or MBAR) estimator instead of OSP.
-In principle, reference-state methods bear the promise of enabling the extrapolative calculation of the relative free energies of numerous arbitrary states ($A$, $B$, $C$, ...) based on a single reference-state simulation. In practice, however, they seldom hold this promise (or not in a sufficiently robust fashion based on finite simulations), because the design of a suitable reference state requires considerable (\eg{} SC approach) or even complete (\eg{} EDS approach) \textit{a priori} knowledge of the target states it has to be appropriate for.
-
-In pathway-dependent methods, a hybrid Hamiltonian is constructed by employing a coupling parameter $\lam$ that defines a continuous transformation between the Hamiltonians of the physical end-states $A$ and $B$. Given such a path, the most established, robust and still frequently used method 
-is \revphil{multi-configuration\cite{ST91.1}} thermodynamic integration\cite{KI33.1,KI34.2,KI35.1} 
-%(TI). 
-\revphil{(MCTI or, simply, TI)}.
-In TI, a set of 
-independent simulations are performed at different constant $\lam$-values, and the 
-ensemble average of the derivative of the hybrid Hamiltonian with respect to $\lam$ is 
-subsequently integrated by numerical quadrature\cite{JO10.2,BR11.5,BR11.6} 
-%
-or curve fitting\cite{SH09.12,JO10.2,VI10.6,SH11.7}.
-%
-\revphil{A common alternative to TI is multi-configuration\cite{JO08.3}
-free-energy perturbation\cite{ZW54.1,MA95.2,LI96.1,MA99.10,SC99.3,RA12.6,RA17.5,BO17.2} (MC-FEP or, simply, FEP),
-where the OSP estimator is used to evaluate the free-energy difference
-from one $\lambda$-point to the previous or/and next one.}
-%
-Refinements and improvements of \revphil{the original TI protocol} include in particular:
-($i$) the design of Hamiltonian coupling schemes 
-%with 
-leading to high sampling efficiencies;\cite{CR86.1,BL04.2,PH11.1,PH12.1,NA14.1,NA15.3}
-($ii$) the partial automation of the TI protocol\cite{ME93.3,HU16.7,ME17.1,SU17.3,DA18.1}, 
-\ie{} of the selection of $\lam$-points along with associated \revphil{initial configurations,} equilibration \revphil{times} and sampling times;
-($iii$) the use of free-energy estimators with improved statistical efficiencies over plain quadrature, \eg{} extended TI (EXTI) estimator\cite{DE16.9} or MBAR estimator\cite{SH08.7};
-($iv$) the design of alternative single- or multiple-replica schemes where the $\lam$-values are
-no longer fixed during the simulation\cite{LI93.1,TI93.2,KO96.1,SU99.1,MI01.1,IB01.1}. 
-
-Although the possibility of changing the $\lam$-values over the course of a simulation may appear at first sight to represent an unnecessary complication of the TI protocol, it often leads to a significant enhancement of the sampling efficiency. This is because it increases the likelihood of crossing barriers 
-\revphil{in the orthogonal space\cite{BI15.1,GR16.4},
-%
-%\ie{} the space spanned by all conformational degrees of freedom excluding $\lam$. 
-that is, the space spanned by all the 
-%conformational 
-degrees of freedom of the system excluding $\lam$ ({\em i.e.} all the conformational ones). 
-}
-%
-These orthogonal barriers are typically higher at certain $\lambda$-values than at others. 
-The highest ones may be seldom crossed in corresponding simulations at \radd{fixed $\lam$, and}
-allowing for variations of $\lam$ may open pathways to circumvent them. Note that, in many cases, this enhancement is not sufficient \textit{per se} and other techniques must be applied to further 
-improve the orthogonal sampling 
-%
-%along the $\lam$-path\cite{WO03.1,WO03.2,HR07.1,DE08.2,DE08.12,FA08.7,HR08.1,HR09.1,GA13.4,KH10.1,KH11.2,DO12.5,WA12.2,GA13.4,KA14.3,ME16.1}. 
-along the $\lam$-path\cite{WO03.1,WO03.2,HR07.1,DE08.2,DE08.12,FA08.7,HR08.1,HR09.1,KH10.1,KH11.2,DO12.5,WA12.2,GA13.4,KA14.3,ME16.1}. 
-%
-There exist two main routes for performing variable-$\lam$ simulations:
-($i$) Hamiltonian replica exchange (HRE) or permutation (HRP), which involve multiple system replicas;
-($ii$) $\lam$-dynamics ($\lam$D) or $\lam$-Monte Carlo ($\lam$MC), which consider a single system.
-
-In the HRE scheme\cite{SU99.1,FU02.2,ZH16.2}, a series of system \revphil{copies (walkers)}
-are distributed over a set of fixed $\lam$-values \revphil{(replicas)}, 
-as is the case in TI. However, at regular time intervals, swaps are attempted 
-between pairs of systems corresponding to different $\lam$-values (typically adjacent ones).
-%$\lam$-values). 
-These attempts are accepted or rejected according to a Metropolis-Hastings criterion\cite{ME53.1,HA70.4} depending on the Boltzmann factor ratio of the replica system before and after the swap. Although the trajectories at each $\lam$-point become discontinuous, the TI-like statistics is preserved and the data can be analyzed in the same way as for TI. Recent extensions of the method involve in particular the consideration 
-of 
-%
-more advanced exchange schemes\cite{CA05.6,BR07.6,CH11.9}, 
-%
-%
-of replica reservoirs\cite{LI06.11,OK07.4,RO07.14,RU10.2,OK13.1,HE13.6,DA18.6},
-%%% NEW OK07.4 RU10.2 HE13.6 DA18.6
-%
-of frozen replicas\cite{CH15.28,CH16.21},
-%
-\radd{of heating-quenching steps between the sampling periods\cite{LI07.13,LI09.20,LI15.18,HE13.6,KU18.3},}
-%
-%(TIGER)
-% NEW: ALL
-%
-%Temperature Intervals with Global Energy Reassignments (TIGER)
-%  Original ref for TIGER
-%    **  LI07.13 : [Li/Stuart] An improved replica-exchange sampling method: Temperature intervals with
-%              global energy reassignment.
-%  Original ref for TIGER2
-%    *** LI09.20 : [Li/Stuart] TIGER2: An improved algorithm for temperature intervals with global exchange
-%              of replicas.
-%  Original ref for TIGER2A
-%    **  LI15.18 : [Li/Latour] TIGER2 with solvent energy averaging (TIGER2A): An accelerated sampling
-%              method for large molecular systems with explicit representation of solvent.
-%  Original ref for TIGER2h
-%    KU18.3  : [Kulke/Langel] Replica-based protein structure sampling methods: Compromising between
-%              explicit and implicit solvents.
-%  Implementations
-%    ME10.6  : [Menz/Biggs] TNAMD: Implementation of TIGER2 in NAMD.
-%    BR15.12 : [Brown/Walsh] An improved TIGER2 implementation for NAMD suitable for the Blue Gene
-%              architecture.
-%  Applications
-%    * HE13.6  : [Henriksen/CheathamIII] Reliable oligonucleotide conformational ensemble generation 
-%                in explicit solvent for force field assessment using reservoir replica exchange molecular 
-%                dynamics simulations. 
-%
-%
-of the infinite-swapping limit\cite{SI08.3,PL11.4,DU12.3,PL13.3,LU13.4,ZH16.2},
-% (ISL),
-%
-\radd{and of generalized-ensemble distributions\cite{KI10.5,LU12.7,LU13.5,LU14.6,MA15.18,MA15.19}}.
-% (gREM)}.
-% NEW: ALL
-%KI10.5  : [Kim/Straub] Generalized replica exchange method. 
-%LU12.7  : [Lu/Straub] Exploring the solid-liquid phase change of an adapted Dzugutov model using 
-%          generalized replica exchange method. 
-%LU13.5  : [Lu/Straub] Order parameter free enhanced sampling of the vapor-liquid transition using 
-%          the generalized replica exchange method. 
-%LU14.6  : [Lu/Straub] Investigating the solid-liquid phase transition of water nanofilms using the 
-%          generalized replica exchange method. 
-%MA15.18 : [Ma\l{l}olepsza/Keyes] Isobaric molecular dynamics version of the generalized replica
-%          exchange method (gREM): Liquid-vapor equilibrium.
-%MA15.19 : [Ma\l{l}olepsza/Keyes] Water freezing and ice melting.
-%
-%
-%
-They also include the implementation of $\lam$-moves that go beyond pairwise swaps with a selection based on a Suwa-Todo criterion\cite{SU10.4,TO13.7,MO15.11}, as implemented in the HRP method\cite{IT13.1,IT13.2,YA17.2}. In the latter case, enabling arbitrary permutations and abandoning the detailed-balance constraint leads to a \radd{significant} increase in the probability of exchange acceptance.
+%% Single, Hybrid and dual topology
+In practice there can be three topology types differentiated: single topology, hybrid topology, and dual topology.
 
 
-In the $\lam$D scheme \cite{KO96.1,DA01.7,GU03.1,KN09.1,KN11.2,DO11.2,AR15.2,HA17.1} (see also its ancestor\cite{TI93.2,LI93.1} $\lam$MC), a single system is considered for which the $\lam$-value evolves dynamically in the course of the simulation, \ie{} $\lam$ is treated as an extra pseudo-conformational degree of freedom with an assigned mass parameter $m_{\lam}$ and momentum $p_{\lam}$. This momentum enters an extended Hamiltonian that includes an additional term for the corresponding kinetic energy. This results in a continuous sampling of the $\lam$-range instead of the discrete sampling underlying TI or HRE/HRP. The free-energy difference is then typically estimated from the probability distribution along $\lam$, with the drawback of requiring a threshold to define the end-states\cite{KN11.1}. This issue can be alleviated by introducing a coordinate transformation with plateaus\cite{BI14.1,BI15.2}, or by using a TI-like formula\cite{KA05.1,KA06.6,KA12.5} or a Rao-Blackwell estimator\cite{DI17.5}, the latter conceptually similar to MBAR. 
 
-The major advantages of $\lam$D compared to HRE/HRP are that it involves a simpler single-system setup, is deterministic, 
-samples the $\lam$-range continuously, and does not require the specification (and 
-optimization\cite{KO05.8,RA05.8,TR06.5,SI08.3,NA08.6,NA08.10,VO15.2,VO15.3,ZH16.2,SI16.5,SU17.3,SI17.7,MA18.8})
-%%% NEW AB08.3 SI17.7
-%
-of a $\lam$-ladder and of a swapping-attempt frequency. The main drawback\cite{BI14.1} is that 
-the sampling probability along $\lam$ is no longer imposed in the form of a fixed set of $\lam$-points 
-with equal sampling times, but entirely controlled by the free-energy profile along $\lam$. 
-As a result, $\lam$-values with high relative free energies may be poorly represented (or not at all) 
-and $\lam$-barriers with high relative free energies may be seldom crossed (or not at all) in the 
-course of a finite simulation. In addition, care must be taken to avoid the sampling of $\lam$-values 
-beyond the physical end-states of the alchemical coupling\cite{KO96.1} \revphil{({\em i.e.} below 0 or above 1)}. 
-%
-Both the sampling inhomogeneity and the end-point issues can in principle be remedied\cite{BI14.1} 
-by employing an appropriate coordinate transformation\cite{KN11.2,DO11.2,WU11.1,KN11.1,DO13.1,ZH12.3,BI14.1,BI15.2} or/and 
-by applying a biasing potential along $\lam$\cite{GU98.1,GU98.2,SO01.1,WU11.1,BI14.1,BI15.2}. A combination of these two 
-approaches underlies the $\lambda$-local elevation umbrella sampling method\cite{BI14.1,BI14.2,BI15.1,BI15.2} ($\lam$-LEUS), 
-which relies in particular on an adaptive memory-based biasing potential. 
-%
-%Note that 
-A similar principle is also at the heart of numerous other methods such 
-as the flat-histogram\cite{WA01.5,LA04.6}, $\lam$-metadynamics\cite{LA02.1,BA08.2,WU11.1}, 
-adaptive integration\cite{FA04.3}, adaptive biasing force\cite{DA08.2}, \radd{adaptively biased\cite{BA08.1}} 
-and expanded-ensemble\cite{LY92.1,LY94.1,LY96.2,ES07.1,ES07.2,PA11.7,RA18.2} methods. 
+In the following we will describe the topology types with an alchemical transition from one ligand to another one (state A and state B).
 
-In $\lam$-LEUS, a local elevation\cite{HU94.3} (LE) build-up phase is used to construct a suitable biasing potential, and followed by an umbrella sampling\cite{TO74.1,TO77.1} (US) phase where this potential is frozen\cite{HA10.1} and biased equilibrium statistics gathered with quasi-homogeneous sampling of the $\lam$-range. Clearly, the LE phase represents an efficiency loss in the method, \ie{} a dead time. Note, however, that a similar (but generally shorter) dead time also exists in TI and HRE/HRP in the form of discarded initial equilibration times for all replicas. Another drawback of $\lam$-LEUS is that it is not parallelizable in the same fashion as TI and HRE/HRP, where the simulations at different $\lambda$-points can be carried out in parallel (see, however, various swarm\cite{HU98.6,BU15.5,KA18.6,AL18.2}, multiple-walker\cite{RA06.2,CO14.5} and flying Gaussian\cite{SU16.3,KR17.1} variants of memory-based biasing methods). 
-Finally, some care must be taken to select \radd{an appropriate mass and thermostat-coupling scheme 
-for the $\lam$-variable, so as to ensure that 
-this variable is adequately coupled to the configurational degrees of freedom\cite{BI15.1}.}
-%can have a significant influence on the calculation results
+%%% single topology
+The single topology approach contains exactly the same set of atom coordinates for both states and switches them from one atom type to another. Differences in the molecular graphs can be realized with using dummy atom types.
+soft-bonds - FEP+ \cite{Wang2017, Yu2017, Shivakumar2010}
 
-In the present chapter, we propose a new alchemical free-energy calculation scheme with the goal of combining the advantages and alleviating the shortcomings of both HRE/HRP and $\lam$D. This scheme is termed conveyor belt thermodynamic integration (CBTI) and relies on the coupled $\lam$D of a set of system replicas, in which the $\lam$-distance between successive replicas is kept fixed along a forward-turn-backward-turn path, akin to a conveyor belt between the two physical end-states. The basic principle of CBTI is illustrated schematically in \reffig{scheme}.
+"Two main approaches exist for calculating ΔΔGsite, the free energy of transforming A into B in the binding site: the single topology approach and the dual topologies approach. In the single topology approach, there is one ligand molecule in all simulations, which morphs from being in state A (having a particular chemical structure and interaction parameters), to a different state B, where the structure and interaction parameters are different.4–13 In some transformations, there could be atoms on A that have no direct analog on B." \cite{Rocklin2013}
 
-\begin{figure}
-  \centering
-  \subgraph{fig:scheme:ldyn:plane}{lambda_dyn_linear.pgf}{.49}%
-  \hfill%
-  \subgraph{fig:scheme:ldyn:gotoflat}{deltag_example_ene_ana.pgf}{.49}\\
-  \subgraph{fig:scheme:cvb:plane}{conveyor_belt_linear.pgf}{.49}%
-  \hfill%
-  \subgraph{fig:scheme:ene:plane}{ene_0.pgf}{.49}\\
-  \subgraph{fig:scheme:cvb:zigzag}{conveyor_belt_zigzag.pgf}{.49}%
-  \hfill%
-  \subgraph{fig:scheme:ene:zigzag}{ene_1.pgf}{.49}\\
-  \subgraph{fig:scheme:cvb:sinus}{conveyor_belt_sintw.pgf}{.49}%
-  \hfill%
-  \subgraph{fig:scheme:ene:sinus}{ene_2.pgf}{.49}\\
-  
-  \caption{\footnotesize
-\textit{Schematic illustration of the conveyor belt thermodynamic integration (CBTI) approach for different free-energy profiles $G(\lam)$ and numbers of replicas $K$.} The free-energy profile $G(\lam)$ is shown on the left along with the conveyor belt for an inclined plane (\subref{fig:scheme:cvb:plane}), a piecewise-linear curve (\subref{fig:scheme:cvb:zigzag}) and a more realistic curve (\subref{fig:scheme:cvb:sinus}),
-\radd{the latter curve corresponding to the function}
-%illustrative function of Panel (\subref{fig:scheme:cvb:sinus}) 
-%is 
-$G(\lam)=\sin (\pi \lam)(\lam-0.5)^2+0.25\lam$.
-%
-The corresponding free-energy profiles $G_{\Lamb}(\Lamb)$ 
-along the conveyor belt advance variable $\Lamb$ \revphil{(\refeq{fre_prof_lam_def})} are shown on the right for $K=2$ (blue), $K=4$ (red), $K=8$ (green) or $K=16$ (orange).
-%
-The top-left panel (\subref{fig:scheme:ldyn:plane}) illustrates the situation of plain unbiased $\lam$D, 
-where the system would ``roll down'' the slope and keep sampling the neighborhood of the state with the lowest free energy.
-%
-\radd{The top-right panel (\subref{fig:scheme:ldyn:gotoflat}) 
-shows the height $G^\star_{\Lamb}$ of the residual barriers in the 
-free-energy profile $G_{\Lamb}(\Lamb)$ considering this illustrative function
-and increasing values of $K$.
-The data is represented in logarithmic form and a linear line of slope $-1$ is fitted to the filled 
-      circles.
-}
-}
-  \label{fig:scheme}
-\end{figure}
+%%% hybrid topology
+The hybrid approach diverges from the single topology approach by adding atoms for the substituent if they are not the same .... \cite{}.
 
-Considering a free-energy profile $G(\lam)$ presenting a constant uphill slope between $A$ and $B$, a single system subjected to $\lam$D in the absence of a biasing potential will ``roll down'' to $A$ and keep sampling the neighborhood of this state (\reffig{scheme:ldyn:plane}). To circumvent this problem, one may decide to couple the $\lam$D of two replicas 0 and 1 of the system in such a way that any downhill displacement of replica 0 implies an equivalent uphill displacement of replica 1 (\reffig{scheme:cvb:plane}). This working principle is exploited in practice by vehicles like cable cars or funiculars, where the motion of the two vehicles are controlled by a stretched cable connected to two pulleys. It has also been exploited previously for MD in the context of twin-system\cite{HA13.1,GE16.1} EDS, which couples forward and reverse alchemical changes performed in two different environments. In this situation, one may describe the $\lam$-values of the two replicas by means of a single periodic angular variable $\Lamb$ representing the advance of the cable from 0 (replica 0 in state $A$, replica 1 in state $B$) to $\pi$ (0 in $B$, 1 in $A$) and then $2\pi$ (back to the starting situation). Note that the $\pi$ to $2\pi$ return range of $\Lamb$ deviates from the cable car or funicular analogy, where the vehicles never go ``over the pulley''. If the free-energy profile $G(\lam)$ has a constant slope, it is easily seen that there will be no net driving force on the cable. In the $\lam$D context, this means that the $\Lamb$-variable will undergo random diffusion with a homogeneous sampling of $\Lamb$, \ie{} the corresponding free-energy profile $G_{\Lamb}(\Lamb)$ will be flat (\reffig{scheme:ene:plane}). Accordingly, each of the two replicas will sample the entire $\lam$-range homogeneously.
+%%%Dual Topology
+"In the dual topologies approach, the computational morphing process carries along two ligand molecules at the same time throughout all simulations.14–16 Using this method, the simulations begin with both a “real” ligand A and a “dummy” ligand B, and over the course of the alchemical transformation, A becomes the dummy ligand while B becomes the real ligand. "
+\cite{Rocklin2013}
 
+The Dual-Topology approach is adding two independent sets of atom-coordinates for molecules differing in the states. This approach allows the largest possible .
+%%%% Restraint problem
+There are different ways how the state molecules are kept in a similar coordinate space, in order to guarantee efficient sampling.  
+One way is to define harmonic  
 
-Consider now a free-energy profile $G(\lam)$ presenting a constant uphill slope from 0 to $1/2$ and a constant downhill slope from $1/2$ to 1 (\reffig{scheme:cvb:zigzag}). In a setup with two replicas, the $G_{\Lamb}(\Lamb)$ profile will no longer be flat (\reffig{scheme:ene:zigzag}, blue curve). From 0 to $\pi/2$ and from $\pi$ to $3\pi/2$, both replicas move uphill, whereas from $\pi/2$ to $\pi$ and from $3\pi/2$ to $2\pi$, they both move downhill. This can be remedied by using four instead of only two replicas, placed at equal distances along the cable. This working principle is now more reminiscent of the real-life situation of a conveyor belt. In this four-replica setup, the $G_{\Lamb}(\Lamb)$ profile will again be flat (\reffig{scheme:ene:zigzag}, red curve), and each of the four replicas will sample the entire $\lam$-range homogeneously.
+For this approach, there are sub variants for how the 
+QligFEP \cite{Jespers2019}
 
-Finally, consider a more realistic free-energy profile $G(\lam)$ (\reffig{scheme:cvb:sinus}). 
-In the general case, the $G_{\Lamb}(\Lamb)$ profile will never be exactly flat irrespective 
-of the number $K$ of replicas. However, by adding more and more replicas to the conveyor belt, 
-the features of the $G_{\Lamb}(\Lamb)$ profile can be progressively reduced in magnitude 
-(as illustrated for $K=2$, 4, 8 or 16 replicas by the blue, red, green and orange curves of \reffig{scheme:ene:sinus}). 
-%
-%
-Note that \revphil{we restrict} the choice of $K$ to even values, 
-in order to have always the same number of replicas moving forward and backward. 
-% The choice of an odd number of replicas would break the forward-backward symmetry, with one extra replica moving in either of the two directions.
-\revphil{Although the choice of an odd number of replicas would be acceptable, 
-it is likely to be less favorable (especially at small $K$), because 
-one extra replica would always move in either of the two directions.
-}
+%%Single vs. Dual Topology
 
-\revphil{Considering the illustrative $G(\lambda)$ of \reffig{scheme:cvb:sinus}, 
-the magnitude $G^{\star}_{\Lambda}$ of the variations 
-in $G_{\Lambda}(\Lambda)$ is shown in \reffig{scheme:ldyn:gotoflat} as a function of $K$.}
-%
-As discussed in \refsec{quad}, 
-these variations
-%in the $G_{\Lamb}(\Lamb)$ profile 
-can be interpreted as
-the residual of a $K$-point trapezoid quadrature approximation to the vanishing integral of the derivative of an even periodic function \radd{over one period, namely that of the $G(\lam)$ profile after mirroring}. Quantitatively, this interpretation shows that the magnitude $G^{\star}_{\Lambda}$ of 
-these variations decreases at least as $K^{-1}$ \radd{in the limit of large $K$}. 
-%
-%
-Note that the convergence to a flat 
-%$G_{\Lamb}(\Lamb)$ 
-\revphil{profile
-({\em i.e.} the decrease
-of the barrier heights towards zero upon increasing $K$)}
-does not need to be regular for small $K$ (see \eg{} the comparatively low variations for the blue curve in \reffig{scheme:ene:sinus}) and that it can be stronger than $K^{-1}$ \radd{for large $K$} if $G(\lam)$ presents particular continuity/symmetry properties.
-%
-By \radd{using a sufficient number of replicas}, one may thus ensure a quasi-homogeneous sampling of the $\lam$-range by each replica, even in the absence of coordinate transformation or biasing potential. If desired, a memory-based biasing potential may still be applied to further homogenize the sampling. However, the LE build-up time 
-%will 
-can
-be considerably reduced relative to that needed in a corresponding single-system $\lam$-LEUS simulation, \radd{because this biasing potential} only needs to be applied to the $\Lamb$-variable and no longer to the $\lam$-variable. Thus, it has to compensate for comparatively small $G_{\Lamb}(\Lamb)$ variations. Furthermore, it only needs to be constructed over a limited $\Lamb$-range, considering that $G_{\Lamb}(\Lamb)$ is periodic with period $2\pi K^{-1}$ as well as even over this $2\pi K^{-1}$ interval. 
-
-Irrespective whether a biasing potential is employed or not, the definition of a free-energy estimator for the CBTI scheme, \ie{} a procedure to construct $G(\lam)$ based on the simulation results for the multiple-replica system, is not as trivial\cite{KR17.1} as in the single-system $\lam$D or $\lam$-LEUS cases. Here, CBTI is analyzed using a TI-like estimator\cite{KA05.1} relying on the quadrature integration of the \radd{average} Hamiltonian $\lam$-derivative binned \radd{along $\lambda$} considering all replicas \radd{simultaneously}. The associated quadrature error can be kept very low by using a large number of bins, which is rendered possible by the continuous and quasi-homogeneous $\lam$-sampling. 
-%
-Although this estimator is very robust, we note that it may not be optimal in terms of statistical efficiency\cite{LU04.3,SH05.6,SH08.7,FA09.4,TA12.1,DE16.9,DI17.5,ZH17.6}. 
-
-
-In the present chapter, we provide the mathematical/physical formulation of the proposed CBTI scheme, and report an initial application of the method to an illustrative alchemical transformation: the mutation of a methanol molecule to a dummy (non-interacting) skeleton in water, giving access to the hydration free energy of the molecule.

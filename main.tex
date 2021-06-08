@@ -14,6 +14,15 @@
 \renewcommand{\sidecaptionsep}{2em}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hyperlinks
+\usepackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Text Symbols (alpha, phi ...)
+\usepackage{textgreek} %nice greek letters everywhere
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Supporting INFO
 
 \usepackage{longtable}
@@ -26,11 +35,18 @@
 \usetikzlibrary{positioning}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Handling of the references
+% Handling of the references - Reference lib
+%\usepackage[backend=biber,
+%			style=alphabetic,
+%			sorting=ynt]{biblatex}
+
+
 
 \usepackage[sort,super,comma,compress]{natbib}
-\usepackage{natmove}
-\renewcommand{\bibname}{References}
+\bibliographystyle{unsrt}
+
+%\usepackage{natmove}
+%\renewcommand{\bibname}{References}
 
 %% % Call as \square{\cite{key}} to work with lars
 %% \newcommand*{\square}[1]{%
@@ -125,10 +141,16 @@
 \input{8_chapter_outlook/content_outlook.tex}
  
  \backmatter
- \begin{thebibliography}{999}
-  \addcontentsline{toc}{chapter}{\bibname}
-  \input{1_frontback/all_ref.bib}
- \end{thebibliography}
+  \addcontentsline{toc}{chapter}{References}
+  \bibliography{
+  	2_chapter_intro/ref/ref.bib,
+  	3_chapter_1/ref/ref.bib, 
+  	4_chapter_2/ref/ref.bib,
+  	5_chapter_3/ref/ref.bib,
+  	6_chapter_4/ref/ref.bib,
+  	7_chapter_5/ref/ref.bib
+	}
+
  \input{1_frontback/cv.tex}
 
 \end{document}

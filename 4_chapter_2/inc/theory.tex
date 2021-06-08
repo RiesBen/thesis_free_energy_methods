@@ -1,701 +1,141 @@
-%------------------------------------------------------------
-\subsection{Alchemical Free-Energy Calculations}
-%------------------------------------------------------------
+\subsection{Enveloping Distribution Sampling (EDS)}
+In EDS, free-energy differences between multiple end states are obtained by sampling a reference-state Hamiltonian, i.e. without the definition of specific alchemical paths \cite{Christ2007,Christ2008,Riniker2011}. 
+Given $N$ end states, the potential energy function $V$ of the EDS reference state $R$ is defined as,
+\begin{equation}
+V_R(\vec{r}; s, \vec{E}^R)= - \frac{1}{\beta s}\ln \left[ \sum^N_{i=1}{e^{-\beta s \left(V_i(\vec{r})- E_i^R\right) }} \right] ,
+\label{EQ: Reference EDS}
+\end{equation}
+where $\beta = (k_\mathrm{B} T)^{-1}$ with $k_\mathrm{B}$ being the Boltzmann constant and $T$ the absolute temperature.
+The smoothing parameter $s$ and the energy offsets $\vec{E}^R$ were introduced to enable tuning of the reference state for optimal sampling of all end states \cite{Christ2007, Christ2008}.
 
+%% $s$-parameter    
+A smoothness parameter set to $s=1.0$ gives a reference potential-energy landscape that contains all the relevant minima of the end states. However, these might be separated by high barriers.
+For $s < 1$, the energy barriers between different end states $V_i$ are smoothed in the reference potential $V_R$, increasing the transition rates between the different minima (Figure \ref{fig: EDS_potential_behavioura}) \cite{Christ2008}. 
+However, if $s$ is chosen too small, $V_R$ consists of a global unphysical minimum, which does not correspond to any of the end states. 
+In the limit of $s\rightarrow 0$, all end states contribute equally to the potential-energy function of the reference state \cite{Koenig2020}, which can lead to unphysical deformations. The situation with a too small $s$ has been termed ``undersampling'' \cite{Riniker2011}.
 
+%%Eoff
+The energy offsets $\vec{E}^R$ are used to ensure equal weighting of all end states $V_i$ in $V_R$ (Figure \ref{fig: EDS_potential_behaviourb}). 
+Note that the optimal values of $s$ and $\vec{E}^R$ are not independent of each other (as can be seen in Eq. (\ref{EQ: Reference EDS})) \cite{Christ2008}.
+%
+Different schemes have been proposed to determine optimal reference-state parameters \cite{Riniker2011, Christ2009a, Hansen2012}, however, these are only applicable to systems with two end states.
 
-The goal of path-dependent alchemical free-energy calculations is
-to evaluate the free-energy difference $\Delta G$
-between two states $A$ and $B$ of a molecular system,
-by introducing a coupling scheme relying on a parameter $\lam$,
-and sampling along the so-defined $\lam$-path.
-%
-The two states have the same number $3N$ of degrees of 
-freedom, but distinct Hamiltonian functions $\ham_A(\xv)$ and $\ham_B(\xv)$,
-respectively, where $\xv = (\rv,\pv)$ is the $6N$-dimensional
-phase-space vector representative of a microscopic system configuration, $\rv$ 
-and $\pv$ being the corresponding coordinate and momentum vectors.
-%
-The coupling parameter is introduced into a hybrid Hamiltonian 
-$\ham(\xv;\lam)$ 
-satisfying the boundary conditions
-$\ham(\xv;0)=\ham_A(\xv)$ and $\ham(\xv;1)=\ham_B(\xv)$,
-where the semi-colon indicates a parametric dependence.
-%
-%
-%Examples of methods involving the coupling-parameter approach are 
-%multi-configuration\cite{ST91.1} thermodynamic integration\cite{KI33.1,KI34.2,KI35.1} (MCTI or, simply, TI)
-%and multi-configuration\cite{JO08.3} free-energy perturbation\cite{ZW54.1,MA95.2,LI96.1,MA99.10,SC99.3,RA12.6,RA17.5,BO17.2} (MC-FEP or, simply, FEP)
-%along with their HRE\cite{SU99.1,FU02.2,ZH16.2}/HRP\cite{IT13.1,IT13.2,YA17.2} variants, as well as $\lam$-dynamics\cite{KO96.1,DA01.7,GU03.1,KN09.1,KN11.2,DO11.2,AR15.2,HA17.1} ($\lam$D),
-%along with its coordinate-transformed or/and $\lam$-biased variants\cite{GU98.1,GU98.2,SO01.1,WU11.1,KN11.2,DO11.2,KN11.1,ZH12.3,DO13.1,BI14.1,BI14.2,BI15.1,BI15.2} ({\em e.g.} the $\lam$-LEUS scheme\cite{BI14.1,BI14.2,BI15.1,BI15.2}).
-%
-\revphildel{[-- Redundant paragraph removed --]}
-%
+\begin{figure}[h]
+	\begin{center}
+		\begin{subfigure}{0.44\columnwidth}
+			\centering
+			\includegraphics[width=\textwidth]{fig/intro/EDS_parmeters_s.png}
+			\caption{Effect of $s$ on $V_R$}
+			\label{fig: EDS_potential_behavioura}
+		\end{subfigure}
+		\begin{subfigure}{0.44\columnwidth}
+			\centering
+			\includegraphics[width=\textwidth]{fig/intro/EDS_parmeters_Eoff.png}
+			\caption{Effect of $E_i^R$ on $V_R$}
+			\label{fig: EDS_potential_behaviourb}
+		\end{subfigure}
+	\end{center}
+	\caption{Schematic illustration of the effect of the two types of EDS reference-state parameters. (a) The smoothing parameter $s$ decreases the barriers between the end states. If $s$ is too small, an ``undersampling'' situation occurs with a global unphysical minimum. (b) The energy offsets $\vec{E}^R$ provide equal weighting to all end states in the EDS reference state.  The figure was generated with Ensembler \cite{ries2021a}.}
+	\label{fig: EDS_potential_behaviour}
+\end{figure}
 
-
-
-Since the proposed CBTI scheme encompasses features of both $\lam$D and TI,
-these two approaches are summarized briefly in the \radd{next two subsections.
-The following three subsections then describe in turn
-the basis of the CBTI scheme, 
-its free-energy estimator 
-and the application of a biasing potential.}
-
-
-
-%------------------------------------------------------------
-\subsection{$\lam$-Dynamics ($\lam$D)}
-%------------------------------------------------------------
-
-
-In the $\lam$D scheme\cite{KO96.1,DA01.7,GU03.1,KN09.1,KN11.2,DO11.2,AR15.2,HA17.1}, 
-the coupling parameter $\lam$ is assigned a mass
-$m_\lam$ and a momentum $p_\lam$, and considered to be an additional
-pseudo-conformational degree of freedom of the system.
-%
-The Hamiltonian of the extended system is defined as
-%
-\beq{lam_dyn_ext_ham}
-  \ham^\star(\xv,\lam) = \ham(\xv;\lam) + \frac{p_\lam^2}{2m_\lam} \ ,
-\eeq
-%
-where the star refers to an extended system in which $\lambda$ 
-is now a variable and no longer a parameter 
-(thus the replacement of the semi-colon by a comma).
-%
-This leads to the additional equation of motion
-%
-\beq{lam_dyn_eq_mot}
-  \ddot{\lam} = \frac {\dot{p}_{\lam}} {m_{\lam}} 
-              = -\frac {1} {m_{\lam}} 
-                 \frac {\partial\ham(\xv;\lam)} {\partial\lam}
-\eeq
-%
-for propagating the $\lam$-variable, \radd{where a dot over a variable indicates its time derivative}.
-%
-
-
-The free-energy difference $\Delta G$
-between the two physical end-states can then in principle be
-calculated based on a single thermostated MD simulation 
-of the extended system, as
-%
-\beq{lam_dyn_dg}
-  \Delta G = 
-      - \frac{1}{\beta}\ln\frac{\left\langle \delta(\lam - 1)\right\rangle^\star}
-      {\left\langle \delta(\lam)\right\rangle^\star} \ ,
+% laws of motion of R
+The force on a particle $k$ in the EDS reference state is calculated as \cite{Christ2008},
+\begin{equation}
+\vec{f}_k(t)=-\frac{\partial V_R(\vec{r}; s, \vec{E}^R)}{\partial \vec{r}_k} = \sum^N_{i=1}\frac{e^{-\beta s(V_i(\vec{r}) -E_i^R)}}{\sum^N_{j=1}{e^{-\beta s (V_j(\vec{r})-E_j^R)}}}  \left( -\frac{\partial V_i(\vec{r})}{\partial \vec{r}_k} \right) \,.
+\label{eq:laws_of_motion}
 \end{equation}
 %
-where 
-$\beta=(k_BT)^{-1}$, 
-$k_B$ being the Boltzmann constant and $T$ the absolute temperature,
-$\delta$ is the Dirac delta function, 
-and $\langle\cdot\cdot\cdot\rangle^\star$ denotes ensemble averaging 
-for the extended system (\ie{} over the joint trajectories of $\xv$ and $\lam$).
-%
-\revphil{In practice, the $\delta$-functions in \refeq{lam_dyn_dg} must be replaced
-      by two finite end-state bins ($\lambda$-cutoff), sufficiently large
-      for proper statistics but also sufficiently small for avoiding 
-      distortions due to averaging at the end-states\cite{KN11.1}.}
-%
-\revphildel{[-- Redundant paragraph removed --]}
-%
-%There are, however, a number of important practical issues 
-%to be addressed if this scheme is to be accurate and efficient\cite{BI14.1}:
-%%
-%($i$) the variations of $\lam$ must be restricted to the range $[0,1]$ between the two physical end-states\cite{KO96.1};
-%($ii$) the mass and thermostat-coupling scheme of the $\lam$-variable must be chosen appropriately
-%      to ensure a correct temperature for this variable\cite{BI15.1};
-%($iii$) the sampling along $\lam$ must generally be adjusted
-%      to ensure adequate sampling of the A and B states
-%      with a sufficient number of interconversion transitions\cite{BI14.1};
-%($iv$) the $\delta$-functions in \refeq{lam_dyn_dg} must be replaced
-%      by two finite end-state bins ($\lambda$-cutoff), sufficiently large
-%      for proper statistics but also sufficiently small for avoiding 
-%      averaging distortions at the end-states\cite{KN11.1}. %
-%%
-%Different implementation variants of $\lambda$D address these
-%issues in a variety of ways, including the use of
-%coordinate transformations\cite{KN11.2,DO11.2,WU11.1,KN11.1,DO13.1,ZH12.3,BI14.1,BI15.2},
-%memory-based biasing potentials,\cite{GU98.1,GU98.2,SO01.1,WU11.1,BI14.1,BI15.2}
-%separate thermostat coupling of the $\lam$-variable\cite{BI14.1,BI15.1,BI15.2},
-%and 
-%alternative free-energy estimators\cite{LU04.3,SH05.6,KA05.1,KA06.6,FA09.4,KA12.5,TA12.1,DI17.5,ZH17.6}.
+For $s$ values close to one, the reference-state forces are dominated by the one end state, for which the current coordinates are most favourable, while the other end states give high energies and therefore contribute little (i.e. ``dummy states'').  
+For small $s$ values (undersampling situation), all end states contribute effectively to the forces, resulting in the global unphysical minimum.
 
+%% ddFE
+The free-energy difference between two end states $A$ and $B$ can be calculated by employing the Zwanzig equation twice forming a path via the reference state~$R$ \cite{Zwanzig1954,Christ2007,Christ2008},
 
-
-%------------------------------------------------------------
-\subsection{Thermodynamic Integration (TI)}
-%------------------------------------------------------------
-
-
-In the original TI scheme\cite{KI33.1,KI34.2,KI35.1}, a set of 
-$K$ replicas of the system are simulated in parallel at fixed predefined 
-$\lam$-values in the range $[0,1]$.
-Since the replicas are entirely decoupled 
-from each other, the simulations
-can be performed serially as well. However, TI extensions 
-including the HRE scheme\cite{SU99.1,FU02.2,ZH16.2} and the HRP scheme\cite{IT13.1,IT13.2,YA17.2}
-introduce a coupling in the form of $\lam$-value exchanges,
-in which case the simulations must really be carried out in parallel.
-The same will apply to the proposed CBTI scheme, where the coupling involves a synchronization of
-the dynamical $\lam$-variations. 
-
-
-Considering all replicas $k=0 \dots K-1$ as the members of a replica system,
-one may note the corresponding $6K\mkern-3mu\times\mkern-3mu N$-dimensional phase-space vector
-as $\Xv=\{\xv_k\}$ and the corresponding $K$-dimensional vector containing the fixed $\lam$-values as 
-$\lamv=\{\lam_k\}$.
-%
-In plain TI, the Hamiltonian of the replica system is defined as
-%
-\beq{ti_rep_ham}
-  \ham^\dagger(\Xv;\lamv) = \sum_{k=0}^{K-1} \ham(\xv_k;\lam_k) \ ,
-\eeq
-%
-where the dagger refers to a replica system,
-and $\lamv$ is here a parameter vector (thus the semi-colon).
-Because the Hamiltonian of \refeq{ti_rep_ham} involves no coupling 
-term  between the replicas, the dynamics of a replica $k$
-is independent from that of the other replicas and
-solely depends on $\lam_k$.
-
-
-The free energy difference $\Delta G$
-between the two states can then be
-calculated based on a single thermostated MD simulation 
-of the replica system, as
-%
-\begin{multline}
-  \label{eq:ti_formula}
-  \Delta G = 
-  \int\limits_0^1 \mathrm{d}\lam' \left\langle \frac{\partial{\ham(\xv;\lam)}}{\partial \lam} \right\rangle_{\lam'} 
-    \approx
-    \sum_{k=0}^{K-1}  w_k \left\langle \frac{\partial{\ham^\dagger(\Xv;\lamv)}}{\partial \lam_k} \right\rangle^\dagger\\ 
-    = 
-    \sum_{k=0}^{K-1}  w_k \left\langle \frac{\partial{\ham(\xv_k;\lam_k)}}{\partial \lam_k} \right\rangle^\dagger \ ,
-\end{multline}
-%
-where 
-the $w_k$ are quadrature weights for the numerical integration\cite{JO10.2,BR11.5,BR11.6},
-$\langle\cdot\cdot\cdot\rangle_{\lam}$ denotes ensemble averaging 
-for a single system \radd{(\ie{} over $\xv$) at the given $\lam$ value},
-and
-$\langle\cdot\cdot\cdot\rangle^\dagger$ denotes ensemble averaging 
-for the replica system (\ie{} over $\Xv$).
-
-
-\revphil{In the above form, TI has long been the workhorse of alchemical free-energy calculations.
-%
-The method is extremely robust in the sense 
-that the accuracy of the calculated $\Delta G$
-%free-energy change 
-can always be systematically
-improved (more $\lambda$-points, longer equilibration or/and sampling times).
-However, it is not necessarily the most 
-%practical and 
-efficient 
-method to determine $\Delta G$ up to a certain accuracy,
-due to possible sub-optimalities in
-the coupling scheme\cite{CR86.1,BL04.2,PH11.1,PH12.1,NA14.1,NA15.3},
-the protocol design\cite{ME93.3,HU16.7,ME17.1,SU17.3,DA18.1}
-the free-energy estimator\cite{LU04.3,SH05.6,SH08.7,FA09.4,TA12.1,DE16.9,DI17.5,ZH17.6},
-and
-the orthogonal sampling\cite{WO03.1,WO03.2,KH10.1,KH11.2,BI15.1}.
-}
-\revphildel{[-- Redundant paragraph removed --]}
-
-
-
-
-%In the above form, TI has long been the workhorse 
-%of alchemical free-energy calculations.
-%%
-%In practice, in addition to the choice of a coupling scheme\cite{CR86.1,BL04.2,PH11.1,PH12.1,NA14.1,NA15.3},
-%a TI calculation requires the definition of a protocol including:
-%($i$) the number $K$ and distribution (spacing) of the $\lambda$-points considered;
-%($ii$) the initial configurations, equilibration times and sampling times
-%    selected for each $\lambda$-point;
-%($iii$) the choice of a quadrature scheme for the numerical integration.
-%%
-%The accuracy of the calculation will depend on the selection of these 
-%parameters, the optimization of which may represent a non-trivial and 
-%time-consuming task\cite{ME93.3,HU16.7,ME17.1,SU17.3,DA18.1}.
-%%
-%Thus, even though TI is extremely robust in the sense 
-%that the accuracy of the calculated free-energy change can always be systematically
-%improved (more $\lambda$-points, longer equilibration or/and sampling times),
-%it is not necessarily the most efficient method to determine 
-%$\Delta G$ up to a certain accuracy.
-%
-%Many improvements have been proposed for the TI scheme
-%over the years.
-%%
-%Most prominently, the inclusion of $\lam$-exchanges in 
-%%HRE\cite{SU99.1,FU02.2,ZH16.2}/HRP\cite{IT13.1,IT13.2,YA17.2} 
-%\radd{the HRE scheme\cite{SU99.1,FU02.2,ZH16.2} and the HRP scheme\cite{IT13.1,IT13.2,YA17.2}}
-%permits to 
-%circumvent orthogonal barriers\cite{WO03.1,WO03.2,KH10.1,KH11.2}, a feature also shared by $\lambda$D schemes\cite{BI15.1}, and
-%the use of alternative free-energy estimators like the
-%EXTI\cite{DE16.9} scheme or the MBAR\cite{SH08.7} scheme permits to improve the statistical efficiency.
-
-
-
-%------------------------------------------------------------
-\subsection{Conveyor Belt Thermodynamic Integration (CBTI)}
-%------------------------------------------------------------
-
-
-The proposed CBTI scheme encompasses features of both $\lam$D and TI.
-%
-Similarly to TI, it is based on the simulation of a replica system involving 
-$K$ copies of the molecular system of interest, where $K$ is taken to be even.
-%
-And similarly to $\lam$D, the individual replicas are extended 
-systems, for which the associated $\lam_k$-variable is allowed to evolve
-along the simulation.
-%
-However, the evolutions of these $\lam_k$-variables are not independent. 
-They are coupled to each 
-other by means of a sequence of hard constraints,
- so that they follow the course of a conveyor belt (CB).
-Thus, they are entirely determined by a single dynamical
-variable $\Lamb$, following 
-the scenario depicted in \reffig{scheme} and discussed
-in the Introduction section.
-
-
-
-The variable $\Lamb$ is a continuous real variable
-representing the overall advance of the CB, successive multiples
-of $2\pi$ corresponding to as many full rotations.
-%
-%
-Given $\Lamb$ and $K$, the $\lam$-value $\lam_k$ associated with a system $k$ on the CB
-is obtained as
-%
-\beq{cb_lam_of_big_lam}
-  \lam_k(\Lamb) = \zeta\left( \Lamb + k \Delta\Lamb  \right) \ ,
-\eeq
-%
-\radd{with
-\beq{delta_lamb}
-\Delta\Lamb = 2\pi K^{-1} .
-\eeq
-}
-\radd{Here, the function $\zeta$} is a continuous and periodic zig-zag function of period $2\pi$ and image range $[0,1]$,
-defined over the reference period $[0,2\pi)$ as
-%
-\beq{zigzag_fct}
-  \zeta(\theta) = \left\{
-                    \begin{array}{ll}
-                       \pi^{-1}\theta & \mathrm{if}\ \theta < \pi \\
-                       2-\pi^{-1}\theta & \mathrm{if}\ \theta \geq \pi \\
-                    \end{array} 
-                  \right. \ \ \mathrm{for}\ \theta\in[0,2\pi) \ ,
-\eeq
-%
-where the $[\cdot,\cdot)$ indicates an interval that is open to the right side, {\em e.g.} $[0,2\pi)$ includes $0$ but excludes $2\pi$.
-%
-\radd{An advance of the CB by $\Delta\Lamb$}
-%
-corresponds to a cyclic permutation of the $K$ replicas, each system moving by 
-one position forward along the CB, \ie
-$\lam_k(\Lamb+\Delta\Lamb) = \lam_{k+1}(\Lamb)$
-for $k<K-1$, along with
-$\lam_{K-1}(\Lamb+\Delta\Lamb) = \lam_0(\Lamb)$.
-%
-For this reason, the increment $\Delta \Lamb$ will be further referred to 
-as one shift of the CB.
-%
-The system $k=0$ can be viewed as a reference system,
-as $\lambda_0=\pi^{-1}\Lambda$ for $0\leq\Lambda<\pi$
-and $\lambda_0=2-\pi^{-1}\Lambda$ for $\pi\leq\Lambda<2\pi$.
-%
-Since $K$ is chosen to be even, an increase of $\Lambda$
-always corresponds to an increase of $\lambda_k$
-for half of the systems (forward-moving side of the CB)
-and a decrease of $\lam_k$ for the other half of the systems
-(backward-moving side of the CB). This choice also implies that 
-$\Lamb$-values which are integer multiples of the
-CB shift $\Delta \Lamb$ 
-correspond to situations where there is 
-one system in state $A$ and one system in state $B$.
-%
-Since an advance of the CB variable by $2\pi$
-leaves the replica system invariant, 
-the variable $\Lamb$ will commonly be refolded into the 
-reference period $[0,2\pi)$ when illustrating the
-results of the CBTI method.
-
-The Hamiltonian of the extended replica system is defined as
-%
-\beq{cb_ext_rep_ham}
-  \ham^{\dagger\star}(\Xv,\Lamb) = \ham^\dagger(\Xv;\lamv)  +  \frac{p_\Lamb^2}{2m_\Lamb} 
-  \quad \text{with} \quad \lamv=\lamv(\Lamb),
-\eeq
-%
-%
-where $\ham^{\dagger}$ is defined as in TI by \refeq{ti_rep_ham}
-and $\lamv(\Lamb)$ by \refeq{cb_lam_of_big_lam}.
-%
-In analogy with \refeq{lam_dyn_eq_mot}, the resulting equation of motion for $\Lamb$ reads
-%
-\beq{cb_big_lam_eq_mot}
-  \ddot{\Lamb} = \frac {\dot{p}_{\Lamb}} {m_{\Lamb}} 
-              = -\frac {1} {m_{\Lamb}}  \frac {\partial\ham^\dagger(\Xv;\lamv)} {\partial \Lamb} 
-\eeq
-%
-where
-%
-\begin{align}
-  \label{eq:cb_big_lam_eq_mot_der}
-   \frac{\partial\ham^\dagger(\Xv;\lamv)}{\partial\Lamb}
-        &= \sum_{k=0}^{K-1} \frac {\partial\ham(\xv_k;\lam_k)} {\partial \lam_k} \frac{\mathrm{d} \lam_k}{\mathrm{d} \Lamb}\nonumber \\
-        &= \sum_{k=0}^{K-1} \frac {\partial\ham(\xv_k;\lam_k)} {\partial \lam_k} \zeta'\left( \Lamb + 2\pi K^{-1} k \right) \ .
+%published & constantly cited form by Clara christ:
+%% - \frac{1}{\beta} \ln(\frac{⁡\langle e^{-\beta (V_B-V_R)}\rangle_R}{\langle e^{-\beta (V_A-V_R )}\rangle_R})
+\begin{align} \nonumber
+	\Delta G_{\text{BA}} &=  \Delta G_{\text{BR}} + \Delta G_{\text{RA}} \\ 
+	&=-\frac{1}{\beta}\left(\ln \langle e^{-\beta (V_B-V_R)}\rangle_R - \ln \langle e^{-\beta (V_A-V_R )}\rangle_R\right) \\ 
+	&= -\frac{1}{\beta} \ln \frac{\langle e^{-\beta (V_B-V_R)}\rangle_R}{\langle e^{-\beta (V_A-V_R)}\rangle_R}.
+	\label{EQ: Free Energy calculation via reference state}
 \end{align}
-%
-Here, the function $\zeta'$ is the derivative of the zig-zag function of \refeq{zigzag_fct}, 
-given over the reference period $[0,2\pi)$ by
-%
-\beq{zigzag_der}
-  \zeta'(\theta) = \left\{
-                    \begin{array}{ll}
-                       \pi^{-1} & \mathrm{if}\ \theta < \pi \\
-                       -\pi^{-1} & \mathrm{if}\ \theta \geq \pi \\
-                    \end{array} 
-                  \right. \ \ \mathrm{for}\ \theta\in[0,2\pi) \ .
-\eeq
-%
-Formally, the derivative is not defined when $\theta$
-is an integer multiple of $\pi$, \ie{} for a system that is exactly 
-in one of the physical end-states $A$ or $B$. In this case, the value of $\zeta'$ has been arbitrarily set to 
-$\pi^{-1}$ for even multiples and $-\pi^{-1}$ for odd multiples.
-This has a negligible impact in practice, as it only concerns a series
-of infinitesimal points over the entire $\Lamb$-range, 
-\ie{} infinitesimally few configurations along a CBTI simulation.
-%
-\revphil{For example, when using double-precision floating-point arithmetics
-(including denormalized numbers),
-their probability of occurrence is on the order of 10$^{-324}K$ 
-({\em i.e.} a single expected occurrence over a simulation lasting about 10$^{292}K^{-1}$
-times the age of the universe with a 2 fs timestep).
-}
-%
-Neither does going over the discontinuity within a timestep represent a source of non-conservativeness. The concerned replica
-will merely bounce back the corresponding physical end-state with a reversion of its velocity, akin to a particle reflected elastically
-by a hard wall (delta-function force).
-%
-If desired, these \revphil{exceptional points could be handled
-more formally by altering} the definition of $\zeta$,
-\revphil{{\em e.g.} by smoothing its tips in a narrow range around $0$ and $\pi$}.
 
 
-The $\lam_k$-dynamics of the individual systems is entirely
-specified by \refeq{cb_big_lam_eq_mot} to propagate $\Lamb$
-along with  \refeq{cb_lam_of_big_lam} to calculate the $\lam_k$-values from the current $\Lamb$.
-Alternatively, one may write an equation of motion for the $\lambda_k$-variables of the 
-individual replicas by combining the two equations (along with \refeq{cb_big_lam_eq_mot_der}) as
-%
-\begin{align}
-  \label{eq:cb_lam_eq_mot}
-  \ddot{\lam}_k &= \ddot{\Lamb} \frac{\mathrm{d} \lam_k}{\mathrm{d} \Lamb} + \dot{\Lamb}^2 \frac{\mathrm{d^2} \lam_k}{\mathrm{d} \Lamb^2} \nonumber\\
-                &= -\frac {1} {m_{\Lamb}} \left( 
-                       \sum_{l=0}^{K-1} \frac {\partial\ham(\xv_{l};\lam_{l})} {\partial \lam_{l}} \zeta'\left( \Lamb + 2\pi K^{-1} l \right) 
-                       \right) \nonumber  \\
-                   & \qquad \zeta'\left( \Lamb + 2\pi K^{-1} k \right) \ .
-\end{align}
-%
-%
-Note that the term in $\dot{\Lamb}^2$ vanishes since the second derivative $\zeta''$ of $\zeta$
-is zero (except at the \radd{exceptional} singular points). However, it should not be overlooked 
-if one decides to use a different function $\zeta$.
-%
-Introducing the vector $\Dv$ and the symmetric $\Lamb$-dependent matrix $\Cmat$ defined 
-by their components as
-%
-\begin{multline}
-  \label{eq:cb_def}
- D_k = \frac{\partial\ham(\xv_{k};\lam_{k})}{\partial \lam_{k}}
-\ \ \ \mathrm{and}\\
-C_{kl}(\Lambda) = \pi^2 \zeta'\left( \Lamb + 2\pi K^{-1} k \right) \zeta'\left( \Lamb + 2\pi K^{-1} l \right) \ ,
-\end{multline}
-%
-\refeq{cb_lam_eq_mot} can be rewritten in an elegant matrix form as
-%
-\beq{cb_lam_eq_mot_mat}
-  \ddot{\lamv} = -\frac {\Cmat(\Lamb)} {\pi^2 m_{\Lamb}}  \Dv \ .
-\eeq
-%
-The elements of the symmetric matrix $\Cmat$
-are either -1 (pair of systems currently on opposite sides of the CB,
-and thus moving in opposite directions) or +1
-(pair of systems currently on the same side of the CB, and thus moving in the same direction). The diagonal elements
-are all +1, and the other +1 values surround the diagonal (line- and column-wise),
-the rest being -1 values.
-Because $K$ is even, the two types of values 
-are always equally represented in the matrix, 
-specific locations
-depending on $\Lamb$.
-%
-Note that the variable $\Lamb$ itself still needs to be explicitly propagated
-using \refeq{cb_big_lam_eq_mot}.
+\subsection{Replica-Exchange EDS (RE-EDS)}
+The recently introduced RE-EDS method \cite{Sidler2016,Sidler2017} is a type of Hamiltonian replica exchange \cite{Hansmann1997,Sugita2000} with the smoothness parameter $s$ as the exchange dimension ($1>=s>0$), which was inspired from constant pH simulations by Lee \textit{et al.} \cite{Lee2014,Lee2015}. The approach is shown schematically in Figure \ref{fig:RE-EDS_Scheme}.
+RE-EDS does not require a single (optimal) $s$-value. Instead enhanced sampling is achieved by exchanging between the replicas with different smoothness levels. This simplifies the parameter choice problem and thus, the method can be applied to systems with more than two end states \cite{Sidler2016,Sidler2017}.
 
-%%\revphil{Discussion in page 16-18 a little hard to get through.}
+%Exchange criterium
+For the pairwise exchanges between neighboring replicas $k$ and $l$, a Metropolis-Hastings criterion \cite{Hastings1970} is used \cite{Sidler2016,Sugita2000},
+\begin{equation}
+p_{k,l} = min\left(1, \exp \left[V_{R}(\vec{r}_k; s_l)-V_{R}(\vec{r}_l; s_k)-(V_{R}(\vec{r}_l; s_l)-V_{R}(\vec{r}_k; s_k) \right] \right) ,
+\end{equation}
+where $H_{R_k}$ and $H_{R_l}$ are the reference-state Hamiltonians of the respective replicas, $\vec{r}_k$ and $\vec{r}_l$ are the current coordinates of the replicas.
 
-For a given configuration $\Xv$ of the replica system, the Hamiltonian
-$\ham^\dagger$ of \refeq{ti_rep_ham} (together with \refeq{cb_lam_of_big_lam}) is periodic in $\Lamb$ 
-with a period $2\pi$ corresponding to a full rotation of the CB.
-%
-However, because the Hamiltonians of the individual replicas are 
-identical, upon ensemble averaging over $\Xv$, 
-one expects the calculated properties to be periodic over $\Lamb$ 
-with a smaller period $\Delta \Lamb$, corresponding to one shift of the CB.
-%
-\revphil{
-This is in particular the case for the probability distribution $P(\Lamb)$
-along $\Lamb$ and the associated free-energy profile $G_{\Lamb}(\Lamb)$,
-given by
-%
-%\begin{align}
-%\label{eq:fre_prof_lam_def}
-%%\beq{fre_prof_lam_def}
-%  G_{\Lamb}(\Lamb) &= G_{\Lamb}(0) +
-%      \int\limits_0^\Lamb \mathrm{d}\Lamb' \left\langle \frac{\partial{\ham^{\dagger}(\Xv;\lamv)}}{\partial \Lamb} \right\rangle^{\dagger}_{\Lamb'} \\ \nonumber
-%    &=  G_{\Lamb}(0) + \sum_{k=0}^{K-1}  \left[ G(\lam_k(\Lamb)) - G(\lam_k(0))\right] \quad \text{with} \  \lamv=\lamv(\Lamb) \ ,
-%\end{align}
-%
-\begin{align}
-  \label{eq:fre_prof_lam_def}
-  G_{\Lamb}(\Lamb) &= G_{\Lamb}(0) +
-      \int\limits_0^\Lamb \mathrm{d}\Lamb' \left\langle \frac{\partial{\ham^{\dagger}(\Xv;\lamv)}}{\partial \Lamb} \right\rangle^{\dagger}_{\Lamb'} \nonumber \\
-    &=  \tilde{G}_{\Lamb}(0) + \sum_{k=0}^{K-1} G(\lam_k) \quad \text{with} \  \lamv=\lamv(\Lamb) \ ,
-\end{align}
-%
-where $\lamv(\Lamb)$ is defined by \refeq{cb_lam_of_big_lam},
-$\langle\cdot\cdot\cdot\rangle^{\dagger}_{\Lamb}$ denotes ensemble averaging 
-for the replica system (\ie{} over $\Xv$) at the given $\Lamb$ value,
-and the second equality follows from \refeqs{ti_rep_ham} and \refeqn{ti_formula}
-(the unknown constant $\tilde{G}_{\Lamb}(0)$ 
-is equal to $G_{\Lamb}(0)$ increased by a sum of $-G(\lam_k(0))$
-offsets).
-%
-}
-%
+Replicas are placed between $s=1.0$ and a lower bound of $s$, where the reference state is in undersampling. The replicas with low $s$ values facilitate the transitions between the low-energy regions of the  different end states. Especially for systems with slowly adapting environments (e.g. protein binding pockets), regions in $s$-space with very low acceptance probability can occur. Thus, to ensure sufficient exchanges between all pairs of replicas, a local variant of the round-trip time optimisation algorithm \cite{Katzgraber2006, Nadler2008} was developed to optimally place the replicas in $s$-space \cite{Sidler2017}.
+It was found that a single set of energy offsets can be used for all replicas \cite{Sidler2016}. However, it is important that these energy offsets are chosen well to avoid ``leakage'' effects, resulting in one or more end states not being properly sampled.
+The final free-energy differences are estimated from the replica at $s=1.0$, which represents the physical minima of the end states.
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\columnwidth]{fig/theory/Reeds_scheme_first.png}
+	\caption{Schematic illustration of RE-EDS with three harmonic oscillators as end states ($A$, $B$, and $C$). Each replica differs by the $s$-parameter, generating reference states with a different degree of smoothness. Sampling of each replica is denoted with orange dots. Exchanges between the replicas are indicated with green arrows. The replica graph shows three regions: a ``physical'' region where $s$ is close to 1, a transition region, and the ``undersampling'' region when $s$ approaches zero. The figure was generated with Ensembler \cite{ries2021a}.}
+	\label{fig:RE-EDS_Scheme}
+\end{figure}
 
-\radd{Owing to this periodicity over a smaller interval}, it is convenient to introduce a fractional advance variable $\tilde{\Lamb}$
-defined as
+\subsection{Automatic Parameter Optimization}
+To facilitate the determination of the energy offsets and $s$-parameter distribution, we have extended and further automatized the previous \cite{Sidler2017} RE-EDS workflow (Figure \ref{fig:Workflow}).
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\columnwidth]{fig/theory/RE_EDS_Pipeline.png}
+	\caption{The RE-EDS workflow can be split into four steps: (1) Input stage with energy offsets set to $E_i^R=0$ and a set of $s$-parameters logarithmically distributed between $1$ and $10^{-5}$; (2) Parameter exploration to determine the lower bound for $s$ and to obtain equilibrated coordinates for each end state; (3) Parameter optimization to determine the energy offsets with the PEOE scheme \cite{Sidler2016} and the optimized $s$-distribution with the N-LRTO algorithm \cite{Sidler2017} ; (4) Production run and calculation of the free-energy differences.}
+	\label{fig:Workflow}
+\end{figure}
 %
-\beq{tilde_lamb_def}
-   \tilde{\Lamb} = \gamma( \Lamb, \Delta \Lamb ),
-\eeq
-%
-where
-%
-\beq{gamma_def}
-   \gamma(\theta,\theta_o)
-     = \theta_o  \left( \theta_o^{-1}\theta - \lfloor \theta_o^{-1}\theta \rfloor \right)
-\eeq
-%
-returns the part of $\theta$ in excess of the closest lower integer multiple of $\theta_o$.
-%
-In contrast to $\Lamb$, which is an unbounded variable, $\tilde{\Lamb}$ only spans a finite definition interval $[0,\Delta \Lamb)$.
-%
-At full convergence, 
-any average property binned as a function 
-of $\Lambda$ over the interval $[0,2\pi)$ will 
-consist of $K$ successive repeats of the same property binned
-as a function of $\tilde{\Lambda}$ over its definition interval $[0,\Delta \Lamb)$, as observed in \reffig{scheme:ene:sinus} for the free energy \radd{$G_{\Lamb}(\Lamb)$}.
-%
-Accordingly, in the absence of full convergence
-along $\Lambda$, binning as a function of $\tilde{\Lambda}$
-over the interval $[0,\Delta \Lamb)$ followed by $K$-fold replication
-provides an efficient way to construct a more accurate representation of any 
-$\Lambda$-resolved average quantity. In fact, the definition interval of $\tilde{\Lamb}$ could be further halved by noting that, upon ensemble averaging over $\Xv$ and for any $\Lamb$ value that is an integer multiple of $\Delta \Lamb$, a forward move of the CB produces the same result as a backward move of the same magnitude. Consequently, $\Lamb$-resolved average properties are even over successive $2\pi K^{-1}$ intervals, as also observed in \reffig{scheme:ene:sinus} for the free energy
-\radd{$G_{\Lamb}(\Lamb)$}. The corresponding information is thus entirely encompassed in an interval of size $\Delta \Lamb /2$.
+The initial input for a system with $N$ end states consists of a prepared EDS system (i.e. topology,  perturbation topology, initial coordinates, and distance restraints), a list of energy offsets of length $N$ with $E_i^R = 0; ~ \forall ~ i \in [1,...,N]$, and a list of $s$-parameters, which are logarithmically distributed in the range $s_i \in [1, 10^{-5}]$. Typically, we use 21 initial $s$ values. 
 
-The normalized probability distribution $p(\lam)$ 
-along the coupling variable $\lam$ considering all the replicas is defined by
-%
-\beq{proba_of_lam}
-  p(\lam) = K^{-1} \sum_{k=0}^{K-1} \left\langle \delta(\lam_k-\lam) \right\rangle^{\dagger\star} \ ,
-\eeq
-%
-\radd{where $\langle\cdot\cdot\cdot\rangle^{\dagger\star}$ denotes ensemble averaging 
-for the extended replica system (\ie{} over the joint trajectories of $\Xv$ and $\lamv$).}
-%
-At full convergence, this probability over the interval $[0,1]$
-will consist of $K/2$ successive
-repeats of the corresponding distribution over the interval $[0,2 K^{-1})$.
-%
-\radd{More precisely, the distribution $p(\lam)$} is related to the distribution 
-$\tilde{P}(\tilde{\Lamb})$ of $\tilde{\Lamb}$ over interval $[0,\Delta \Lamb)$
-as
-%
-%\revdavid{Shouldn't there be a factor, \ie
-\beq{proba_of_lam_from_that_of_big_lam}
-%  p(\lam) = \tilde{P}( \pi \gamma( \lam, 2 K^{-1} )  ) \ .
-  p(\lam) = \Delta \Lamb\,\tilde{P}( \pi \gamma( \lam, \pi^{-1}\Delta\Lamb )  )  \ .
-\eeq
-%}
-%
-%\beq{proba_of_lam_from_that_of_big_lam}
-%%  p(\lam) = \tilde{P}( \pi \gamma( \lam, 2 K^{-1} )  ) \ .
-%  p(\lam) = \tilde{P}( \pi \gamma( \lam, \pi^{-1}\Delta\Lamb )  ) \ .
-%\eeq
-%
-In plain words, this means that $\tilde{P}(\tilde{\Lamb})$ is the relevant quantity
-in terms of sampling along the coupling variable $\lam$.
-If it is close to uniform over the range $[0,\Delta \Lamb)$,
-then $p(\lam)$ will also be close to uniform over the range $[0,1]$.
-Here again, it is noted that $p(\lam)$ is also even over the interval $[0,2 K^{-1})$,
-and could be mapped to a $\tilde{\Lamb}$ value defined over an interval of size $\Delta \Lamb / 2$ instead of $\Delta \Lamb$ if desired, as
+The parameter exploration consists of two substeps: (i) determining the lower bound for the $s$-distribution, and (ii) obtaining optimized coordinates within the EDS set-up for each end state.
+%%1. initial parameter search
+To enable sampling of all end states at $s=1.0$, some replicas have to be in undersampling to facilitate transitions. However, for efficiency reasons (and numerical stability) the number of replicas $M$ in undersampling should be small and the lowest $s$-value should be as high as possible. From a short simulation with the initial $s$-distribution between $[1, 10^{-5}]$, the highest smoothing parameter $s_{M_\mathrm{us}}$ at which undersampling still occurs is determined and used in the following as a lower bound for the $s$-distribution. The $s$-distribution for the next step is then defined by 21 replicas logarithmically distributed between $s=1.0$ and the new lower bound.
 
-\beq{sym_proba_lam}
-  p(\lam) = \left\{
-                    \begin{array}{ll}
-%                       \tilde{P}(\pi \gamma(\lam, 2 K^{-1})) & \mathrm{if}\ \gamma(\lam, 2 K^{-1}) < K^{-1} \\
-                       \Delta \Lamb\,\tilde{P}(\pi \gamma(\lam, \pi^{-1}\Delta\Lamb)) & \mathrm{if}\ \gamma(\lam, \pi^{-1}\Delta\Lamb) < (2\pi)^{-1}\Delta\Lamb \\
-%                       \tilde{P}(\pi \gamma(1-\lam,  2 K^{-1})) & \mathrm{otherwise} \\
-                       \Delta \Lamb\,\tilde{P}(\pi \gamma(1-\lam,  \pi^{-1}\Delta\Lamb)) & \mathrm{otherwise} \\
-                    \end{array} 
-                  \right. .
-\eeq
+%%%state optimization
+Optimized coordinates for each end state in the EDS setup are obtained by short parallel simulations, where one end state in turn is favoured by setting an arbitrarily large energy offset for this state. 
+The optimized coordinates allow the user to start RE-EDS simulations from different end states and are needed for the subsequent parameter optimization. 
 
+%%2. optimization of parameters
+%%%EOFFs:
+In the second step, the energy offsets and subsequently the optimal $s$-distribution are estimated. For the first substep, the previously developed parallel energy offset estimation (PEOE) \cite{Sidler2016} scheme is used. From a short simulation with the initial parameters, the energy offsets are extracted from the replicas $k$ in the undersampling region using \cite{Sidler2016},
+\begin{equation}
+E_{i}^{R}(new)=-\frac{1}{\beta}\ln \Big < e^{-\beta \big(V_i(\vec{r})-V_R(\vec{r}; s_{k},\vec{E}^{R}(old))\big)}\Big>_{R(s_{k},\vec{E}^{R}(old))} .
+\label{eq: EoffEstimator}
+\end{equation}
 
-\radd{
-%------------------------------------------------------
-\subsection{CBTI Free-energy Estimator}
-%------------------------------------------------------------
-}
+%%% s-Optimization:
+The $s$-distribution is optimized by minimizing the round-trip time $\tau$ using the multistate local round-trip time optimization (N-LRTO) algorithm \cite{Sidler2017}. The optimization is performed in an iterative manner with short simulations.  
+New replicas in an iteration are positioned by linear interpolation in the regions where exchange bottlenecks are detected, while the replicas of previous iteration remain fixed. The bottlenecks are identified for each end state separately (i.e. multistate). The number of replicas added can be chosen by the user. The iteration is stopped when the average round trip time $\overline{\tau}$ converges. 
+The local variant of the optimization algorithm is needed for situations with severe bottlenecks with the initial logarithmic $s$-distribution (e.g. protein binding pockets). For systems with smaller perturbations, 
+the global multistate variant (N-GRTO) \cite{Sidler2017} can be more efficient.
+%
+In this study, we started with the same number of replicas as used for the PEOE scheme above (21 $s$-values), and added four replica positions per iteration in the N-LRTO algorithm.
 
+%%% 3. production run
+After optimizing the RE-EDS parameters, the production run is performed for a chosen length. 
+The free-energy differences are subsequently calculated using the replica at $s=1.0$ with Eq.~(\ref{EQ: Free Energy calculation via reference state}).
 
-Due to the constraints coupling the $\lam_k$-values of the
-$K$ replicas, the function $p(\lam)$ of \refeq{proba_of_lam}
-is by no means a Boltzmann distribution in terms of the single-system
-Hamiltonian. In fact, as seen above, it consists at full convergence
-of $K/2$ successive repeats of the same even
-curve.
-In addition, compared to the Boltzmann distribution,
-it will be
-significantly flatter. On the one hand, the smaller amplitude of variations 
-%and the reduced barriers 
-are desired, as they will lead to more homogeneous sampling 
-and \revphil{are expected to ease transitions along $\Lamb$ 
-(up to the limit imposed by the speed of random diffusion)}.
-%
-%\revphil{
-%Page 18: says that 'there is a smaller amplitude of variations and
-%reduced barriers', but it's not clear dynamics are faster, since the
-%dH/dl force is slowed down by (averaged). I think this is eventually
-%explained by the fact that it becomes nearly diffusive behavior, but
-%perhaps this can be brought up sooner.
-%}
-%
-%
-On the other hand, it is no longer possible to evaluate 
-the free-energy difference $\Delta G$
-directly from $p(\lam)$ in analogy with the $\lam$D expression of \refeq{lam_dyn_dg}.
-%
-However, since the dynamics remains Hamiltonian and the coupling 
-between replicas does not
-involve the configurational degrees of freedom, the change \radd{from TI to CBTI} does not affect 
-the conditional probabilities $\mathcal{P}(\xv | \lam)$. Thus,
-configurational ensemble averages sorted by $\lam$-values will remain
-identical to those one would obtain from TI \radd{(or from HRE/HRP or $\lam$D)}.
-%
-As a result, $\Delta G$ can still be obtained 
-\radd{by integrating over the average Hamiltonian derivative binned as a function 
-of $\lambda$ considering all replicas simultaneously,}
-in analogy with the TI expression
-of \refeq{ti_formula}.
-%
-\revphil{Note that the exceptional points of the function $\zeta'$
-(discussed previously in the context of \refeq{zigzag_der})
-have no influence on the integration, as they represent
-finite discontinuities over infinitesimal ranges.
-}
-%\revphil{SAY THAT DISCONT HAS NO EFFECT
-%See Point 6 above. Similar considerations apply to the integration.
-%We integrate $\partial\mathcal{H}/\partial\lam$. If the value is off
-%at one (or a few) points, the integral is unaffected because the 
-%neighborhood of the singularity is infinitesimal and its magnitude
-%is finite ({\em i.e.} it is not a $\delta$ function, but just 
-%a finite change in the function value).
-%}
+\subsubsection{Starting State Mixing}
+The sampling in RE-EDS simulations can be further improved by using starting coordinates for the replicas corresponding to the different end states (i.e. replica 1 starts in a low-energy configuration for end state 1, replica 2 in a low-energy configuration for end state 2, etc.). This technical approach is called ``starting state mixing'' (SSM) in the following and is also used for Hamiltonian replica-exchange TI calculations (see e.g. \cite{Graf2016, Hahn2020}). The optimized coordinates obtained in the parameter exploration step can be used for SSM. We compare RE-EDS simulations with SSM and with a single set of starting coordinates (abbreviated as 1SS).  
 
+\subsubsection{Analysis}
+Three types of metrics were used to quantify the sampling in RE-EDS simulations. The first metric determines for each end state $i$ the sampling fraction as dominating state, i.e. $f_i^{\text{domin}}$. A dominating state is defined as the end state with the lowest potential energy in a frame. As can be seen in  Eq.~\eqref{eq:laws_of_motion}, dominating end states have the largest impact on the reference state sampling at a given time point.
+%
+Optimal sampling in a RE-EDS system is achieved when all end states are sampled as dominating states to an equal extent at $s=1.0$, i.e. 
+\begin{equation}
+f_{i}^{\text{domin,ideal}} = \frac{1}{N} ~, \forall ~ i~\in~ \{1, ..., N\}
+\label{eq: optimalDominationSamplingDist}
+\end{equation}
 
+The second metric is the sampling fraction of ``physical occurrence'' of an end state $i$, i.e. $f_i^{\text{occur}}$. As a result of phase-space overlap with the current dominating end state, other end states in the EDS system might be sampled simultaneously. An end state is counted as ``occurred'' when its potential energy is below the threshold $T_{i}^{\text{phys}}$ at a time point $t$. 
+These thresholds are estimated during the second substep of the parameter exploration phase. If end states show no phase-space overlap, $f_i^{\text{occur}}$ will be (nearly) the same as $f_i^{\text{domin}}$. 
 
-In practice, \revphil{$\Delta G$} is calculated here based on a single thermostated MD simulation 
-of the extended replica system, as
-%
-\begin{align}
-\label{eq:cbti_formula}
-  \Delta G &= 
-    \int_0^1 \mathrm{d}\lam' K^{-1} \sum_{k=0}^{K-1} \left\langle 
-                 \frac{\ham(x_k;\lam_k)}{\partial \lam_k} \delta(\lam_k-\lam')
-            \right\rangle^{\dagger\star}\\ \nonumber
-   &\approx
-%     K^{-1} 
-\sum_{j=0}^{J-1}  \left \langle \frac{ \sum_{k=0}^{K-1} \frac{\ham(x_k;\lam_k)}{\partial \lam_k} \alpha(\lambda_k,j;J)}
-                              { \sum_{k=0}^{K-1} \alpha(\lambda_k,j;J)}  \right \rangle^{\dagger \star}                                   ,
-\end{align}
-%
-where 
-%
-\beq{binning_fct}
-\alpha(\theta,j;J)=\begin{cases}
-1 \qquad \text{if}\ j\leq J\theta < j+1 \\
-0 \qquad \text{otherwise}
-\end{cases}
-\eeq
-%
-is a binning function  corresponding to a discretization of the $\lam$-interval $[0,1]$ using
-$J$ bins. 
-%
-The approximation in \refeq{cbti_formula} corresponds to a 
-simple forward rectangular quadrature, where the Hamiltonian derivative is 
-averaged over the $J$ successive bins considering all replicas.
-%
-Since $\tilde{P}(\tilde{\Lamb})$, and thus $p(\lam)$, will typically be close to homogeneous, $J$ can be taken very large, 
-resulting in a negligible quadrature error. 
-For example, if $K$ replicas sample $L$ configurations each, the number of data points
-per bin will be close to $K L/J$, with limited variations across bins. 
-Defining
-the maximal allowed value $J_{\mathrm{max}}$ as the highest value of $J$ for which 
-empty bins (vanishing denominator in the ensemble average of \refeq{cbti_formula}) never 
-occur, a graph of $\Delta G$ evaluated upon increasing $J$ from 1 to $J_{\mathrm{max}}$ 
-will rapidly level off to a plateau when quadrature errors become negligible.
-%sufficiently small. 
-%
-\revphil{
-Two variants which do not require the specification 
-of a number of bins are also proposed in \refsec{CH2C} (\refeqs{cbti_formula_app1} and \refeqn{cbti_formula_average}).}
-%
-\revphildel{[-- Variants moved to Appendix C --]}
-
-
-
-%------------------------------------------------------------
-\subsection{CBTI with Memory-based Biasing Potential}
-%------------------------------------------------------------
-
-%For a 
-When using a large number of replicas, the sampling along $\lam$ afforded by the CBTI scheme will be close to homogeneous. However, for practical reasons (\eg{} number of processors available on a computer node), one may wish to use a small number of replicas. In this case, the sampling homogeneity can be enhanced by addition of a biasing potential. It is sufficient to apply this potential to the fractional advance variable $\tilde{\Lambda}$ over the range $[0,\Delta \Lamb)$. With inclusion of a biasing potential $\mathcal{B}$, \refeq{cb_big_lam_eq_mot} becomes 
-%
-  \begin{multline}
-  \label{eq:cb_big_lam_eq_mot_bias}
-  \ddot{\Lamb} = -\frac {1} {m_{\Lamb}} \frac {\partial}{\partial \Lamb} \left ( \ham^\dagger(\Xv;\lamv)  
-  + \mathcal{B}(\tilde{\Lamb}) \right) \\ \text{with} \  \lamv=\lamv(\Lamb)\ \text{and}\ \tilde{\Lamb}=\tilde{\Lamb}(\Lamb) \ ,
-  \end{multline}
-%
-where $\mathcal{H}^{\dagger}$ is defined by \refeq{ti_rep_ham}, $\lamv(\Lamb)$ by \refeq{cb_lam_of_big_lam} and $\tilde{\Lamb}(\Lamb)$ by \refeq{tilde_lamb_def}. 
-
-
-In analogy with the $\lam$-LEUS scheme\cite{BI14.1,BI14.2,BI15.1,BI15.2}, this biasing potential can be expressed as a sum of local grid-based spline functions, built in a LE preoptimization phase and frozen in a subsequent US sampling phase. However, the duration of the LE phase can be considerably reduced compared to a single-system $\lam$-LEUS simulation, considering that $\tilde{P}(\tilde{\Lamb})$ is already close to homogeneity in the absence of biasing and that the support interval is reduced to the $\tilde{\Lamb}$-range $[0,\Delta \Lamb)$. The latter interval can actually be further restricted to $[0,\Delta \Lamb / 2]$ considering the even symmetry of $\tilde{P}(\tilde{\Lamb})$, \ie{} by enforcing an even symmetry of $\mathcal{B}$ as well.
-
-Since the application of a biasing potential that only involves the $\lam_k$-variables does not alter the 
-conditional probabilities $\mathcal{P}(\xv|\lam)$, \refeq{cbti_formula} \revphil{(or the variants of \refeqs{cbti_formula_app1} and \refeqn{cbti_formula_average})}
-can still be employed without any modification to evaluate the free-energy change. In other words, 
-in contrast to the $\lam$-LEUS scheme, the CBTI scheme with the presented TI-like free-energy estimator does not require any reweighting.
+Undersampling is detected with a third metric using the thresholds $T_{i}^{\text{us}}$. These thresholds are determined in the first substep of the parameter exploration phase from the simulation with the lowest $s$-value. If all end states have a potential energy below their respective $T_{i}^{\text{us}}$, the current frame is characterized as undersampling \cite{Sidler2016}. 

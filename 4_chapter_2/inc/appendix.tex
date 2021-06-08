@@ -1,1080 +1,124 @@
-%================================================================================
-\appsection[CBTI and Quadrature]{quad}{Relationship between CBTI and Quadrature Integration}
-%================================================================================
-This appendix investigates the convergence properties of the CBTI scheme upon
-increasing the number $K$ of replicas based on an analogy with quadrature integration. More precisely, it is  shown that the 
-\radd{variation amplitude} $G_{\Lamb}^\star$ \radd{of $G_{\Lamb}(\Lamb)$} decreases at least as $K^{-1}$ \radd{in the limit of large $K$}
-%upon increasing $K$ 
-%\radd{for large $K$}
-(with $K$ even), as suggested by \reffig{scheme:ldyn:gotoflat} and \reff{deltag}.
-
-
-To this purpose, we first observe that the situation of a conveyor belt (CB) spanning the $\lam$-range $[0,1]$ of the free-energy profile $G(\lam)$ with $K$ equidistant replicas at \radd{spacings $2K^{-1}$} along the cable (\reffig{train:cvb}) is mathematically equivalent to the situation of a train spanning a periodic function $g(x)$ of period $2\pi$ with $K$ equidistant carriages at \radd{spacings $2\pi K^{-1}$} spanning one period (\reffig{train:gx}).
-%
-The function $g(x)$ is obtained by mirroring $G(\lam)$ \radd{at $\lam=0$ or $1$}, periodically translating the mirrored function by integer multiples of two, and stretching $\lam$ by a factor of $\pi$ to define the new variable $x$.
-
-\begin{figure}[H]
-  \centering
-  \subgraph{fig:train:cvb}{conveyor_belt_sintw_without_arrows.pgf}{.5}\\
-%  \subgraph{fig:train:train}{train_sintw.pgf}{1.0}\\
-  \subgraph{fig:train:gx}{app_gx.pgf}{.99}%
-  \caption{\footnotesize\captitital{Analogy between the CBTI scheme and the sampling of an even
-    periodic function by a train of equispaced points.}
-    The illustration considers a conveyor belt (CB) with $K=8$ replicas, analog
-  to a train with 8 carriages.}
-  \label{fig:train}
-\end{figure}
-
-
-In this analogy, we now have a periodic function $g(x)$ of period $2\pi$ that is even over the reference interval $[0,2\pi)$.
-%
-    This function is sampled by $K$ equidistant points at locations
-
-    \beq{xm}
-    x_k = s+kh\quad\text{with}\quad k=0 \dots K-1\quad\text{and}\quad h=2\pi K^{-1},
-    \eeq
-%
-    where $s$ represents the offset position of the first point $k=0$.
-%
-    Note that $s$ can always be selected in the interval $[0,h)$ 
-    by consideration of periodicity, along with an appropriate renumbering of the points carriages. 
-We also introduce the negative first derivative of the function
-
-        \beq{fx}
-        f(x)=-g'(x).
-        \eeq
-
-In practical applications of CBTI, the Hamiltonian-coupling scheme 
-will 
-%generally 
-be defined by a continuously differentiable function of $\lam$, in which case $G(\lam)$ is also continuously differentiable. The same applies to $g(x)$ in the analogy of \reffig{train:gx}, except for the possible occurrence of kinks at integer multiples of $\pi$. These occur because the derivative $G'(\lam)$ of $G(\lam)$ generally differs from zero at the physical end-states $\lam=0$ or $\lam=1$. As a result, $f(x)$ is continuous except at these points, where it will present jumps. An illustrative example for functions $g(x)$ and $f(x)$ with the above properties is shown in \reffigs{app:g} and \reff{app:f}, respectively.
-
-In the analogy of \reffig{train:gx} to the CB situation, the total force on the \radd{train of points} (analog to the mean force on the $\Lamb$-variable) is given for a specific value of $s$ (analog to the $\tilde{\Lamb}$-variable) by 
-%
-\beq{total_force}
-F(s) = \sum\limits_{k=0}^{K-1}f(kh+s).
-\eeq
-%
-As illustrated in \reffig{app:ftrapz}, this sum has a simple interpretation. It represents a trapezoidal quadrature
-estimate to the integral of the periodic function $f(x)$ over the period $[s,2\pi+s)$. Because $f(x)$ is the negative derivative of the periodic function $g(x)$, its exact integral over one period must be zero. Thus, \radd{for any $s$,} we expect $F(s)$ to converge to zero in the limit $K\rightarrow \infty$. The following paragraphs investigate the corresponding convergence rate.
-%
- 
-\begin{figure}[H]
-  \centering
-  \subgraph{fig:app:g}{gx_ene_ana.pgf}{.49}%
-  \subgraph{fig:app:f}{fx_ene_ana.pgf}{.49}\\
-  \vspace{-1em}%
-  \subgraph{fig:app:ftrapz}{fx_trapz_ene_ana.pgf}{.49}\\
-  \vspace{-1em}%
-  \subgraph{fig:app:tildeF}{tildeF_ene_ana.pgf}{0.49}%
-  \subgraph{fig:app:tildeG}{tildeG_ene_ana.pgf}{0.49}\\
-  \vspace{-1em}%
-  \subgraph{fig:app:Rs}{Rs_ene_ana.pgf}{0.49}%
-  \subgraph{fig:app:Rprimes}{Rprimes_ene_ana.pgf}{0.49}\\
-  \caption{\footnotesize\captitital{Illustrative functions supporting the discussion in \refsec{quad}.}
-    Panel (\subref{fig:app:g}) shows the illustrative function $g(x)$ defined 
-    over the reference period $[0;2\pi[$ as 
-        $x+\sin (x^2)$ if  $x<\pi$ or 
-        $(2\pi-x)+\sin ((2\pi-x)^2)$ if $x\geq\pi$.
-    %
-    Panel (\subref{fig:app:f}) shows the negative derivative $f(x)$ of $g(x)$.
-    %
-    Panel (\subref{fig:app:ftrapz}) illustrates the trapezoidal integration of $f(x)$ (blue)
-    as a shaded area (orange) with $K=8$ and $s=0.4$. The vertical lines show the positions of the
-    carriages at values $x_m$. The trapezoids are seen to represent a poor approximation
-    at the discontinuities.
-    %
-    Panel (\subref{fig:app:tildeF}) illustrates the total force $\tilde{F}(\tilde{s})$ 
-    of \refeq{total_force_tilde} for different values of $K$.
-    %
-    Panel (\subref{fig:app:tildeG}) illustrates the potential energy $\tilde{G}(\tilde{s})$
-    for different values of $K$.    which is the running integral of $\tilde{F}$ for different numbers of replicas $K$.
-    %
-    Panel (\subref{fig:app:Rs}) shows in a log-log form the residual integral 
-    $R(\tilde{s})$ of \refeq{r_of_s} 
-    as a function of $K$ for different values of $\tilde{s}$. 
-    %
-    Panel (\subref{fig:app:Rprimes}) shows in a log-log form the corrected residual integral  $R'(\tilde{s})$ of \refeq{r_prime_of_s_tilde}. Note that the logarithm of the absolute value of $R$ or $R'$ is displayed. The cusp in Panel (\subref{fig:app:Rprimes}) is explained by a change of sign.
-  %% Bottom left: $log(\tilde{I})$ vs $\log(M)$. The dashed lines denote fits. The slope is always 
-  %% -1.
-  %% Bottom right: $log(\tilde{F})$ (net force) vs. $\log(M)$
-  }
-  \label{fig:app}
-\end{figure}
-
-     
-%
-The function $F(s)$ is periodic of period $h$, odd over the reference interval $[0,h)$
-and generally discontinuous at $s$ values which are integer multiples of $h$.
-%
-Introducing  
-%
-\beq{total_force_tilde}
-\tilde{s}=h^{-1}s \quad\text{and}\quad\tilde{F}(\tilde{s}) = F(h\tilde{s})=\sum\limits_{k=0}^{K-1}f((k+\tilde{s})h),
-\eeq
-%
-the function $\tilde{F}(\tilde{s})$ is periodic of period 1, odd over the reference interval $[0,1)$ and generally discontinuous at integer values of $\tilde{s}$.
-
-The corresponding potential energy of the \radd{train of points} (analog to the free-energy profile $G_{\Lamb}(\Lamb)$ of the CB 
-%scheme 
-over the \radd{interval $[0,2\pi K^{-1}]$}) is given by
-%
-\beq{train_energy}
-G(s)=-\int\limits_{0}^{s} \mathrm{d}s' F(s').
-\eeq
-%
-The function $G(s)$ is periodic of period $h$, even over the reference
-interval $[0,h)$ with an extremum at $h/2$, and possibly presents kinks at $s$ values which are integer multiples of $h$.
-%
-Using the variable $\tilde{s}$ and introducing
-%
-\beq{train_energy_tilde}
-\tilde{G}(\tilde{s})=-\int\limits_{0}^{\tilde{s}} \mathrm{d}\tilde{s}' \tilde{F}(\tilde{s}') \ ,
-\eeq
-%
-one may write
-%
-\beq{train_energy_to_tilde}
-G(s) = h \tilde{G}(h^{-1}s).
-\eeq
-%
-The function $\tilde{G}(\tilde{s})$ is periodic of period 1, even over
-the reference interval $[0,1)$ with an extremum at $1/2$,
-and possibly presents kinks at integer values of $\tilde{s}$.
-
-The functions $\tilde{F}(\tilde{s})$ and $\tilde{G}(\tilde{s})$
-corresponding to the illustrative functions $g(x)$ and $f(x)$ are shown in \reffigs{app:tildeF} and \reff{app:tildeG}, respectively, considering the choices $K=2,4,8,16,32$ or $64$.
-%
-Convergence is observed upon increasing $K$,
-%(decreasing $h$), 
-in which
-% case 
-$\tilde{F}(\tilde{s})$
-becomes linear and $\tilde{G}(\tilde{s})$ parabolic over the reference interval
-$[0,1)$. Thus, \radd{in the limit of large $K$}, one expects the maximal variation $\tilde{G}^\star$ in $\tilde{G}(\tilde{s})$
-to converge to a constant and, \textit{via} \refeq{train_energy_to_tilde}, the maximal variation $G^\star$
-in $G(s)$  (analog to the corresponding maximal variation $G_{\Lamb}^\star$ of  $G_{\Lamb}(\Lamb)$ in the CB scheme)
-to \radd{scale as $h$, {\em i.e.} as $K^{-1}$}.
-
-This observation, made here in a special case, can be generalized as follows.
-%
-Given
-%
-\beq{r_of_s}
-R(\tilde{s})=h\tilde{F}(\tilde{s}) = h\sum\limits_{k=0}^{K-1}f(h(k+\tilde{s})),
-\eeq
-%
-$G^\star$ is the absolute extremum (largest absolute value) of the function
-%
-\beq{s_of_s}
-S(\tilde{s})=h\tilde{G}(\tilde{s}) = \int\limits_{0}^{\tilde{s}} \mathrm{d}\tilde{s}' R(\tilde{s}')
-\eeq
-%
-over the $\tilde{s}$-interval $[0,1/2]$.
-%
-According to \reffig{app:ftrapz}, the quantity $R(\tilde{s})$ is the residual of the trapezoidal quadrature approximation to the integral of $f(x)$ over one period, where the first grid point is offset from the origin by a fraction $\tilde{s}$ of the spacing $h$. 
-%
-If $f(x)$ was continuous everywhere, the convergence would be quadratic in $h$ (\ie{} scale as $K^{-2}$), as expected from a trapezoidal quadrature. However, the presence of discontinuities in $f(x)$ at $0$ and $\pi$ introduces an error that is linear in $h$.
-%
-To recover quadratic convergence, one would need to introduce a correcting term for the points $0,K/2-1,K/2$ and $K-1$ surrounding the discontinuities, namely
-
-\begin{align}
-\label{eq:r_prime_of_s_tilde}
-R'(\tilde{s})=&R(\tilde{s}) + h 
-   \bigg\{
-    \frac{\tilde{s} - 1}{2} 
-    \left  [
-      f(h\tilde{s}) + f\left (h\left(\tilde{s}+\frac{K}{2}\right)\right)
-    \right ] \nonumber \\
-    &- 
-     \frac{\tilde{s}}{2} 
-    \left  [
-      f(h(\tilde{s}+K-1)) + f\left(h\left(\tilde{s}+\frac{K}{2}-1\right)\right)
-    \right ] \nonumber \\
-    & + \left(\tilde{s} -\frac{1}{2}\right)
-    \left ( 
-      \Delta_0 + \Delta_\pi
-    \right )
-  \bigg \}
-\end{align}
-%
-where $\Delta_0$ and $\Delta_\pi$ account for the magnitude of the discontinuities, \ie
-
-\beq{discont}
-\Delta_0=\lim_{x\xrightarrow{>} 0}f(x)\quad\text{and}\quad\Delta_\pi=\lim_{x\xrightarrow{>} \pi}f(x).
-\eeq
-
-The convergence of $R(\tilde{s})$ and $R'(\tilde{s})$ for the illustrative functions
-$g(x)$ and $f(x)$ upon increasing $K$ along with the choices $\tilde{s}=0.01, 0.2, 0.3, 0.4,0.49$ 
-is shown in  logarithmic form in \reffigs{app:Rs} and \reff{app:Rprimes}, respectively.
-%
-As expected, for large $K$, $R$ shows a linear convergence (slope -1) and $R'$
-a quadratic one (slope -2). 
-%
-The limiting cases $\tilde{s}=0$ and $\tilde{s}=1/2$ are special. For $\tilde{s}=0$, \refeq{r_of_s}
-implies an evaluation of $f(x)$ at the discontinuity. If one uses an average value of $0$ for these points, $R(0)$ evaluates to 0 for any $K$ by symmetry. 
-%Similarly, for $\tilde{s}=1/2$, $R(1/2)$ evaluates to 0 for any $K$ by symmetry. 
-\radd{The same applies for $\tilde{s}=1/2$, $R(1/2)$.}
-For all other values for $\tilde{s}$, the convergence is as expected, \ie{} linear for $R(\tilde{s})$ and quadratic for $R'(\tilde{s})$.
-
-If $R(\tilde{s})$ converges to zero as $K^{-1}$ for (nearly) all $\tilde{s}$ values,
-the function $S(\tilde{s})$ of \refeq{s_of_s} will converge to zero with the same scaling, and so will its absolute extremum $G^\star$. We conclude that the magnitude \radd{$G^\star_{\Lamb}$} of the residual variations
-in $G_{\Lamb}(\Lamb)$ for the CBTI scheme scales at least as $K^{-1}$ \radd{in the limit of large $K$}. And if $G(\lam)$ has a vanishing derivative at the physical end-states, it will scale at least as $K^{-2}$.
-%
-It should be stressed, however, that these are worst-case scalings. A higher level of continuity or specific symmetry properties of $G(\lam)$ may tighten the scaling. 
-%
-To give an extreme case, for a free-energy profile $G(\lam)=\cos (2\pi\lam)$,
-one shows easily that the residual variations \radd{$G^\star_{\Lamb}$} entirely vanish irrespective of $K$. 
-%
-This follows from 
-\beq{cos}
-\sum\limits_{k=0}^{K-1}\cos \left (2\pi K^{-1}k + c \right ) = 0\quad\forall~c \quad \text{(for }K\text{ even)}.
-\eeq
-
-The present analysis connects the convergence of the CBTI scheme with $K$ to the properties of a quadrature integration. This connection opens interesting tracks for future work. In particular, it suggests that these convergence properties could be improved by altering the coupling scheme (\eg{} to enforce vanishing $G(\lam)$ derivatives at the end-states), the function $\zeta$ in \refeq{cb_lam_of_big_lam} (\eg{} higher system density close to discontinuities) and the CBTI weighting in \refeq{ti_rep_ham} (\eg{} from trapezoidal to higher-level quadrature, \eg{} Simpson or even Romberg).
-
-
-%================================================================================
-\appsection[CBTI Parameters]{othersim}{Choice of the CBTI Parameters}
-%================================================================================
-Here, we explore the influence of the CBTI 
-mass parameter $m_\Lambda$ and thermostat coupling 
-time $\tau_\Lambda$ considering different numbers $K$ 
-of replicas. 
-%
-
-A first set of simulations involves the choices $m_{\Lambda}=$16, 160, 800, 1600 or 3200$\,\mathrm{u}\,\mathrm{nm}^2$,
-      along with $K=16$ replicas in the absence of separate thermostat coupling 
-      for $\Lambda$, {\em i.e.} $\tau_\Lambda\rightarrow\infty$
-      (10 ns simulations after $0.2\unit{ns}$ equilibration).
-%
-The results are shown graphically in \reffigs{thermo:03_cvb_screen:016:1_0.01} - \reffign{thermo:03_cvb_screen:016:200_0.01} and reported numerically in \reftab{screen} (entries 1-5).
-%
-In the absence of explicit
-%specific 
-thermostating for the $\Lamb$-variable, the average
-temperature $T_{\Lamb}$ of this variable is controlled exclusively by its 
-coupling to the conformational degrees of freedom, 
-themselves thermostated by the application of SD with a reference temperature of $298.15\unit{K}$
-and an effective coupling time of $0.1\unit{ps}$.
-%
-All choices of $m_{\Lamb}$ considered lead to average temperatures $T_\Lamb$
-close to $298.15\unit{K}$, suggesting an appropriate kinetic-energy exchange.
- The mass-parameter
-choices of  $m_\Lamb=16\,\mathrm{u\,nm^2}$ 
-and $1600\,\mathrm{u\,nm^2}$ present the largest deviations of about $10\unit{K}$ and $6\unit{K}$,
-respectively, while the deviation is at most $2\unit{K}$ for the other choices.
-
-
-Expectedly, increasing $m_{\Lamb}$ tendentially leads to a decrease in the
-diffusion coefficient $D_\Lambda$.
-%
-This results from a smaller width $\sigma_{\dot{\Lamb}}$ of the $\dot{\Lamb}$ distribution 
-(\refeq{ana_vel}; see also \reffig{dynamics:vel} where $m_{\Lamb}$ increases from left to right),
-\ie{} a lower average magnitude of the velocity along $\Lamb$. 
-However, $D_{\Lamb}$ is also affected by the presence of residual variations 
-in the free-energy profile $G_{\Lamb}(\Lamb)$, which may be more easily overcome at higher $m_{\Lamb}$
-(more inertia). This is reflected in the increase of the $\dot{\Lamb}$ autocorrelation time $\tau_{\dot{\Lamb}}$ upon increasing $m_{\Lamb}$ (see also \reffig{acf} for the corresponding \radd{normalized} autocorrelation functions). This second effect is likely to have more influence for \radd{small $K$},
-where the $G_{\Lamb}(\Lamb)$ variations are more pronounced. 
-In the present case with $K=16$, these opposite effects probably 
-explain why the trend in $D_{\Lamb}$ upon increasing $m_{\Lamb}$ is not strictly
-monotonic, with a comparatively high $D_{\Lamb}$ for 
-$m_{\Lamb}=1600\unit{u\,nm^2}$ (see also \reffig{dynamics:dif} where the diffusion trend is non-monotonic
-upon increasing $K$ when  $m_{\Lamb}$ is made proportional to $K^{1/2}$).
-
-
-
-In terms of the calculated free-energy change $\Delta G$, all simulations provide the same 
-values within the statistical error, with a slightly larger deviation for the simulation 
-involving the lowest mass $m_{\Lambda}=16\unit{u\,nm^2}$, probably due to the comparatively large $T_{\Lamb}$ deviation.
-%
-Because it leads to accurate $T_{\Lamb}$ and $\Delta G$ values while presenting a high $D_{\Lamb}$,
-the second-to-lowest mass $m_\Lamb=160\,\mathrm{u\,nm^2}$ was chosen for all 
-following CBTI simulations employing $K=16$ replicas. 
-
-
-A second set of simulations involves a separate coupling of the $\Lamb$ variable to a 
-Nos\'e-Hoover chain thermostat with the
-choices $\tau_\Lambda=$0.05,0.1,0.5,1 or 2$\,\mathrm{ps}$
-along with $K=16$ replicas and $m_{\Lambda}=160\,\mathrm{u}\,\mathrm{nm}^2$
-($10\unit{ns}$ simulations after $0.2\unit{ns}$ equilibration).
-%
-The results are shown graphically in \reffigs{thermo:02_cvb_thermo_screen:016:10_0.05} - 
-\reffign{thermo:02_cvb_thermo_screen:016:10_2.0} and reported numerically in \reftab{screen} (entries 6-10).
-%
-Except for the two shortest coupling times,
-the average temperature $T_\Lambda$ is very close to the reference temperature, with a maximal
-deviation of about $2\unit{K}$. The larger deviations for $\tau_{\Lamb}=0.05$ or $0.1\unit{ps}$ suggest that the coupling of $\Lamb$ to its thermostat should be made less tight than that of the conformational degrees of freedom to their thermostat (here SD with $0.1\unit{ps}$). The coupling parameter $\tau_{\Lamb}$ has no
-influence on the width $\sigma_{\dot{\Lamb}}$ of the $\dot{\Lamb}$ distribution,  which is the
-same for all five simulations and very close to the Maxwell-Boltzmann one (\refeq{ana_vel}). 
-On the other hand, a lower $\tau_{\Lamb}$, \ie{} a tighter coupling, reduces the
-inertia of the conveyor belt, which results in a decrease of the autocorrelation time $\tau_{\dot{\Lamb}}$. This leads to a tendential decrease of $D_{\Lamb}$ upon decreasing $\tau_{\Lamb}$.
-%
-In terms of the calculated $\Delta G$, all simulations provide consistent values within the statistical error, with a slightly larger deviation for the simulation involving $\tau_{\Lamb}=0.05\unit{ps}$, probably again due to the comparatively large $T_{\Lamb}$ deviation. 
-%
-In comparison to the first set of simulations with $\tau_{\Lamb}\rightarrow \infty$, the $\Delta G$ values are slightly higher ($0.1-0.3\unit{kJ\,mol^{-1}}$), which could be due to the fact that the sampled $\dot{\Lamb}$ distribution $P_{\dot{\Lamb}}$ is even closer to the Maxwell-Boltzmann distribution (\refeq{ana_vel}), also for shorter time intervals.
-%
-For $\tau_{\Lamb}\geq 0.5\unit{ps}$, the choice of $\tau_{\Lamb}$ has little influence on the calculation, and a coupling time $\tau_{\Lamb}=0.5\,\mathrm{ps}$
-was chosen for all following CBTI simulations. Note, however, that a looser coupling could be of advantage by leading to a higher $D_{\Lamb}$.
-
-
-A third set of simulations considers the choices $K=$8, 16, 32, 64 or 128
-along with 
-$m_{\Lamb}=40 K^{1/2}\,\mathrm{u}\,\mathrm{nm}^2$
-and $\tau_{\Lamb}=0.5\,\mathrm{ps}$ 
-($256 K^{-1}\unit{ns}$ simulations after $0.2\unit{ns}$ equilibration). 
-%
-The results are shown graphically in \reffigs{thermo:04_cvb_thermo:008:10} - \reffign{thermo:04_cvb_thermo:128:10} and reported in \reftab{screen} (entries 11-15).
-%
-Simulations 11, 13 and 15 are discussed in details in \refsec{results} (see \reffigs{lam} and \reff{dynamics}).
-%
-For the five simulations, the average temperature $T_{\Lamb}$ is close to the target temperature,
-with a maximal deviation of about $6\unit{K}$.
-%
-The free-energy differences $\Delta G$ are consistent within
-the statistical error, except for the simulation employing $K=8$ replicas (entry 11),
-which is due to the non-uniform sampling of the $\lam$-range as discussed in \refsec{results}.
-%
-
-The rationale for making the mass $m_{\Lamb}$ proportional to the square-root of $K$, \revphil{an arbitrary parameter choice,} is the following. 
-If one wishes the CB variable $\Lamb$ to evolve dynamically on comparable timescales irrespective of the number $K$ of replicas attached to it, one should ensure that its acceleration $\ddot{\Lamb}$
-depends only weakly on $K$. Assuming that the forces exerted by the $K$ replicas are essentially uncorrelated, their sum (\ie{} the net force on the CB) will scale as $K^{1/2}$. 
-Thus, an identical scaling of $m_{\Lamb}$ is required to preserve an approximately constant $\ddot{\Lamb}$. The time series and distributions of $\ddot{\Lamb}$ for different choices of $K$ when using this scaling for $m_{\Lamb}$ (see \reffig{dynamics:acc}) are indeed similar, 
-supporting the above considerations.
-%this choice for the $m_{\Lamb}$ scaling.
-
-In summary, this appendix shows that when selected within reasonable ranges,
-the parameters $m_\Lambda$ and $\tau_\Lambda$ have only a limited 
-influence on the kinetic-energy exchange between $\Lambda$ and the conformational
-degrees of freedom, on the temperature $T_\Lambda$, on the diffusion constant $D_\Lamb$, 
-and on the calculated free energies $\Delta G$.
-%
-In \refsec{results}, \revphil{working} choice
-$m_{\Lamb}=40 K^{1/2}\,\mathrm{u}\,\mathrm{nm}^2$ 
-and $\tau_{\Lamb}=0.5\,\mathrm{ps}$ 
-is selected for all CBTI calculations.
-
-
-\revphil{
-%================================================================================
-\appsection[Simplified Estimators]{CH2C}{\revphil{Simplified Free-energy Estimators}}
-%================================================================================
-}
-
-
-
-%
-%
-The free-energy estimator employed here for CBTI is
-given by \refeq{cbti_formula}.
-%
-The approximation involved corresponds to a 
-simple forward rectangular quadrature, where the Hamiltonian derivative is 
-averaged over $J$ successive bins considering all replicas simultaneously.
-%
-%Since $\tilde{P}(\tilde{\Lamb})$ and thus $p(\lam)$ are typically close to homogeneous, $J$ can be taken very large, resulting in a negligible quadrature error. For example, 
-%
-If $K$ replicas sample $L$ configurations each, and $p(\lam)$ is close to homogeneous,
-the number of data points per bin will be close to $K L/J$, with limited variations across bins. 
-%We define the maximal allowed value $J_{\mathrm{max}}$ as the highest value of $J$ for which empty bins 
-%(vanishing denominator in the ensemble average of \refeq{cbti_formula}) never occur. 
-%In practice, a graph of $\Delta G$ evaluated upon increasing $J$ from 1 to $J_{\mathrm{max}}$ will 
-%rapidly level off to a plateau when quadrature errors become sufficiently small. 
-%
-In this case, one may consider a simpler alternative to \refeq{cbti_formula} that does 
-not involve the specification of a number of bins.
-%
-
-
-Considering all the $K$ replicas simultaneously,
-the $KL$ pairs of $\lam$-values and associated Hamiltonian 
-derivatives are sorted in ascending order for $\lam$ (index $i=0,...,KL-1$),
-One then calculates
-%
-\beq{cbti_formula_app1}
-\Delta G_{\mathrm{alt}}=(KL)^{-1}\sum\limits_{i=0}^{KL-1} \frac{\lam_{i+1}-\lam_{i-1}}{2} \left ( \frac{\partial \ham}{\partial \lam}\right )_{i}
-\eeq
-%
-using $\lam_{-1}=\lam_{KL}=0$.
-%
-This alternative estimate, noted $\Delta G_{\mathrm{alt}}$, considers that each sample $i$ defines 
-its own single-point bin, of width determined by contact to the next lower and higher 
-data points $i-1$ and $i+1$, respectively, thereby accounting for a possible heterogeneity in the $\lambda$-sampling.
-%
-
-
-In the limit where the sampling becomes sufficiently close to homogeneous, 
-\refeqs{cbti_formula} or \refeqn{cbti_formula_app1} can be replaced by an even simpler 
-approximate expression, namely 
-%
-\beq{cbti_formula_average}
-  \Delta G_{\mathrm{app}} \approx K^{-1} \sum_{k=0}^{K-1} \left \langle \frac{\partial \ham(\xv_k;\lam_k)}{\partial \lam_k}  \right \rangle ^{\dagger \star} ,
-\eeq
-%
-which corresponds to averaging the Hamiltonian derivative over all replicas and over the entire CBTI simulation. 
-This approximate estimate, noted $\Delta G_{\mathrm{app}}$, assumes that the $KL$ data points are on average equispaced along $\lam$, 
-which only holds in the limit of homogeneous sampling.
-%
-
-
-The accuracy
-of the estimate $\Delta G$ of \refeq{cbti_formula} with $J=500$ (except for entry 11, $J = 200$)
-is compared in \reftab{screen}
-to those of the simpler expressions $\Delta G_{\mathrm{alt}}$ and $\Delta G_{\mathrm{app}}$, which do not require the specification of a number of bins.
-%
-%of \refeqs{cbti_formula_app1} and \refeq{cbti_formula_average}
-%
-%
-%The estimate $\Delta G_{\mathrm{alt}}$ assumes that each sampled $\lam$-value
-%is at the center of its own bin, limited on the left and on the right by contact to the bin of 
-%the next lower and next higher sampled $\lambda$-value.
-%
-The estimate $\Delta G_{\mathrm{alt}}$ is very close to $\Delta G$ (within error bar),
-suggesting that \refeq{cbti_formula_app1}, which assumes that each sampled $\lam$-value
-is at the center of its own bin, is a viable parameter-free alternative to \refeq{cbti_formula}. 
-%
-On the other hand, the estimate $\Delta G_{\mathrm{app}}$,
-which assumes that each bin encompasses the same number of sampled $\lambda$-points
-irrespective of $J$, is more approximate.
-%
-As expected from the involved assumption, $\Delta G_{\mathrm{app}}$ is only a good approximation
-to $\Delta G$ when the CBTI sampling is indeed close to uniform along $\lambda$.
-%
-Considering entries 11-17, this is essentially the case for the unbiased simulations with $K\ge 32$.
-%
-However, for the unbiased simulation with $K=8$ and the two biased simulations, 
-the sampling is not sufficiently homogeneous and the discrepancy can be significant
-(about $1-5\unit{kJ\, mol^{-1}}$).
-
-
-%--------------------------------------------------------------------------------
-\appsection[Autocorrelation]{CH2D}{Autocorrelation of the Hamiltonian Derivative}
-%--------------------------------------------------------------------------------
-
-\begin{figure}[H]
-  \centering
-    \input{\path/plt/tcf_all_ene_ana.pgf}%
-    \caption{\footnotesize\captitital{Normalized autocorrelation function $f(t)$ of the Hamiltonian derivative for the aqueous methanol-to-dummy mutation at $298.15\unit{K}$ and $1\unit{bar}$ with the 2016H66 force field.} These functions are based on the TI calculation relying on $K_{\mathrm{TI}}=17$ $\lam$-points. The functions displayed correspond to every second $\lam$-point. The associated autocorrelation times $\tau_{f}$ are reported in \reftab{tcf}. 
-      %
-      %% The definition of the discrete autocorrelation function $f(t)$ with lag time $t$ is given as 
-      %% $f(t)=1/\sigma_x^2 \sum\limits_{i=0}^{N-t}(x_i-\overline{x})(x_{i+t}-\overline{x})$.
-}
-    \label{fig:ti:tcf}
-\end{figure}
-\clearpage
-
-\begin{table}[H]
-  \centering
-\caption{\footnotesize\captitital{Autocorrelation times $\tau_f$ of the Hamiltonian derivative for the aqueous methanol-to-dummy mutation at $298.15\unit{K}$ and $1\unit{bar}$ with the 2016H66 force field.} These times are based on the TI calculation relying on $K_{\mathrm{TI}}=17$ $\lam$-points. The associated autocorrelation functions $f(t)$ are displayed in \reffig{ti:tcf} for every second $\lam$-point. The autocorrelation times were derived by performing an expontential fit to the $f(t)$ curve.
-}
-\label{tab:tcf}
-\begin{tabular}{*{2}{c} | *{2}{c}}
-\hline
-$\lam$ & $\tau_{f}\,[\mathrm{ps}]$ & $\lam$ & $\tau_{f}\,[\mathrm{ps}]$ \\
-\hline
-\hline
-     0.000 &      0.339  &     0.562 &      0.161 \\
-     0.062 &      0.297  &     0.625 &      0.224 \\
-     0.125 &      0.207  &     0.688 &      0.377 \\
-     0.188 &      0.150  &     0.750 &      1.080 \\
-     0.250 &      0.109  &     0.812 &      1.119 \\
-     0.312 &      0.085  &     0.875 &      0.799 \\
-     0.375 &      0.087  &     0.938 &      0.555 \\
-     0.438 &      0.112  &     1.000 &      0.442 \\
-     0.500 &      0.139  &
-\end{tabular}
-\end{table}
-
-
-
-\newcommand\avgti[1]{\subgraph{fig:avgti:#1}{conv_mad_#1_ene_ana.pgf}{0.45}%
-}
-
-%================================================================================
-\appsection[Reference TI Calculations]{CH2E}{Reference TI Calculations}%
-%================================================================================
-
-\begin{figure}[H]
-  \centering
-   \avgti{03}%
-   \avgti{05}\\[-0.2cm]
-   \avgti{09}%
-   \avgti{17}\\[-0.2cm]
-   \avgti{33}
-   \avgti{65}\\[-0.2cm]
-   \subgraph{fig:avgti:129}{conv_mad_129_wide_ene_ana.pgf}{0.5}%
-   \caption{\footnotesize\captitital{Convergence properties of the TI calculations for the aqueous methanol-to-dummy mutation at $298.15\unit{K}$ and $1\unit{bar}$ with the 2016H66 force field. }
-     %
-     This figure complements \reffig{ti:conv} 
-     by also including the TI
-     calculations involving fewer than 129 $\lam$-points.
-     %
-     Here, the running $\Delta G$ estimates are shown for calculations involving
-     $K_{\mathrm{TI}}=2^n+1$ equidistant $\lam$-points with $n=1,2,..,7$ resulting in 
-     $K_{\mathrm{TI}}=3$ \ref{sub@fig:avgti:03}, %
-     5 \ref{sub@fig:avgti:05}, %
-     9 \ref{sub@fig:avgti:09}, %
-     17 \ref{sub@fig:avgti:17}, %
-     33 \ref{sub@fig:avgti:33}, %
-     65 \ref{sub@fig:avgti:65} and %
-     129 \ref{sub@fig:avgti:129}. %
-     Note that the vertical ranges in Panels \ref{sub@fig:avgti:03} and \ref{sub@fig:avgti:05}
-     differ from the range used in the other graphs. The corresponding numerical values at full
-     sampling time are reported in \reftabs{repeats} and \reftabn{ti}.
-   }
-   \label{fig:avgti}
-\end{figure}
-
-
-%% The dashed lines correspond to the 10 independent calculations, the blue line is the average of these 10 simulations with a 95\% confidence interval given as a blue shade.
-  %
-
-%% The last four rows correspond to the average $\Delta G$ (avg) over the ten repeats
-    %% and three different error estimates.
-    %% %
-    %% $\sigma(\mathrm{avg})$ corresponds to the standard deviation on the mean of the 10 repeats. \davcom{not multiplied with the Student t-factor (as in the graphs), but I can do this.}.
-    %% %
-    %% $\sigma_{\mathrm{bs,tot}}$ is the bootstrap error of the concatenated trajectories, \ie{} corresponding
-    %% to the values in the first parenthesis for the combined trajectories.
-    %% %
-    %% $\sigma_{\mathrm{tot}}$ (BH17.1) is the the error propagated from the bootstrap errors 
-    %% of the Hamiltonian derivative at each $\lam$-point of the concatenated trajectories, 
-    %% \ie{} corresponding to the values in the second parenthesis for the combined trajectories.
-    %% \davcom{This is the error calculated exactly as in BH17.1/BH18.1}  
-\begin{table}[H]
-  \centering
-  \caption{\footnotesize\captitital{Repeat results over TI 
-    calculations for the aqueous methanol-to-dummy mutation at $298.15\unit{K}$
-    and $1\unit{bar}$ with the 2016H66 force field.}
-    %
-    The free-energy change $\Delta G$ is reported for TI calculations involving
-    $K_{\mathrm{TI}}=2^n+1$ $\lam$-points with $n=1,2,..,7$.
-    %
-    For each choice of $K_{\mathrm{TI}}$ the results of ten repeats (successive rows) are listed,
-    all involving a total sampling time of $100\unit{ns}$  
-    equally distributed over the $\lam$-points.
-    %
-    For each repeat, the calculated $\Delta G$ (Simpson quadrature)  
-    is reported along with a bootstrap error estimate (first parenthesis)
-    and an error propagated from the bootstrap errors of the Hamiltonian derivative at each
-    $\lam$-point (second parenthesis). These two error estimates do not include a Student $t$-factor.
-    %
-    Repeat statistics based on this data can be found in \reftab{repeats}.
-    }
-  \label{tab:ti}
-\resizebox{\textwidth}{!}{
- \begin{tabular}{*{8}{c}}
-\hline
-\multicolumn{8}{c}{$\Delta G\,[\mathrm{kJ\,mol^{-1}}]$}\\
-\hline
-$n$               &                1 &                2 &                3 &               4 &               5 &               6 &              7 \\
-   $K_{\mathrm{TI}}$ &                3 &                5 &                9 &               17 &               33 &               65 &              129 \\
-\hline
-\hline
-   1 &  15.68 (0.08)  (0.10) &   4.82 (0.18)  (0.15) &  19.22 (0.18)  (0.16) &  21.87 (0.17)  (0.15) &  21.48 (0.20)  (0.15) &  21.18 (0.24)  (0.15) &  21.45 (0.30)  (0.14) \\
-   2 &  15.52 (0.11)  (0.10) &   4.32 (0.18)  (0.14) &  18.72 (0.17)  (0.16) &  21.83 (0.18)  (0.14) &  21.59 (0.19)  (0.14) &  21.72 (0.22)  (0.14) &  21.87 (0.29)  (0.14) \\
-   3 &  15.64 (0.09)  (0.09) &   4.50 (0.22)  (0.16) &  18.92 (0.17)  (0.14) &  21.57 (0.20)  (0.14) &  21.72 (0.17)  (0.14) &  21.62 (0.20)  (0.14) &  21.60 (0.26)  (0.14) \\
-   4 &  15.58 (0.10)  (0.09) &   4.98 (0.17)  (0.14) &  19.18 (0.17)  (0.14) &  21.88 (0.18)  (0.14) &  21.85 (0.19)  (0.14) &  21.66 (0.22)  (0.14) &  21.67 (0.31)  (0.14) \\
-   5 &  15.71 (0.10)  (0.09) &   4.97 (0.18)  (0.15) &  18.77 (0.17)  (0.15) &  21.37 (0.18)  (0.15) &  21.37 (0.22)  (0.15) &  21.29 (0.25)  (0.14) &  21.30 (0.26)  (0.14) \\
-   6 &  15.62 (0.10)  (0.09) &   5.11 (0.18)  (0.16) &  18.99 (0.17)  (0.15) &  21.54 (0.21)  (0.15) &  21.19 (0.17)  (0.15) &  21.66 (0.22)  (0.14) &  21.76 (0.27)  (0.14) \\
-   7 &  15.66 (0.10)  (0.08) &   4.75 (0.19)  (0.15) &  18.92 (0.14)  (0.15) &  21.67 (0.14)  (0.15) &  21.71 (0.21)  (0.14) &  21.29 (0.22)  (0.14) &  21.39 (0.29)  (0.14) \\
-   8 &  15.48 (0.09)  (0.09) &   4.79 (0.18)  (0.15) &  18.77 (0.16)  (0.15) &  21.37 (0.17)  (0.15) &  21.03 (0.19)  (0.15) &  21.34 (0.25)  (0.14) &  20.99 (0.33)  (0.14) \\
-   9 &  15.58 (0.09)  (0.08) &   4.77 (0.19)  (0.16) &  18.98 (0.19)  (0.15) &  21.49 (0.18)  (0.15) &  21.12 (0.18)  (0.14) &  21.02 (0.23)  (0.14) &  21.16 (0.32)  (0.14) \\
-  10 &  15.65 (0.10)  (0.09) &   5.06 (0.19)  (0.14) &  19.17 (0.17)  (0.15) &  21.95 (0.19)  (0.15) &  21.45 (0.18)  (0.15) &  21.24 (0.22)  (0.14) &  21.09 (0.26)  (0.14) \\
-\end{tabular}
-}
-\end{table}
-
-
-
-
-
-
-\newcommand\simdata[5]{%
-\begin{figure}[H]
-         \centering%
-\subgraph{fig:thermo:#2:#3:#4:lamb}{#2_#3_#4_caplambda_ts_hist_ene_ana.pgf}{0.26}%
-\hfill%
-\subgraph{fig:thermo:#2:#3:#4:tlamb}{#2_#3_#4_tildelambda_ts_hist_ene_ana.pgf}{0.26}%
-\hfill%
-\subgraph{fig:thermo:#2:#3:#4:ll}{#2_#3_#4_lambda_ts_hist_ene_ana.pgf}{0.26}\\[-.5em]
-\subgraph{fig:thermo:#2:#3:#4:vel}{#2_#3_#4_vel_ts_hist_ene_ana.pgf}{0.26}%
-%\hfill%
-\subgraph{fig:thermo:#2:#3:#4:acc}{#2_#3_#4_acc_ene_ana.pgf}{0.26}\\[-.5em]%
-%\hfill%
-%\subgraph{fig:thermo:#2:#3:#4:ll}{#2_#3_#4_lambda_ts_hist_ene_ana.pgf}{0.26}\\
-\subgraph{fig:thermo:#2:#3:#4:dif}{#2_#3_#4_diffusion_ene_ana.pgf}{0.26}%
-%\hfill%
-\subgraph{fig:thermo:#2:#3:#4:acf}{#2_#3_#4_autocorr_vel_ene_ana.pgf}{0.26}\\[-1em]%
-%\hfill%
-%\subgraph{fig:thermo:#2:#3:#4:ll}{#2_#3_#4_lambda_ts_hist_ene_ana.pgf}{0.26}\\
-\caption{\footnotesize #1%
-Panel \ref{sub@fig:thermo:#2:#3:#4:lamb} time series (blue) and distribution (orange) of $\Lamb$.
-Panel \ref{sub@fig:thermo:#2:#3:#4:tlamb} time series (blue) and distribution (orange) of $\tilde{\Lamb}$.
-Panel \ref{sub@fig:thermo:#2:#3:#4:ll} time series of $\lambda$ for replica $k=0$ (blue) along with the $\lam$-values for the $K-1$ other replicas (colored dots) as well as distribution of $\lam$ considering all replicas (orange).
-%
-Panel \ref{sub@fig:thermo:#2:#3:#4:vel} time series (blue) and distribution (blue) of the velocity $\dot{\Lamb}$ along with the analytical Maxwell-Boltzmann distribution (orange). 
-%
-Panel \ref{sub@fig:thermo:#2:#3:#4:acc} time series (blue) and distribution (blue) of the acceleration $\ddot{\Lamb}$.
-%
-%Panel \ref{sub@fig:thermo:#2:#3:#4:frc} time series and distribution of the force $F_{\Lamb}$;
-%
-Panel \ref{sub@fig:thermo:#2:#3:#4:dif} time series of the mean-square displacement of $\Lamb$ (blue) along with a linear least-square fit (dashed brown).
-%
-Panel \ref{sub@fig:thermo:#2:#3:#4:acf} autocorrelation function of $\dot{\Lambda}$ (blue) along with an exponential fit (dashed brown).
-%
-%Panel \ref{sub@fig:thermo:#2:#3:#4:acfsq} autocorrelation function $c_{\dot{\Lamb}^{2}}(t)$ of $\dot{\Lambda}^{2}$ (blue) along with an exponential fit (red).
-%% Panel \ref{sub@fig:thermo:#2:#3:#4:dhdl}: The resulting $\langle \dhdl \rangle$ curve using 1000 bins.%
-%% Panel \ref{sub@fig:thermo:#2:#3:#4:pes}: The resulting PMF $G(\lam)$ curve using 1000 bins.%
-%% Panel \ref{sub@fig:thermo:#2:#3:#4:convdg}: The convergence of $\Delta G$ with total simulation time using 1000 bins for analysis.%
-%% Panel \ref{sub@fig:thermo:#2:#3:#4:convbin}: The convergence of $\Delta G$ with employed number of bins.%
- }
-\label{fig:thermo:#2:#3:#4}
-%\includegraphics[height=.25\textwidth]{/fileserver/oak4/dahahn/J_CONVEYOR_BELT/10_mtl/MTL/in_h2o/#2/#3/#4/conv_prob_#3_datapts_ene_ana.png}
-\end{figure}
-
-}
-\clearpage
-
-
-%================================================================================
-\appsection[Unbiased CBTI Simulations]{CH2F}{Unbiased CBTI Simulations}%
-%================================================================================
-\subsection{Exploration of the Influence of $m_{\Lamb}$ in CBTI}%
-\textbf{Simulation $\#1$, $m_{\Lamb}=16\unit{u\,nm^2}$}%
-\simdata{\captitital{Results from the CBTI simulation of $10\unit{ns}$ employing $K=16$ replicas with a mass-parameter $m_{\Lamb}=16\,\mathrm{u\,nm^2}$ and no thermostat coupling of the $\Lamb$-variable ($\tau_{\Lamb}\rightarrow\infty$).} This simulation corresponds to entry 1 in  \reftab{screen}. }{03_cvb_screen}{016}{1_0.01}{1000}
-\clearpage
-
-\textbf{Simulation $\#2$, $m_{\Lamb}=160\unit{u\,nm^2}$}%
-\simdata{\captitital{Results from the CBTI simulation of $10\unit{ns}$ employing $K=16$ replicas with a mass-parameter $m_{\Lamb}=160\,\mathrm{u\,nm^2}$ and no thermostat coupling of the $\Lamb$-variable ($\tau_{\Lamb}\rightarrow\infty$).} This simulation corresponds to entry 2 in  \reftab{screen}. }{03_cvb_screen}{016}{10_0.01}{1000}%
-\clearpage
-
-\textbf{Simulation $\#3$, $m_{\Lamb}=800\unit{u\,nm^2}$}%
-\simdata{\captitital{Results from the CBTI simulation of $10\unit{ns}$ employing $K=16$ replicas with a mass-parameter $m_{\Lamb}=800\,\mathrm{u\,nm^2}$ and no thermostat coupling of the $\Lamb$-variable ($\tau_{\Lamb}\rightarrow\infty$).} This simulation corresponds to entry 3 in  \reftab{screen}. }{03_cvb_screen}{016}{50_0.01}{1000}
-\clearpage
-
-\textbf{Simulation $\#4$, $m_{\Lamb}=1600\unit{u\,nm^2}$}%
-\simdata{\captitital{Results from the CBTI simulation of $10\unit{ns}$ employing $K=16$ replicas with a mass-parameter $m_{\Lamb}=1600\,\mathrm{u\,nm^2}$ and no thermostat coupling of the $\Lamb$-variable ($\tau_{\Lamb}\rightarrow\infty$).} This simulation corresponds to entry 4 in  \reftab{screen}. }{03_cvb_screen}{016}{100_0.01}{1000}
-\clearpage
-
-\textbf{Simulation $\#5$, $m_{\Lamb}=3200\unit{u\,nm^2}$}%
-\simdata{\captitital{Results from the CBTI simulation of $10\unit{ns}$ employing $K=16$ replicas with a mass-parameter $m_{\Lamb}=3200\,\mathrm{u\,nm^2}$ and no thermostat coupling of the $\Lamb$-variable ($\tau_{\Lamb}\rightarrow\infty$).} This simulation corresponds to entry 5 in  \reftab{screen}. }{03_cvb_screen}{016}{200_0.01}{1000}
-\clearpage
-
-
-\subsection{Exploration of the Influence of $\tau_{\Lamb}$ in CBTI}
-%
-\textbf{Simulation $\#6$, $\tau_{\Lamb}=0.05\unit{ps}$}%
-\simdata{\captitital{Results from the CBTI simulation of $10\unit{ns}$ employing $K=16$ replicas with a mass-parameter $m_{\Lamb}=160\,\mathrm{u\,nm^2}$ and thermostat coupling of the $\Lamb$-variable with $\tau_{\Lamb}=0.05\unit{ps}$.} This simulation corresponds to entry 6 in  \reftab{screen}. }{02_cvb_thermo_screen}{016}{10_0.05}{1000}
-\clearpage
-
-\textbf{Simulation $\#7$, $\tau_{\Lamb}=0.1\unit{ps}$}%
-\simdata{\captitital{Results from the CBTI simulation of $10\unit{ns}$ employing $K=16$ replicas with a mass-parameter $m_{\Lamb}=160\,\mathrm{u\,nm^2}$ and thermostat coupling of the $\Lamb$-variable with $\tau_{\Lamb}=0.1\unit{ps}$.} This simulation corresponds to entry 7 in  \reftab{screen}. }{02_cvb_thermo_screen}{016}{10_0.1}{1000}
-\clearpage
-
-
-\textbf{Simulation $\#8$, $\tau_{\Lamb}=0.5\unit{ps}$}%
-\simdata{\captitital{Results from the CBTI simulation of $10\unit{ns}$ employing $K=16$ replicas with a mass-parameter $m_{\Lamb}=160\,\mathrm{u\,nm^2}$ and thermostat coupling of the $\Lamb$-variable with $\tau_{\Lamb}=0.5\unit{ps}$.} This simulation corresponds to entry 8 in  \reftab{screen}. }{02_cvb_thermo_screen}{016}{10_0.5}{1000}
-\clearpage
-
-
-\textbf{Simulation $\#9$, $\tau_{\Lamb}=1\unit{ps}$}%
-\simdata{\captitital{Results from the CBTI simulation of $10\unit{ns}$ employing $K=16$ replicas with a mass-parameter $m_{\Lamb}=160\,\mathrm{u\,nm^2}$ and thermostat coupling of the $\Lamb$-variable with $\tau_{\Lamb}=1\unit{ps}$.} This simulation corresponds to entry 9 in  \reftab{screen}. }{02_cvb_thermo_screen}{016}{10_1.0}{1000}
-\clearpage
-
-
-\textbf{Simulation $\#10$, $\tau_{\Lamb}=2\unit{ps}$}%
-\simdata{\captitital{Results from the CBTI simulation of $10\unit{ns}$ employing $K=16$ replicas with a mass-parameter $m_{\Lamb}=160\,\mathrm{u\,nm^2}$ and thermostat coupling of the $\Lamb$-variable with $\tau_{\Lamb}=2\unit{ps}$.} This simulation corresponds to entry 10 in  \reftab{screen}.}{02_cvb_thermo_screen}{016}{10_2.0}{1000}
-\clearpage
-
-
-\subsection{Exploration of the Influence of $K$ in CBTI}
-%
-\textbf{Simulation $\#11$, $K=8$}%
-\simdata{\captitital{Results from the CBTI simulation of $32\unit{ns}$ employing $K=8$ replicas with a mass-parameter $m_{\Lamb}=113\,\mathrm{u\,nm^2}$ and thermostat coupling of the $\Lamb$-variable with $\tau_{\Lamb}=0.5\unit{ps}$.} This simulation corresponds to entry 11 in  \reftab{screen}. }{04_cvb_thermo}{008}{10}{1000}
-\clearpage
-
-
-\textbf{Simulation $\#12$, $K=16$}%
-\simdata{\captitital{Results from the CBTI simulation of $16\unit{ns}$ employing $K=16$ replicas with a mass-parameter $m_{\Lamb}=160\,\mathrm{u\,nm^2}$ and thermostat coupling of the $\Lamb$-variable with $\tau_{\Lamb}=0.5\unit{ps}$.} This simulation corresponds to entry 12 in  \reftab{screen}. }{04_cvb_thermo}{016}{10}{1000}
-\clearpage
-
-
-\textbf{Simulation $\#13$, $K=32$}%
-\simdata{\captitital{Results from the CBTI simulation of $8\unit{ns}$ employing $K=32$ replicas with a mass-parameter $m_{\Lamb}=226\,\mathrm{u\,nm^2}$ and thermostat coupling of the $\Lamb$-variable with $\tau_{\Lamb}=0.5\unit{ps}$.} This simulation corresponds to entry 13 in  \reftab{screen}. }{04_cvb_thermo}{032}{10}{1000}
-\clearpage
-
-
-\textbf{Simulation $\#14$, $K=64$}%
-\simdata{\captitital{Results from the CBTI simulation of $4\unit{ns}$ employing $K=64$ replicas with a mass-parameter $m_{\Lamb}=320\,\mathrm{u\,nm^2}$ and thermostat coupling of the $\Lamb$-variable with $\tau_{\Lamb}=0.5\unit{ps}$.} This simulation corresponds to entry 14 in  \reftab{screen}. }{04_cvb_thermo}{064}{10}{1000}
-\clearpage
-
-
-\textbf{Simulation $\#15$, $K=128$}%
-\simdata{\captitital{Results from the CBTI simulation of $2\unit{ns}$ employing $K=128$ replicas with a mass-parameter $m_{\Lamb}=452\,\mathrm{u\,nm^2}$ and thermostat coupling of the $\Lamb$-variable with $\tau_{\Lamb}=0.5\unit{ps}$.} This simulation corresponds to entry 15 in  \reftab{screen}. }{04_cvb_thermo}{128}{10}{1000}
-\clearpage
-
-\appsection[Repeats of a CBTI Simulation]{CH2I}{Repeats of a CBTI Simulation}
-%
-\begin{table}[H]
-  \centering
-  \caption{\footnotesize\captitital{Repeat results of a CBTI calculation for the aqueous methanol-to-dummy mutation at $298.15\unit{K}$ and
-    $1\unit{bar}$ using the 2061H66 force field.} The free-energy change $\Delta G$ is reported for the CBTI
-    calculation involving $K=16$ replicas along with $m_{\Lamb}=160\unit{u\,nm^2}$  and $\tau_{\Lamb}=0.5\unit{ps}$.
-    %
-    The results of ten repeats (successive rows) are listed, all of $6.25\unit{ns}$ duration (total
-    single-system sampling time of $100\unit{ns}$).
-    %
-    For each repeat, the calculated $\Delta G$ (Eq. \ref{eq:cbti_formula} with $J=500$) is reported along with a
-    bootstrap error estimate. This error does not include a Student $t$-factor.
-    %
-    Repeat statistics based on this data can be found in  \reftab{repeats}.
-  }
-  \label{tab:cvbseed}
-  \begin{tabular}{*{2}{c}}
-\hline
-    &       $\Delta G\,[\mathrm{kJ\,mol^{-1}}]$  \\
-\hline
-\hline
-   1  &  21.42  (0.16)\\
-   2  &  21.33  (0.16)\\
-   3  &  21.44  (0.17)\\
-   4  &  21.38  (0.15)\\
-   5  &  21.08  (0.14)\\
-   6  &  21.43  (0.15)\\
-   7  &  21.59  (0.15)\\
-   8  &  21.54  (0.15)\\
-   9  &  21.31  (0.15)\\
-  10  &  21.42  (0.16)\\
-\end{tabular}
-\end{table}
-\clearpage
-
-
-
-%================================================================================
-\appsection[CBTI Simulations with Biasing]{CH2J}{CBTI Simulations with Biasing Potential}
-%================================================================================
-
-\begin{table}[H]
-  \centering
-  \caption{\footnotesize\captitital{Parameters and results of biased CBTI simulations of the aqueous methanol-to-dummy 
-    mutation at $298.15\unit{K}$ and $1\unit{bar}$ with the 2016H66 force field.}
-  %
-  The successive entries are
-  the index of the simulation (sim),
-  the number $K$ of replicas,
-  the number $N_{\mathrm{gp}}$ of gridpoints for $\tilde{\Lamb}$ in the range $[0;2\pi/K]$,
-  the build-up force constant $c_{\mathrm{LE}}$,
-  the reduction factor $f_{\mathrm{red}}$,
-  the LE build-up time $t_{\mathrm{LE}}$ for the replica system,
-  the number $N_{\mathrm{ds}}$ of double-sweeps over the $\tilde{\Lamb}$ range during the build-up,
-  the US umbrella sampling time $t_{\mathrm{US}}$ for the replica system,
-  and the free-energy difference $\Delta G$ calculated using Eq. \ref{eq:cbti_formula} with $J=500$.
-  The corresponding  results are illustrated graphically  in \reffigs{leus:8} and \reff{leus:16}.
-    Only entries 2 and 8 are discussed in \refsec{results}.
-}
-  \label{tab:leus}
-  \resizebox{\textwidth}{!}{
-  \begin{tabular}{*{9}{c}}
-\hline
-sim & $K$ & $N_{\mathrm{gp}}$ & $c_{\mathrm{LE}}\,[\mathrm{kJ\,mol^{-1}}]$ & $f_{\mathrm{red}}$  & $t_{\mathrm{LE}}\,[\mathrm{ns}]$ & $N_{\mathrm{ds}}$ & $t_{\mathrm{US}}\,[\mathrm{ns}]$  &   $\Delta G\,[\mathrm{kJ\,mol^{-1}}]$  \\
-\hline
-\hline
-   $1$  &  8 & 10 & 0.01  & 0.1 & 0.050 & 3 & 22 & 21.11$\pm$  0.15 \\ %05_cvb_leus/008/10
-   $2$  &  8 & 34 & 0.001 & 0.1 & 0.150 & 3 & 22 & 21.48$\pm$  0.18 \\ %09_cvb_leus/008/3
-   $3$  &  8 & 34 & 0.001 & 0.1 & 0.200 & 6 & 22 & 21.29$\pm$  0.17 \\ %09_cvb_leus/008/4
-   $4$  &  8 & 34 & 0.001 & 0.8 & 0.054 & 3 & 22 & 21.54$\pm$  0.22 \\ %10_cvb_leus/008/3
-   $5$  &  8 & 34 & 0.001 & 0.8 & 0.128 & 6 & 22 & 21.38$\pm$  0.17 \\ %10_cvb_leus/008/6
-   $6$  &  8 & 34 & 0.001 & 0.8 & 0.156 & 9 & 22 & 21.46$\pm$  0.16 \\ %10_cvb_leus/008/9
-\hline
-   $7$  & 16 &  6 & 0.01  & 0.1 & 0.050 & 3 & 22 & 21.23$\pm$  0.22 \\ %05_cvb_leus/008/10
-   $8$  & 16 & 18 & 0.001 & 0.1 & 0.070 & 3 & 22 & 21.30$\pm$  0.13 \\ %09_cvb_leus/008/3
-   $9$  & 16 & 18 & 0.001 & 0.1 & 0.083 & 6 & 22 & 21.48$\pm$  0.16 \\ %09_cvb_leus/008/4
-   $10$ & 16 & 18 & 0.001 & 0.8 & 0.030 & 3 & 10 & 21.00$\pm$  0.14 \\ %10_cvb_leus/008/3
-   $11$ & 16 & 18 & 0.001 & 0.8 & 0.050 & 6 & 20 & 21.57$\pm$  0.14 \\ %10_cvb_leus/008/6
-   $12$ & 16 & 18 & 0.001 & 0.8 & 0.084 & 9 & 20 & 21.21$\pm$  0.17 \\ %10_cvb_leus/008/9
-\end{tabular}
-}
-\end{table}
-\clearpage
-
-
-
-\begin{figure}[H]
-  \centering
-\subgraph{leus:caplamhist:008:1}{05_cvb_leus_008_10_lambda_leus_hist_ene_ana.pgf}{0.48}%
-\subgraph{leus:lamhist:008:1}{05_cvb_leus_008_10_lambda_ts_hist_008_leus_ene_ana.pgf}{0.48}\\
-\subgraph{leus:caplamhist:008:2}{09_cvb_leus_gridpoints_008_3_lambda_leus_hist_ene_ana.pgf}{0.48}%
-\subgraph{leus:lamhist:008:2}{09_cvb_leus_gridpoints_008_3_lambda_ts_hist_008_leus_ene_ana.pgf}{0.48}\\
-\subgraph{leus:caplamhist:008:3}{09_cvb_leus_gridpoints_008_4_lambda_leus_hist_ene_ana.pgf}{0.48}%
-\subgraph{leus:lamhist:008:3}{09_cvb_leus_gridpoints_008_4_lambda_ts_hist_008_leus_ene_ana.pgf}{0.48}\\
-  \hfill \textit{Continued next page.}
-\end{figure}
-\begin{figure}[H]
-  \centering
-  \setcounter{subfigure}{6}
-\subgraph{leus:caplamhist:008:4}{10_cvb_leus_fred_008_3_lambda_leus_hist_ene_ana.pgf}{0.48}%
-\subgraph{leus:lamhist:008:4}{10_cvb_leus_fred_008_3_lambda_ts_hist_008_leus_ene_ana.pgf}{0.48}\\
-\subgraph{leus:caplamhist:008:5}{10_cvb_leus_fred_008_6_lambda_leus_hist_ene_ana.pgf}{0.48}%
-\subgraph{leus:lamhist:008:5}{10_cvb_leus_fred_008_6_lambda_ts_hist_008_leus_ene_ana.pgf}{0.48}\\
-\subgraph{leus:caplamhist:008:6}{10_cvb_leus_fred_008_9_lambda_leus_hist_ene_ana.pgf}{0.48}%
-\subgraph{leus:lamhist:008:6}{10_cvb_leus_fred_008_9_lambda_ts_hist_008_leus_ene_ana.pgf}{0.48}
-\caption{\footnotesize\captitital{Time series and probability distributions of the relevant CB-variables
-in biased CBTI calculations of the aqueous methanol-to-dummy mutation
-at 298.15 K and 1 bar with the 2016H66 force field.}
-%
-The calculations rely on $K=8$ replicas.
-%
-Each row shows the probability distribution $P(\Lamb)$ of the CB advance 
-variable $\Lamb$ (left)
-and the time series $\lam(t)$ and probability distribution $p(\lambda)$
-of the coupling variable $\lambda$ for all replicas (right).
-The successive panels correspond
-to different protocol settings listed in  \reftab{leus}.
-%
-             Panels (a,b) entry $1$. %
-%
-             Panels (c,d) entry $2$. %
-%
-             Panels (e,f) entry $3$. %
-%
-             Panels (g,h) entry $4$. %
-%
-             Panels (i,j) entry $5$. %
-%
-             and Panels (k,l) entry $6$. %
-%
-}
-\label{fig:leus:8}
-\end{figure}
-
-
-
-\begin{figure}[H]
-  \centering
-\subgraph{leus:caplamhist:016:1}{05_cvb_leus_016_10_lambda_leus_hist_ene_ana.pgf}{0.48}%
-\subgraph{fig:leus:lamhist:016:1}{05_cvb_leus_016_10_lambda_ts_hist_016_leus_ene_ana.pgf}{0.48}\\
-\subgraph{fig:leus:caplamhist:016:2}{09_cvb_leus_gridpoints_016_3_lambda_leus_hist_ene_ana.pgf}{0.48}%
-\subgraph{fig:leus:lamhist:016:2}{09_cvb_leus_gridpoints_016_3_lambda_ts_hist_016_leus_ene_ana.pgf}{0.48}\\
-\subgraph{fig:leus:caplamhist:016:3}{09_cvb_leus_gridpoints_016_6_lambda_leus_hist_ene_ana.pgf}{0.48}%
-\subgraph{fig:leus:lamhist:016:3}{09_cvb_leus_gridpoints_016_6_lambda_ts_hist_016_leus_ene_ana.pgf}{0.48}\\
-  \hfill \textit{Continued next page.}
-\end{figure}
-\begin{figure}[H]
-  \centering
-  \setcounter{subfigure}{6}
-\subgraph{fig:leus:caplamhist:016:4}{10_cvb_leus_fred_016_3_lambda_leus_hist_ene_ana.pgf}{0.48}%
-\subgraph{fig:leus:lamhist:016:4}{10_cvb_leus_fred_016_3_lambda_ts_hist_016_leus_ene_ana.pgf}{0.48}\\
-\subgraph{fig:leus:caplamhist:016:5}{10_cvb_leus_fred_016_6_lambda_leus_hist_ene_ana.pgf}{0.48}%
-\subgraph{fig:leus:lamhist:016:5}{10_cvb_leus_fred_016_6_lambda_ts_hist_016_leus_ene_ana.pgf}{0.48}\\
-\subgraph{fig:leus:caplamhist:016:6}{10_cvb_leus_fred_016_9_lambda_leus_hist_ene_ana.pgf}{0.48}%
-\subgraph{fig:leus:lamhist:016:6}{10_cvb_leus_fred_016_9_lambda_ts_hist_016_leus_ene_ana.pgf}{0.48}\\
-\caption{\footnotesize\captitital{Time series and probability distributions of the relevant CB-variables
-in biased CBTI calculations of the aqueous methanol-to-dummy mutation
-at 298.15 K and 1 bar with the 2016H66 force field.}
-%
-The calculations rely on $K=16$ replicas.
-%
-Each row shows the probability distribution $P(\Lamb)$ of the CB advance 
-variable $\Lamb$ (left)
-and the time series $\lam(t)$ and probability distribution $p(\lambda)$
-of the coupling variable $\lambda$ for all replicas (right).
-The successive panels correspond
-to different protocol settings listed in \reftab{leus}.
-%
-             Panels (a,b) entry $7$. %
-%
-             Panels (c,d) entry $8$. %
-%
-             Panels (e,f) entry $9$. %
-%
-             Panels (g,h) entry $10$. %
-%
-             Panels (i,j) entry $11$. %
-%
-             and Panels (k,l) entry $12$. %
-             %
-}
-\label{fig:leus:16}
-\end{figure}
-
-
-%================================================================================
-\appsection[Free-energy Profiles]{CH2fep}{Free-energy Profiles $G_{\tilde{\Lamb}}(\tilde{\Lamb})$  along $\tilde{\Lamb}$}
-%================================================================================
-%
-\begin{figure}[H]
+\section{Parameter Exploration}
+A fast transition of the initial dominating end state to the desired dominating end state was observed by monitoring the dominating end state over time.
+The transition occurred latest after $0.5$~ns, and the system remained in the biased end state for the rest of the simulation time.
+In both water and complex simulations, the desired end state was sampled about $~99\%$ of the simulation time with the exception of L19 in water (Table \ref{SItab:RingCycleOpenin_sampling_fraction_optimizedStates}).
+To inspect if the optimized state simulations' results sufficiently represent the target states, a comparison between the target state obtained potential energy distributions in the eds simulations with MD simulations consisting of only the target state was conducted (Figure \ref{fig:CHK1_set2_stateOptimization_EnergyDistribution}). 
+
+\begin{table}[h]
 \centering
-\subgraph{fig:gprof:008}{gprofile_008_ene_ana.pgf}{0.48}%
-\hfill%
-\subgraph{fig:gprof:016}{gprofile_016_ene_ana.pgf}{0.48}\\
-\subgraph{fig:gprof:032}{gprofile_032_ene_ana.pgf}{0.48}%
-\hfill%
-\subgraph{fig:gprof:064}{gprofile_064_ene_ana.pgf}{0.48}\\
-\subgraph{fig:gprof:128}{gprofile_128_ene_ana.pgf}{0.48}%
-  \caption{\footnotesize\captitital{Free-energy profiles $G_{\tilde{\Lamb}}(\tilde{\Lamb})$ in unbiased CBTI simulations 
-    of the aqueous methanol-to-dummy mutation at $298.15\unit{K}$ and $1\unit{bar}$ with the 
-    2016H66 force field. }
-    %
-    The simulations relied on
-    $K=8$ \protect\subref{fig:gprof:008},
-    $K=16$ \protect\subref{fig:gprof:016}, %
-    $K=32$ \protect\subref{fig:gprof:032}, %
-    $K=64$ \protect\subref{fig:gprof:064}, and %
-    $K=128$ \protect\subref{fig:gprof:128} replicas, %
-    a mass-parameter $m_{\Lamb}=40K^{1/2}\,\mathrm{u\,nm^2}$ and  thermostat coupling 
-    of the $\Lamb$-variable with $\tau_{\Lamb}=0.5\unit{ps}$.
-    %
-    The free-energy profiles were calculated as  
-    $G_{\tilde{\Lamb}}(\Lamb)=-\beta^{-1} \ln P_{\tilde{\Lamb}}(\tilde{\Lamb})$, 
-    where $P_{\tilde{\Lamb}}(\tilde{\Lamb})$ is the normalized 
-    probability distribution of $\tilde{\Lamb}$, and anchored to zero at their minimum. 
-    %
-    The value at the maximum corresponds to $G^\star_{\tilde{\Lamb}}$,
-    shown graphically in \reffig{deltag}.
-  }
-\label{fig:gprof}
+\caption{Fraction of the simulation time (in \%) that the desired end state was sampled as the dominating state during the EDS simulation to optimize the coordinates for a desired end state.}
+\label{SItab:RingCycleOpenin_sampling_fraction_optimizedStates}
+\begin{tabular}{ l | c c }
+ Ligand & Water  & Complex \\ 
+ \hline
+     L1 & 99.84 & 99.97 \\ 
+     L17 & 99.99 & 99.97\\
+     L19 & 36.07 &  99.98\\
+     L20 & 99.99 & 100\\
+     L21 & 100 & 99.97 \\
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Potential thresholds for occurrence sampling ($T_{i}^{\text{phys}}$) and undersampling ($T_{i}^{\text{us}}$) determined during the parameter exploration (in kJ~mol$^{-1}$).}
+\label{SItab:RingCycleOpenin_PotentialTresholds}
+\begin{tabular}{ l | c c |c c| }
+ Ligand &\multicolumn{2}{c|}{Water} & \multicolumn{2}{c|}{Complex}\\ 
+  & \multicolumn{1}{c}{$T^{\text{phys}}$}& \multicolumn{1}{c|}{$T^{\text{us}}$}&  \multicolumn{1}{c}{$T^{\text{phys}}$}& \multicolumn{1}{c|}{$T^{\text{us}}$} \\ 
+ \hline
+     L1  & -582.96 & -436.05 & -737.37 & -516.41\\ 
+     L17 & -572.41 & -419.16 & -717.95 & -492.83\\
+     L19 & -579.13 & -415.91 & -738.95 & -483.78\\
+     L20 & -636.00 & -492.75 & -759.01 & -549.35\\
+     L21 & -656.22 & -488.43 & -805.30 & -539.78\\
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+\centering
+     \includegraphics[width=0.8\textwidth]{fig/results/ringOpening/paramExploration/single_state_energy_sampling.png}
+    \caption{Comparison of the potential-energy distribution obtained from a standard MD simulation of a given end state (black) and from an EDS simulation with the given end state favoured (colored) from the first step of the RE-EDS workflow.}
+     \label{fig:CHK1_set2_stateOptimization_EnergyDistribution}
 \end{figure}
 
 
-%================================================================================
-\appsection[HRE Simulations]{CH2K}{HRE Simulations}
-%================================================================================
+\section{Energy Offset Estimation}
+The relative energy offsets $\Delta \Delta E^R_{ji}$ are compared with the experimental relative binding free energies $\Delta \Delta G^\text{bind}_{ji}$ in Figure \ref{SIfig:Eoff_experiment_corr_RingOpening}. 
+The root mean squared error (RMSE) between $\Delta \Delta E^R_{ji}$ obtained with RE-EDS 1SS and $\Delta \Delta G^\text{bind}_{ji}$ is $12.6$~kJ~mol$^{-1}$. Outliers are mainly related to L19.
+With the RE-EDS SSM approach, the RMSE was reduced to $7.0$~kJ~mol$^{-1}$. No clear outliers were observed in this case. Thus, the use of the SSM approach is recommended for RE-EDS simulations.
 
-\newcommand\hre[1]{\subgraph{fig:hre:#1}{06_hre_#1_lambda_ene_ana.pgf}{0.32}%
-}
+The energy offsets obtained with the SSM approach are shown as a function of the replica ($s$-value) in Figure \ref{SIfig:Eoff-perreplica}. 
 
-\begin{figure}[H]
-  \centering
-   \hre{017}%
-   \hre{033}%
-   \hre{065}
-   \caption{\footnotesize\captitital{Time series $\lam (t)$ and probability distributions $p(\lambda)$ of 
-     the coupling variable $\lam$ in HRE simulations 
-     of the aqueous methanol-to-dummy mutation
-     at 298.15 K and 1 bar with the 2016H66 force field.}
-     The time series is shown as a blue curve for replica $k=0$, and as individual colored points
-     at $0.5\unit{ns}$ interval for the $K_{\mathrm{HRE}}-1$ other replicas.
-     Panel \protect\subref{fig:hre:017}: $K_{\mathrm{HRE}}=17$.
-     Panel \protect\subref{fig:hre:033}: $K_{\mathrm{HRE}}=33$.
-     Panel \protect\subref{fig:hre:065}: $K_{\mathrm{HRE}}=65$.
-   }
- \label{fig:hre}
+\begin{figure}[h]
+\centering
+  \includegraphics[width=0.8\textwidth]{fig/results/ringOpening/paramOptimization/RingClosure_system_Eoff_final_results.png}
+\caption{Comparison of the relative energy offsets $\Delta \Delta E^R_{ji}$ in water and complex with the experimental relative binding free energies $\Delta \Delta G^\text{bind}_{ji}$. The energy offsets were estimated from RE-EDS simulations using the 1SS (green) or SSM (blue) approach to select the starting configurations of the replicas.} \label{SIfig:Eoff_experiment_corr_RingOpening}
 \end{figure}
+
+\begin{figure}[h]
+\centering
+  \includegraphics[width=1.0\textwidth]{fig/results/ringOpening/paramOptimization/CHK1_shuffle_eoffs.png}
+\caption{Energy offsets (relative to the average energy offset $\overline{E}^R_i$) estimated from the simulation with the SSM approach in water (left) and in complex (right) as a function of the replica ($s$-value).} \label{SIfig:Eoff-perreplica}
+\end{figure}
+
+
+\section{Optimization of the $s$-Distribution}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{fig/results/ringOpening/paramOptimization/s_optimization_efficiency_RingOpening_log_scale.png}
+\caption{Improvement of the average round-trip time between iterations $i$ and $j$ ($\overline{\tau}_j - \overline{\tau}_i$) on a logarithmic scale. An $s$-distribution was considered converged when ($\overline{\tau}_j - \overline{\tau}_i$) reached 1~ps.}
+\label{SIfig:CHK1_RingOpening_soptimization_efficiency}
+\end{figure}
+
 
 \newpage
 
-\renewcommand\hre[1]{\subgraph{fig:hre:dhdl:#1}{06_hre_#1_dhdl_ene_ana.pgf}{0.48}%
-\subgraph{fig:hre:dg:#1}{06_hre_#1_conv_ene_ana.pgf}{0.48}
-}
+\section{Free-Energy Calculation}
+\begin{table}[h]
+\caption{Free-energy differences in water and in complex calculated from the production run of 4~ns of length with the RE-EDS 1SS and RE-EDS SSM approaches.}
+\begin{center}
+\begin{tabular}{ c c |c c |c c}
+  \multicolumn{2}{c|}{Ligand} & \multicolumn{2}{c|}{RE-EDS 1SS} &\multicolumn{2}{c}{RE-EDS SSM}\\ 
+  I & J  & water [kJ~mol$^{-1}$] & complex [kJ~mol$^{-1}$]  & water [kJ~mol$^{-1}$] & complex [kJ~mol$^{-1}$] \\
+  \hline
+        L17 &         L1 &       15.22 $\pm$ 0.15&       16.44 $\pm$ 0.22&  -13.61 $\pm$ 0.11&  16.63 $\pm$ 0.19\\
+        L19 &         L1 &        6.73 $\pm$ 0.13&       -7.24 $\pm$ 0.16&   -1.95 $\pm$ 0.18&  -7.98 $\pm$ 0.19\\
+        L20 &         L1 &      -48.59 $\pm$ 0.22&      -45.99 $\pm$ 0.21& -48.09 $\pm$ 0.13& -49.27 $\pm$ 0.35\\
+        L21 &         L1 &      -67.83 $\pm$ 0.326&     -69.48 $\pm$ 0.20& -69.48 $\pm$ 0.16& -72.60 $\pm$ 0.85\\
+        L19 &         L17 &      -8.49 $\pm$ 0.12&      -23.68 $\pm$ 0.25& -15.56 $\pm$ 0.18& -24.60 $\pm$ 0.13\\
+        L20 &         L17 &     -63.81 $\pm$ 0.22&      -62.42 $\pm$ 0.19& -61.69 $\pm$ 0.14&  65.89 $\pm$ 0.33\\
+        L21 &         L17 &     -83.05 $\pm$ 0.31&      -85.92 $\pm$ 0.29& -83.09 $\pm$ 0.17& -89.22 $\pm$ 0.84\\
+        L20 &         L19 &     -55.32 $\pm$ 0.21&       38.75 $\pm$ 0.33& -46.13 $\pm$ 0.20& -41.29 $\pm$ 0.32\\
+        L21 &         L19 &     -74.56 $\pm$ 0.31&      -62.24 $\pm$ 0.29& -67.52 $\pm$ 0.21& -64.62 $\pm$ 0.84\\
+        L21 &         L20 &     -19.24 $\pm$ 0.35&      -23.50 $\pm$ 0.31& -21.39 $\pm$ 0.18& -23.33 $\pm$ 0.88\\
+\end{tabular}
+\end{center}
+\label{SItab: RE-EDS_FE_RingCycleOpening_dFs}
+\end{table}
 
-\begin{figure}[H]
-  \centering
-   \hre{017}\\%
-   \hre{033}\\%
-   \hre{065}
-   \caption{\footnotesize\captitital{Relevant results from HRE 
-     calulations of the aqueous methanol-to-dummy mutation at 298.15 K and 1 bar 
-     with the 2016H66 force field. }
-     %
-     Panels  \protect\subref{fig:hre:dhdl:017}, \protect\subref{fig:hre:dhdl:033} 
-     and \protect\subref{fig:hre:dhdl:065} show the Hamiltonian derivative curve considering a total
-     single-system sampling time of $100\unit{ns}$.
-     Panel \protect\subref{fig:hre:dhdl:017}: $K_{\mathrm{HRE}}=17$.
-     Panel \protect\subref{fig:hre:dhdl:033}: $K_{\mathrm{HRE}}=33$.
-     Panel \protect\subref{fig:hre:dhdl:065}: $K_{\mathrm{HRE}}=65$.
-     %
-     Panels  \protect\subref{fig:hre:dg:017}, \protect\subref{fig:hre:dg:033} 
-     and \protect\subref{fig:hre:dg:065} show the Hamiltonian derivative curve considering a total
-     single-system sampling time of $100\unit{ns}$.
-     Panel \protect\subref{fig:hre:dg:017}: $K_{\mathrm{HRE}}=17$.
-     Panel \protect\subref{fig:hre:dg:033}: $K_{\mathrm{HRE}}=33$.
-     Panel \protect\subref{fig:hre:dg:065}: $K_{\mathrm{HRE}}=65$.
-     }
- \label{fig:hre:results}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{fig/results/ringOpening/FE/Reeds_RingOpening_production_sampling_s1.png}
+\caption{Sampling of the end states in the final production run at replica $s=1.0$. Sampling was assessed by monitoring the dominant end state (top panels) and by counting all end states a potential energy below $T_{i}^{phys}$ (see Table \ref{SItab:RingCycleOpenin_PotentialTresholds}) (bottom panels). Ideally, the sampling fraction as dominating end state should be 1/$N$ (Eq. (8) in the main text) for all end states, indicated as a black horizontal line.}
+\label{SIfig:CHK1_RingOpening_soptimization_final_Sampling_s1}
 \end{figure}
 
-
-%================================================================================
-\appsection[TI/EXTI Calculations]{CH2L}{TI/EXTI Calculations}
-%================================================================================
-
-\newcommand\exti[1]{\subgraph{fig:exti:dhdl:#1}{07_exti_ana_exti_dhdl_#1_ene_ana.pgf}{0.48}%
-\subgraph{fig:exti:conv:#1}{07_exti_ana_exti_conv_#1_ene_ana.pgf}{0.48}
-}
-
-\begin{figure}[H]
-  \centering
-   %% \exti{02}\\%
-   %% \exti{03}\\%
-   %% \exti{05}\\%
-   \exti{09}\\%
-   \exti{17}%
-%% \sidesubfloat[]{
-%%     \hspace{-2em}%
-%%     \includegraphics[width=.5\textwidth]{07_exti/ana/exti/dhdl_all_ene_ana.png}
-%%     \label{fig:extilam:dhdl}%
-%%   }%
-%% \sidesubfloat[]{
-%%     \hspace{-2em}%
-%%     \includegraphics[width=.5\textwidth]{07_exti/ana/exti/conv_lampts_ene_ana.png}
-%%     \label{fig:extilam:conv}%
-%%   }%
-   \caption{\footnotesize\captitital{Relevant results from TI/EXTI
-     calulations of the aqueous methanol-to-dummy mutation at 298.15 K and 1 bar 
-     with the 2016H66 force field.}%
-     %The resulting Hamiltonian-derivative curve of EXTI simulations for %% \protect\subref{fig:exti:dhdl:02} 2, \protect\subref{fig:exti:dhdl:03} 3, \protect\subref{fig:exti:dhdl:05} 5,
-     Panels \protect\subref{fig:exti:dhdl:09} and  \protect\subref{fig:exti:dhdl:17} show the Hamiltonian derivative curve, which was predicted at 129 $\lam$-points. Panel \protect\subref{fig:exti:dhdl:09}: $K_{\mathrm{TI}}=9$. Panel \protect\subref{fig:exti:dhdl:17}: $K_{\mathrm{TI}}=17$.%
-     Panels \protect\subref{fig:exti:conv:09} and  \protect\subref{fig:exti:conv:17} show the convergence of the $\Delta G$ value dependent on the total single-system sampling time. Panel \protect\subref{fig:exti:conv:09}: $K_{\mathrm{TI}}=9$. Panel \protect\subref{fig:exti:conv:17}: $K_{\mathrm{TI}}=17$.}
- \label{fig:exti}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{fig/results/ringOpening/FE/Reeds_RingOpening_production_sampling_underS.png}
+\caption{Sampling of the end states in the final production run at the undersampling replica position $s=0.0032$. Sampling was assessed by monitoring the dominant end state (top panels) and by counting all end states a potential energy below $T_{i}^{phys}$ (see Table \ref{SItab:RingCycleOpenin_PotentialTresholds}) (bottom panels). Ideally, the sampling fraction as dominating end state should be 1/$N$ (Eq. (8) in the main text) for all end states, indicated as a black horizontal line.}
+\label{SIfig:CHK1_RingOpening_soptimization_final_Sampling_undersampling}
 \end{figure}
 
-
-\newcommand\mbar[1]{
-%\sidesubfloat[]{
-  %%   \includegraphics[width=.4\textwidth]{07_exti/ana/mbar/pes_#1_ene_ana.png}
-  %%   \label{fig:bar:pes:#1}%
-  %% }%
-  %% \qquad
-\subgraph{fig:bar:conv:#1}{07_exti_ana_mbar_2_conv_#1_ene_ana.pgf}{0.48}
-}
-
-
-%================================================================================
-\appsection[TI/MBAR Calculations]{CH2M}{TI/MBAR Calculations}%
-%================================================================================
-\nopagebreak%
-\begin{figure}[H]
-  \centering
-   %% \mbar{2}%
-   %%  \hspace{-5em}%
-   %% \mbar{3}\\
-   %% \mbar{5}
-   %%  \hspace{-5em}%
-   \mbar{9}%
-   \mbar{17}\\%
-   \caption{\footnotesize\captitital{Convergence properties of TI/MBAR
-     calulations for the aqueous methanol-to-dummy mutation at 298.15 K and 1 bar 
-     with the 2016H66 force field. }
-     %The resulting Hamiltonian-derivative curve of EXTI simulations for %% \protect\subref{fig:exti:dhdl:02} 2, \protect\subref{fig:exti:dhdl:03} 3, \protect\subref{fig:exti:dhdl:05} 5,
-     Panels \protect\subref{fig:exti:conv:09} and  \protect\subref{fig:exti:conv:17} show the convergence of the $\Delta G$ value dependent on the total single-system sampling time. Panel \protect\subref{fig:bar:conv:9}: $K_{\mathrm{TI}}=9$. Panel \protect\subref{fig:bar:conv:17}: $K_{\mathrm{TI}}=17$.
-}
- \label{fig:barlam}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{fig/results/ringOpening/FE/dF_RingOpening_Convergence.png}
+\caption{Convergence analysis of the RE-EDS production runs (total 4~ns): Free-energy differences relative to the final free-energy results after 4~ns are plotted as a function of the simulation time. The vertical lines indicate when a particular $\Delta G_{ji}$ value was found to be converged (deviation below 0.25~kJ~mol$^{-1}$).}
+\label{SIfig:CHK1_RingOpening_dF_convergence}
 \end{figure}
 
-%% \newpage
+%\bibliography{manual_ref.bib}
 
-%% \begin{figure}[H]
-%% \sidesubfloat[]{
-%%     \includegraphics[width=.4\textwidth]{07_exti/ana/mbar/pes_all_ene_ana.png}
-%%     \label{fig:barlam:dhdl}%
-%%   }%
-%% \qquad
-%% \sidesubfloat[]{
-%%     \includegraphics[width=.4\textwidth]{07_exti/ana/mbar/conv_lampts_ene_ana.png}
-%%     \label{fig:barlam:conv}%
-%%   }%
-%% \caption{\subref{fig:barlam:dhdl} All resulting free-energy profiles $G(\lam)$ curve with 2, 3, 5, 9, and 17 simulated equispaced $\lam$-points. \subref{fig:barlam:conv} The free energy difference $\Delta G$ dependent on the number of simulated $\lam$-points.}
-%% \label{fig:barlam}
-%% \end{figure}
+ 
