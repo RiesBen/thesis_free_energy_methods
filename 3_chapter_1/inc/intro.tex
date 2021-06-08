@@ -164,44 +164,6 @@ this variable is adequately coupled to the configurational degrees of freedom\ci
 
 In the present chapter, we propose a new alchemical free-energy calculation scheme with the goal of combining the advantages and alleviating the shortcomings of both HRE/HRP and $\lam$D. This scheme is termed conveyor belt thermodynamic integration (CBTI) and relies on the coupled $\lam$D of a set of system replicas, in which the $\lam$-distance between successive replicas is kept fixed along a forward-turn-backward-turn path, akin to a conveyor belt between the two physical end-states. The basic principle of CBTI is illustrated schematically in \reffig{scheme}.
 
-\begin{figure}
-  \centering
-  \subgraph{fig:scheme:ldyn:plane}{lambda_dyn_linear.pgf}{.49}%
-  \hfill%
-  \subgraph{fig:scheme:ldyn:gotoflat}{deltag_example_ene_ana.pgf}{.49}\\
-  \subgraph{fig:scheme:cvb:plane}{conveyor_belt_linear.pgf}{.49}%
-  \hfill%
-  \subgraph{fig:scheme:ene:plane}{ene_0.pgf}{.49}\\
-  \subgraph{fig:scheme:cvb:zigzag}{conveyor_belt_zigzag.pgf}{.49}%
-  \hfill%
-  \subgraph{fig:scheme:ene:zigzag}{ene_1.pgf}{.49}\\
-  \subgraph{fig:scheme:cvb:sinus}{conveyor_belt_sintw.pgf}{.49}%
-  \hfill%
-  \subgraph{fig:scheme:ene:sinus}{ene_2.pgf}{.49}\\
-  
-  \caption{\footnotesize
-\textit{Schematic illustration of the conveyor belt thermodynamic integration (CBTI) approach for different free-energy profiles $G(\lam)$ and numbers of replicas $K$.} The free-energy profile $G(\lam)$ is shown on the left along with the conveyor belt for an inclined plane (\subref{fig:scheme:cvb:plane}), a piecewise-linear curve (\subref{fig:scheme:cvb:zigzag}) and a more realistic curve (\subref{fig:scheme:cvb:sinus}),
-\radd{the latter curve corresponding to the function}
-%illustrative function of Panel (\subref{fig:scheme:cvb:sinus}) 
-%is 
-$G(\lam)=\sin (\pi \lam)(\lam-0.5)^2+0.25\lam$.
-%
-The corresponding free-energy profiles $G_{\Lamb}(\Lamb)$ 
-along the conveyor belt advance variable $\Lamb$ \revphil{(\refeq{fre_prof_lam_def})} are shown on the right for $K=2$ (blue), $K=4$ (red), $K=8$ (green) or $K=16$ (orange).
-%
-The top-left panel (\subref{fig:scheme:ldyn:plane}) illustrates the situation of plain unbiased $\lam$D, 
-where the system would ``roll down'' the slope and keep sampling the neighborhood of the state with the lowest free energy.
-%
-\radd{The top-right panel (\subref{fig:scheme:ldyn:gotoflat}) 
-shows the height $G^\star_{\Lamb}$ of the residual barriers in the 
-free-energy profile $G_{\Lamb}(\Lamb)$ considering this illustrative function
-and increasing values of $K$.
-The data is represented in logarithmic form and a linear line of slope $-1$ is fitted to the filled 
-      circles.
-}
-}
-  \label{fig:scheme}
-\end{figure}
 
 Considering a free-energy profile $G(\lam)$ presenting a constant uphill slope between $A$ and $B$, a single system subjected to $\lam$D in the absence of a biasing potential will ``roll down'' to $A$ and keep sampling the neighborhood of this state (\reffig{scheme:ldyn:plane}). To circumvent this problem, one may decide to couple the $\lam$D of two replicas 0 and 1 of the system in such a way that any downhill displacement of replica 0 implies an equivalent uphill displacement of replica 1 (\reffig{scheme:cvb:plane}). This working principle is exploited in practice by vehicles like cable cars or funiculars, where the motion of the two vehicles are controlled by a stretched cable connected to two pulleys. It has also been exploited previously for MD in the context of twin-system\cite{HA13.1,GE16.1} EDS, which couples forward and reverse alchemical changes performed in two different environments. In this situation, one may describe the $\lam$-values of the two replicas by means of a single periodic angular variable $\Lamb$ representing the advance of the cable from 0 (replica 0 in state $A$, replica 1 in state $B$) to $\pi$ (0 in $B$, 1 in $A$) and then $2\pi$ (back to the starting situation). Note that the $\pi$ to $2\pi$ return range of $\Lamb$ deviates from the cable car or funicular analogy, where the vehicles never go ``over the pulley''. If the free-energy profile $G(\lam)$ has a constant slope, it is easily seen that there will be no net driving force on the cable. In the $\lam$D context, this means that the $\Lamb$-variable will undergo random diffusion with a homogeneous sampling of $\Lamb$, \ie{} the corresponding free-energy profile $G_{\Lamb}(\Lamb)$ will be flat (\reffig{scheme:ene:plane}). Accordingly, each of the two replicas will sample the entire $\lam$-range homogeneously.
 
