@@ -62,15 +62,15 @@ The enhanced sampling technique can be applied by adding a single line of code c
 \section{Application Example: Free-Energy Calculation}
 %-------------------------------------------------------------------------------------------------------------------------
 
-Free-energy calculation is an important field in computational chemistry because free-energy differences govern the outcome of processes in nature, e.g. protein-ligand binding or polymer formation.\cite{Christ2009, Hansen2014, Cournia2020, Armacost2020c} 
+Free-energy calculation is an important field in computational chemistry because free-energy differences govern the outcome of processes in nature, e.g. protein-ligand binding or polymer formation.\cite{Christ2009, Hansen2014, Cournia2020, Armacost2020} 
 %
 The calculation of alchemical free-energy differences with Ensembler is exemplified with a mutation of the equilibrium position of a one-dimensional harmonic oscillator (Figure \ref{fig:FE_sampling}a).
 This mutation corresponds to a change of a covalent bond type at the terminus of a linear molecule and can be calculated analytically (Table \ref{tab:FE_results}).
 In practical applications, however, it is usually not possible to calculate the free-energy difference analytically. In these cases, MD-based simulation techniques can be employed.
 In the following, the sampling of the two end states of the model system and the results of the free-energy calculation with different methods are discussed. For more details, we refer to the Jupyter notebook in the Ensembler GitHub repository.
 
-A simple free-energy method is to simulate one end state and estimate the free-energy difference with the Zwanzig equation.\cite{Zwanzig1954} The quality of the result depends on a sufficient phase-space overlap between the two end states.\cite{Konig2018a}
-Alternatively, one can simulate both end states separately and use BAR\cite{Bennett1976} (Figure \ref{fig:FE_sampling}a), yielding more converged results.\cite{Konig2018a}
+A simple free-energy method is to simulate one end state and estimate the free-energy difference with the Zwanzig equation.\cite{Zwanzig1954} The quality of the result depends on a sufficient phase-space overlap between the two end states.\cite{Konig2018}
+Alternatively, one can simulate both end states separately and use BAR\cite{Bennett1976} (Figure \ref{fig:FE_sampling}a), yielding more converged results.\cite{Konig2018}
 If the phase-space overlap between the two end states is not sufficient, more advanced sampling methods are necessary to obtain converged free-energy differences.
 %
 \begin{figure}
@@ -92,7 +92,7 @@ If the phase-space overlap between the two end states is not sufficient, more ad
 		\caption{}
 		\includegraphics[width=\linewidth]{fig/FE_example/hlEDS_sampling.pdf} 
 	\end{subfigure}
-	\caption{Illustration of different free-energy methods implemented in Ensembler. (a) For FEP\cite{Zwanzig1954} and BAR\cite{Bennett1976}, the two end states (grey and black) are sampled separately (green and blue). (b) To increase the phase-space overlap, the two end states can be coupled as a linear combination of their Hamiltonians using a coupling parameter $\lambda$. This allows the generation of intermediate states (grey to black) and sampling of those (colored points). (c) An alternative method is EDS,\cite{Christ2007, Christ2008a, Christ2009} where a reference-state Hamiltonian (blue line) is sampled (blue points), which envelopes the end states. By setting the reference-state parameters to $s$~=~0.3 and energy offsets~=~[0,0], all relevant phase-space regions can be sampled. (d) A recently developed approach called $\lambda$-EDS\cite{Koenig2020} introduces a $\lambda$-dependence in the EDS method (blue, orange and green line). Colored points indicate sampling. The reference-state parameters were set to $s$~=~0.3 and energy offsets~=~[0,0], and three different lambda values 0.25,0.5, 0.75 were chosen.}
+	\caption{Illustration of different free-energy methods implemented in Ensembler. (a) For FEP\cite{Zwanzig1954} and BAR\cite{Bennett1976}, the two end states (grey and black) are sampled separately (green and blue). (b) To increase the phase-space overlap, the two end states can be coupled as a linear combination of their Hamiltonians using a coupling parameter $\lambda$. This allows the generation of intermediate states (grey to black) and sampling of those (colored points). (c) An alternative method is EDS,\cite{Christ2007, Christ2008, Christ2009} where a reference-state Hamiltonian (blue line) is sampled (blue points), which envelopes the end states. By setting the reference-state parameters to $s$~=~0.3 and energy offsets~=~[0,0], all relevant phase-space regions can be sampled. (d) A recently developed approach called $\lambda$-EDS\cite{Koenig2020} introduces a $\lambda$-dependence in the EDS method (blue, orange and green line). Colored points indicate sampling. The reference-state parameters were set to $s$~=~0.3 and energy offsets~=~[0,0], and three different lambda values 0.25,0.5, 0.75 were chosen.}
 	\label{fig:FE_sampling}
 \end{figure}
 %
@@ -102,12 +102,12 @@ The intermediate states are positioned at discrete $\lambda$-points between 0 an
 The free-energy difference can be estimated using FEP\cite{Zwanzig1954} or BAR\cite{Bennett1976} as the path over all intermediates, or with TI\cite{Kirkwood1935} as the integral along $\lambda$. 
 
 %% EDS
-Another elegant free-energy method is EDS,\cite{Christ2007, Christ2008a} where a reference-state Hamiltonian $H_r$ is sampled. $H_r$ is constructed as a log-sum of the Hamiltonians of the two (or more) end states, guaranteeing the phase-space overlap of the reference state with all end states,
+Another elegant free-energy method is EDS,\cite{Christ2007, Christ2008} where a reference-state Hamiltonian $H_r$ is sampled. $H_r$ is constructed as a log-sum of the Hamiltonians of the two (or more) end states, guaranteeing the phase-space overlap of the reference state with all end states,
 \begin{equation}
 H_R = - \frac{1}{\beta s} \ln( e^{(- \beta s (H_A - E^R_A)}) +e^{(- \beta s (H_B - E^R_B)}),
 \end{equation}
 where $1/\beta=k_{B}T$, $k_B$ being the Boltzmann constant and $T$ the absolute temperature.
-$H_R$ can be optimized for sampling using two kinds of parameters: The smoothing parameter $s$ lowers the energy barriers between the end states, whereas the energy offsets $E^R$ ensure equal weighting of all end states. In our example, both end states are sampled sufficiently during the EDS simulation with $s=0.3$ and the energy offsets $E^R=[0,0]$ (Figure \ref{fig:FE_sampling}c). Subsequently, the Zwanzig equation\cite{Zwanzig1954} is used to obtain the free-energy difference between the end states.\cite{Christ2007, Christ2008a}
+$H_R$ can be optimized for sampling using two kinds of parameters: The smoothing parameter $s$ lowers the energy barriers between the end states, whereas the energy offsets $E^R$ ensure equal weighting of all end states. In our example, both end states are sampled sufficiently during the EDS simulation with $s=0.3$ and the energy offsets $E^R=[0,0]$ (Figure \ref{fig:FE_sampling}c). Subsequently, the Zwanzig equation\cite{Zwanzig1954} is used to obtain the free-energy difference between the end states.\cite{Christ2007, Christ2008}
 %hybrid coupling l-EDS
 Recently, a hybrid form of EDS and $\lambda$-coupling was introduced, termed $\lambda$-EDS.\cite{Koenig2020} At $\lambda=0$ or $1$, the $H_R$ is equal to the Hamiltonians of the respective end states, while conventional EDS is recovered with $\lambda$=0.5 (except for an offset).\cite{Koenig2020}
 $\lambda$-EDS allows for a $\lambda$-weighting of the exponential terms in the EDS equation. In the example in Figure \ref{fig:FE_sampling}d, the same reference-state parameters were used as before.
@@ -117,7 +117,7 @@ All free-energy calculations discussed above were performed with Ensembler for a
 The simulation results listed in Table \ref{tab:FE_results} show that larger errors are obtained without intermediate states due to insufficient phase-space overlap.
 Using ten $\lambda$–intermediate states together with TI gave the best result, however, this approach is also the computationally most expensive one (i.e. ten separate simulations). s
 EDS and $\lambda$-EDS, on the other hand, yielded also good results, while requiring only one simulation (given a set of suitable reference-state parameters). 
-We refer to the Jupyter notebook in the Ensembler GitHub repository for the source code, more detailed information on these methods as well as additional methods like conveyor-belt TI\cite{Hahn2019} and RE-EDS,\cite{Sidler2016a, Sidler2017a} which combine enhanced sampling and free-energy methods.
+We refer to the Jupyter notebook in the Ensembler GitHub repository for the source code, more detailed information on these methods as well as additional methods like conveyor-belt TI\cite{Hahn2019} and RE-EDS,\cite{Sidler2016, Sidler2017} which combine enhanced sampling and free-energy methods.
 \begin{table}[ht]
 	\centering
 	\caption{Estimated free-energy difference for the model system shown in Figure \ref{fig:FE_sampling}. Sampling was performed with Monte Carlo (MC)\cite{Hastings1970} for 10'000 steps in each simulation. Each calculation was replicated five times and the averaged result is shown together with the standard deviation.
@@ -133,7 +133,7 @@ We refer to the Jupyter notebook in the Ensembler GitHub repository for the sour
 			BAR\cite{Bennett1976} & $2.437 \pm  0.500$ & 2.437 & 3.0 & 2.1 \\
 			FEP 10-$\lambda$-points &  $1.406 \pm 0.431$ & 0.131 & 14.0 & 0.7 \\
 			TI\cite{Kirkwood1935} 10-$\lambda$-points& $1.242 \pm 0.015$ & 0.033 & 14.0 & 0.04\\
-			EDS\cite{Christ2007, Christ2008a, Christ2009} &  $0.958 \pm 0.110$ & 0.317 & 2.4 &  0.2 \\
+			EDS\cite{Christ2007, Christ2008, Christ2009} &  $0.958 \pm 0.110$ & 0.317 & 2.4 &  0.2 \\
 			$\lambda$-EDS\cite{Koenig2020} $\lambda=0.5$ & $ 0.987 \pm  0.111$ & 0.287 & 3.1 & 0.2\\
 		\end{tabular}
 	}

@@ -42,7 +42,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Handling of the references - Reference lib	
 \usepackage[sort,super,comma,compress]{natbib}
-\usepackage{natmove}
+%\usepackage{natmove}
 \bibliographystyle{unsrt}
 
 
@@ -80,7 +80,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TITLE
-\title{Free Energy Methods with Biomols}
+\title{Development of Methodology and Software for Free Energy Calculations using Molecular Dynamics Simulations with Biomolecules}
 
 \thesisnumber{?????}
 \author{\textls{Benjamin Joachim Ries}}
@@ -121,24 +121,23 @@
  \input{1_frontback/publications.tex}
 
  \mainmatter
-\subfile{2_chapter_intro/content_introduction.tex}
+%\subfile{2_chapter_intro/content_introduction.tex}
 \subfile{3_chapter_1/content_chapter1.tex}
 \subfile{4_chapter_2/content_chapter2.tex}
 \subfile{5_chapter_3/content_chapter3.tex}
 \subfile{6_chapter_4/content_chapter4.tex}
 \subfile{7_chapter_5/content_chapter5.tex}
-\input{8_chapter_outlook/content_outlook.tex}
+%\input{8_chapter_outlook/content_outlook.tex}
  
  \backmatter
   \addcontentsline{toc}{chapter}{References}
-  \bibliography{
-  	2_chapter_intro/ref/ref.bib,
-  	3_chapter_1/ref/ref.bib, 
-  	4_chapter_2/ref/ref.bib,
-  	5_chapter_3/ref/ref.bib,
-  	6_chapter_4/ref/ref.bib,
-  	7_chapter_5/ref/ref.bib
-	}
+  \bibliography{MendeleyMerge.bib}
+  %	2_chapter_intro/ref/ref.bib,
+  %	3_chapter_1/ref/ref.bib, 
+  %	4_chapter_2/ref/ref.bib,
+  %	5_chapter_3/ref/ref.bib,
+  %	6_chapter_4/ref/ref.bib,
+  %	7_chapter_5/ref/ref.bib
 
  \input{1_frontback/cv.tex}
 
