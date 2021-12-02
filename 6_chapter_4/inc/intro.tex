@@ -1,0 +1,30 @@
+%general idea - productivity through digitalization and code
+Digitalization was identified as one of the most promising tools to increase productivity for many aspects of life.\cite{Tuomi2018}
+Over many years, this development is reaching out to chemistry, building up computational chemistry. This field focuses on the estimation of properties of chemicals, conformational behavior, or reactivity. A prominent area of application for computational chemistry is drug design. \cite{Cournia2020} This field requires, besides computational science knowledge, a large amount of chemical and biological knowledge. 
+
+%% Diversification of coding skill 
+With the growth of digitalization in chemistry, more people will have to write and read code. Nevertheless not everyone has and will have the same level of knowledge in coding as not everyone is required to write very efficient code with complex languages like Java or C++. A much more diversified set of coding skills has already evolved, leading to the requirement of convenient-to-use scripting languages and APIs that can be used to rapidly implement solutions to complex problems requiring additional problem-focused specialized knowledge. \cite{ayer2014} 
+
+%% Python and Why Python 
+The scripting language with the largest impact on science is Python. 
+Core features making Python attractive are: 
+\begin{itemize}
+    \item easy to read and learn
+    \item easy integration of other languages (especially for C/C++\cite{Stroustrup1995}, with tools like pybinds or SWIG) \cite{Wenzel2011, Beazley1996}
+    \item large community supporting with high quality packages (e.g., numpy, scipy, matplotlib, pandas and jupyter) \cite{VanDerWalt2011, Virtanen2020, Hunter2007, Mckinney2010, Kluyver2016}
+    \item good tools for environment and package managment (e.g., pip and conda) \cite{pypi2021,anaconda2020}
+\end{itemize}
+\cite{Oliphant2007}
+
+%APIs in Python -> Efficiency as API
+Already in 2011, Python was declared as the de facto standard language in science and engineering, and from 2017 to today (2021), Python is the highest-ranked language in the \textit{IEEE Spectrum} journal. The ranking reflects the reader interests measured by stack overflow, GitHub data, and IEEE Articles. \cite{Millman2011, Cass2017, Cass2018, Cass2019, Cass2020, Cass2021} 
+Despite this boom of Python, one downside of the programming language is its limited performance efficiency. But for the efficiency issues, many different solutions were proposed. One solution is translating the python code during the run-time (just-in-time-compiling) into C code. Tools making this solution accessible are, for example, Cython or Numba. \cite{behnel2011, Lam2015} 
+Prominent packages like SciPy, NumPy, or pandas use a reverse approach and bind C code into the Python layer, where Python 'steers' the code execution.  \cite{VanDerWalt2011, Virtanen2020, Mckinney2010, Oliphant2007} 
+Tools like pybind11 make this approach very easy and allow easy building of python APIs. \cite{Wenzel2017}
+Many packages in computational chemistry use this approach like RDKit, PyMol, PySCF, pyOpenMS, Biopython, Pybel. \cite{landrum2021, DeLano2020, Sun2018, Röst2014, Cock2009, O'Boyle2008}
+The most important Molecular Dynamics (MD) packages follow this trend and offer python APIs. For example, Gromacs provides 'gmxapi', Amber provides the 'ParmEd' package that can serve as a python API, and OpenMM and LAMMPS bring the python API natively with the simulation package. \cite{BERENDSEN199543, Lindahl2001, Irrgang2018, Eastman2017, Case2005, Shirts2017, Thompson2022, Talirz2021}
+
+Other Packages from our group follow this concept like for example, the vsCNN repository for hierarchical clustering. \cite{Weiß2021}
+
+Here we want to introduce PyGromosTools, a python API for GROMOS. \cite{Lehner2021} This API is a starting point for a proper API, integrating the GROMOS Package into PyGromosTools. Currently, PyGromosTools allows making data accessible in Python and allows GROMOS executions, even HPC-Queueing, and data analysis. This work aims to present our rationale behind the API-Design and show examples of how the API can be used.
+

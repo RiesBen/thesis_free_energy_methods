@@ -2,10 +2,6 @@
 \documentclass[publish]{ethdissertation}
 \batchmode
 
-%mein Gruen: \definecolor{ChapterGreen}{HTML}{1e8449 }
-%1e8449 196f3d
-% rgb:  30, 132, 73 
- 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Subfiles
 \usepackage{subfiles}
@@ -26,24 +22,11 @@
 % Text Symbols (alpha, phi ...)
 \usepackage{textgreek} %nice greek letters everywhere
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Supporting INFO
-
-\usepackage{longtable}
-\usepackage{lscape}
-\newcommand{\si}{Supporting Information}
-\newlength{\oldtabcolsep}
-\setlength{\oldtabcolsep}{\tabcolsep}
-\usepackage{xfrac}
-\usepackage{csquotes}
-\usetikzlibrary{positioning}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Handling of the references - Reference lib	
 \usepackage[sort,super,comma,compress]{natbib}
 %\usepackage{natmove}
-\bibliographystyle{unsrt}
+%\bibliographystyle{unsrt}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -63,16 +46,6 @@
 \usepackage[inline]{enumitem}
 \usepackage{xstring}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Hyphenations
-\hyphenation{zustands-summe di-poles Cou-lomb ma-cro-sco-pic}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Personal Commands 
-\input{personal_commands.tex}
-
-%\pdfminorversion=7
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Cover import into the pdf
 \usepackage{pdfpages}
@@ -80,7 +53,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TITLE
-\title{Development of Methodology and Software for Free Energy Calculations using Molecular Dynamics Simulations with Biomolecules}
+\title{Free Energy Methods: \\Drug-Like Molecules and Macrocycles}
 
 \thesisnumber{?????}
 \author{\textls{Benjamin Joachim Ries}}
@@ -106,32 +79,32 @@
 \begin{document}
 
  \frontmatter
- \includepdf[pages=-]{0_cover/frontcover.pdf}
+ %\includepdf[pages=-]{0_cover/frontcover.pdf}
  
  \maketitle
  
- \dedication{Here a nice dedication}
+ %\dedication{Here a nice dedication}
 
- \input{1_frontback/acknowledgements.tex}
+ %\input{1_frontback/acknowledgements.tex}
 
  \tableofcontents
 
- \input{1_frontback/abstract.tex}
- \input{1_frontback/zusammenfassung.tex}
- \input{1_frontback/publications.tex}
+ %\input{1_frontback/abstract.tex}
+ %\input{1_frontback/zusammenfassung.tex}
+ %\input{1_frontback/publications.tex}
 
  \mainmatter
-%\subfile{2_chapter_intro/content_introduction.tex}
-\subfile{3_chapter_1/content_chapter1.tex}
-\subfile{4_chapter_2/content_chapter2.tex}
-\subfile{5_chapter_3/content_chapter3.tex}
-\subfile{6_chapter_4/content_chapter4.tex}
-\subfile{7_chapter_5/content_chapter5.tex}
+\subfile{2_chapter_intro/content_introduction.tex}
+%\subfile{3_chapter_1/content_chapter1.tex}
+%\subfile{4_chapter_2/content_chapter2.tex}
+%\subfile{5_chapter_3/content_chapter3.tex}
+%\subfile{6_chapter_4/content_chapter4.tex}
+%\subfile{7_chapter_5/content_chapter5.tex}
 %\input{8_chapter_outlook/content_outlook.tex}
  
  \backmatter
-  \addcontentsline{toc}{chapter}{References}
-  \bibliography{MendeleyMerge.bib}
+ \addcontentsline{toc}{chapter}{References}
+ \bibliography{references.bib}
   %	2_chapter_intro/ref/ref.bib,
   %	3_chapter_1/ref/ref.bib, 
   %	4_chapter_2/ref/ref.bib,
@@ -139,7 +112,7 @@
   %	6_chapter_4/ref/ref.bib,
   %	7_chapter_5/ref/ref.bib
 
- \input{1_frontback/cv.tex}
+ %\input{1_frontback/cv.tex}
 
 \end{document}
 

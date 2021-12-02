@@ -4,14 +4,17 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 \renewcommand{\path}{3_chapter_1/}
-\chapter[Building a Python API for GROMOS]{A python library for accessing Molecular Dynamics}
+\chapter[PyGromosTools an API making development of scientific projects faster, more reproducibile and shareable]{PyGromosTools:  A modern, fast, flexible API for the MD simulation package GROMOS enhancing reproducibility and shareability of science}
 \chaptermark{Software Development}
-\label{ch:feml}
+\label{ch:pyGrom}
 
-\aquote{``Let us learn to dream, gentlemen, and then perhaps we
-shall learn the truth.''
+\aquote{
+"Another way of passing the buck is to sacrifice usability on the altar of efficiency."
 }
-{August Kekul\'e, 1865}
+{M. Henning,  \cite{Henning2009}}
+
+
+
 
 \begin{abstract}
 Let's see if I have something here
@@ -31,22 +34,16 @@ Let's see if I have something here
 \input{6_chapter_4/inc/intro.tex}
 
 %================================================================================
-\section{Theory}
-%================================================================================
-
-\input{6_chapter_4/inc/theory.tex}
-
-%================================================================================
 \section{Computational Details}
 %================================================================================
 
-\input{6_chapter_4/inc/methods.tex}
+\input{6_chapter_4/inc/implementation.tex}
 
 %================================================================================
 \section{Results and Discussion}
 %================================================================================
 
-\input{6_chapter_4/inc/results.tex}
+\input{6_chapter_4/inc/examples.tex}
 
 \clearpage
 \newpage
@@ -60,19 +57,7 @@ Let's see if I have something here
 \clearpage
 \pagebreak
 
-%================================================================================
-%\section{Appendix}
-%================================================================================
-\begin{ethappendix}
-\input{6_chapter_4/inc/appendix.tex}
-\end{ethappendix}
-\clearpage
-\pagebreak
+\bibliography{MendeleyMerge.bib}
 
-%% %================================================================================
-%% \begin{thebibliography}{74}
-%% \input{\path/inc/paper.lrs}
-%% \end{thebibliography}
-%% %================================================================================
 
 \end{document}
