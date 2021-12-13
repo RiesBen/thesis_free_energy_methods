@@ -4,31 +4,29 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 \renewcommand{\path}{3_chapter_1/}
-\chapter[Path-Free Multistate Methodology for Free Energy Calculations]{Relative Free-Energy Calculations for Scaffold Hopping-Type Transformations with an Automated RE-EDS Sampling Procedure 
+\chapter[An Algorithmic Graph-Based Approach for Setting up Dual Topology Methods]{Dual Topology and the Challenge how to pick the restraints - Restraintmaker
     \footnote{\label{footnoteChapter2CopyRight} 
-    Reprinted (adapted) from  Benjamin Ries, Karl Normak, R. Gregor Wei{\ss}, et al., 
-    JCAMD, textbf{X}, XX-XX (202X) licensed by Creative Commons CC BY}
-}
-\chaptermark{Free Energy Calculation}
-\label{ch:fereeds}
+    Reprinted (adapted) from  Benjamin Ries$^{**}$, Salom\'e Rieder$^{**}$, Clemens Rhiner, Philippe H. H\"unenberger, and Sereina Riniker, 
+    JCTC, \textbf{X}, XX-XX (202X)
+    $^{**}$ equal contribution}
+ }
+\chaptermark{FE: System Generation}
+\label{ch:feres}
 
 \aquote{
-    ""
-}{}
+    "Allzu straff gespannt, zerspringt der Bogen."\\ \color{OliveGreen} \footnotesize{``And much too tightly stretched the bow will split.''}
+}{Rudenz in Wilhelm Tell\\ Friedrich Schiller\cite{Schiller1898}}
 
 
-\begin{abstract}
-	The calculation of relative free-energy differences between different compounds plays an important role in drug design to identify potent binders for a given protein target. 
-	Most rigorous methods based on molecular dynamics (MD) simulations estimate the free-energy difference between pairs of ligands. 
-	Thus, the comparison of multiple ligands requires the construction of a ``state graph'', in which the compounds are connected by alchemical transformations. 
-	The computational cost can be optimized by reducing the state graph to a minimal set of transformations.
-	However, this may require individual adaptation of the sampling strategy if a transformation process does not converge in a given simulation time. 
-	In contrast, path-free methods like replica-exchange enveloping distribution sampling (RE-EDS) allow the sampling of multiple states within a single simulation without the pre-definition of alchemical transition paths.
-	To optimize sampling and convergence, a set of RE-EDS parameters needs to be estimated in a pre-processing step.
-	Here, we present an automated procedure for this step that determines all required parameters, improving the robustness and ease of use of the methodology.
-	To illustrate the performance, the relative binding free energies are calculated for a series of checkpoint kinase 1 (CHK1) inhibitors containing challenging transformations in ring size, opening/closing, and extension, which reflect changes observed in scaffold hopping. The simulation of such transformations with RE-EDS can be conducted with conventional force fields and, in particular, omit the need for soft bond-stretching terms.
-%
-\end{abstract}
+
+\begin{summary}
+The calculation of relative binding free energies involves the choice of the end-state/system representation, of a sampling approach, and of a free-energy estimator. System representations are usually termed ``single topology'' or ``dual topology''. As the terminology is often used ambiguously in the literature, a systematic categorization of the system representations is suggested here. In the dual topology approach, the molecules are simulated as separate molecules. Such an approach is relatively easy to automate for high-throughput RBFE calculations compared to the ``single topology'' approach. Distance restraints are commonly applied to prevent the molecules from drifting apart, thereby improving the sampling efficiency.
+In this study, we introduce the program RestraintMaker, which relies on a greedy algorithm to find optimal distance restraints between pairs of atoms based on geometric measures.
+The algorithm is further extended for multi-state methods such as enveloping distribution sampling (EDS) or multi-site $\lambda$-dynamics. The performance of RestraintMaker is demonstrated for toy models and for the calculation of relative hydration free energies.
+The Python program can be used in script form or through an interactive GUI within PyMol. The selected distance restraints can be written out in the GROMOS or GROMACS file formats. 
+Additionally, the program provides a human-readable JSON format that can be easily parsed and processed further.
+The code of RestraintMaker is freely available on GitHub \textit{https://github.com/rinikerlab/restraintmaker}.
+\end{summary}
 
 \clearpage
 \pagebreak
@@ -72,7 +70,8 @@
 \clearpage
 \pagebreak
 
-\bibliography{MendeleyMerge.bib}
+%\bibliography{4_chapter_2/ref/ref.bib}
 
 
 \end{document}
+

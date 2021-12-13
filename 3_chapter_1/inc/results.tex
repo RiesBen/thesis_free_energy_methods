@@ -1,17 +1,17 @@
-\labsec{results}
+%\labsec{results}
 %-------------------------------------------------------------------------------------------------------------------------
-\section{Application Example: Simple Simulations}
+\subsection{Simple Simulations}
 %-------------------------------------------------------------------------------------------------------------------------
 
 
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.45\textwidth}
+	\begin{subfigure}{0.85\textwidth}
 		\includegraphics[width=\linewidth, height=1.75in]{fig/codeExamples/four_well.pdf} 
 		\caption{}
-	\end{subfigure}
-	\begin{subfigure}{0.45\textwidth}
+	\end{subfigure}\\
+	\begin{subfigure}{0.85\textwidth}
 		\includegraphics[width=\linewidth, height=1.75in]{fig/codeExamples/Potential_code.png}
 		\caption{}
 	\end{subfigure}
@@ -23,6 +23,17 @@
 
 In the following, simple code examples are shown to introduce the usage of Ensembler. In addition, an application example is provided to illustrate the use of Ensembler for teaching about free-energy methods. 
 The code for these examples can be found in the GitHub repository \textit{\hyperlink{https://github.com/rinikerlab/Ensembler}{https://github.com/rinikerlab/Ensembler/examples}}.
+
+
+In typical applications of Ensembler, the user selects a potential-energy function from the available ones. In the following example, a potential-energy function with four wells is selected and initialized with chosen parameters. 
+To sample this four-well potential-energy function with stochastic dynamics (SD),\cite{Brunger1984} the sampling method is instantiated and passed to the \textit{system class}, which controls the execution of the simulation. 
+The simulation is performed by calling the function \textit{simulate} with the desired number of simulation steps passed as parameter. 
+Subsequently, the results can be visualized using the built-in visualization functions that are compatible with the \textit{simulation class} of Ensembler.  
+As can be seen in Figure \ref{fig:code_example_simulations}a, the energy barriers between the different minima were not crossed during the chosen simulation length. 
+To overcome the sampling issue, enhanced sampling techniques can be employed.\cite{Pohorille2010} 
+In this example, local elevation\cite{Huber1994}/metadynamics\cite{Laio2002} is used to overcome the energy barriers (Figure \ref{fig:code_example_simulations}b).
+The method adds a time-dependent biasing potential to the system, i.e. it adds a Gaussian biasing potential to positions that were already visited such that they become energetically less favorable. This decreases the likelihood of visiting known positions again. 
+The enhanced sampling technique can be applied by adding a single line of code compared to the previous simulation (Figure \ref{fig:code_example_simulations}c).
 
 \begin{figure}[H]
 	\centering
@@ -48,18 +59,9 @@ The code for these examples can be found in the GitHub repository \textit{\hyper
 \label{fig:code_example_simulations}
 \end{figure}
 
-In typical applications of Ensembler, the user selects a potential-energy function from the available ones. In the following example, a potential-energy function with four wells is selected and initialized with chosen parameters. 
-To sample this four-well potential-energy function with stochastic dynamics (SD),\cite{Brunger1984} the sampling method is instantiated and passed to the \textit{system class}, which controls the execution of the simulation. 
-The simulation is performed by calling the function \textit{simulate} with the desired number of simulation steps passed as parameter. 
-Subsequently, the results can be visualized using the built-in visualization functions that are compatible with the \textit{simulation class} of Ensembler.  
-As can be seen in Figure \ref{fig:code_example_simulations}a, the energy barriers between the different minima were not crossed during the chosen simulation length. 
-To overcome the sampling issue, enhanced sampling techniques can be employed.\cite{Pohorille2010} 
-In this example, local elevation\cite{Huber1994}/metadynamics\cite{Laio2002} is used to overcome the energy barriers (Figure \ref{fig:code_example_simulations}b).
-The method adds a time-dependent biasing potential to the system, i.e. it adds a Gaussian biasing potential to positions that were already visited such that they become energetically less favorable. This decreases the likelihood of visiting known positions again. 
-The enhanced sampling technique can be applied by adding a single line of code compared to the previous simulation (Figure \ref{fig:code_example_simulations}c).
 
 %-------------------------------------------------------------------------------------------------------------------------
-\section{Application Example: Free-Energy Calculation}
+\subsection{Free-Energy Calculation}
 %-------------------------------------------------------------------------------------------------------------------------
 
 Free-energy calculation is an important field in computational chemistry because free-energy differences govern the outcome of processes in nature, e.g. protein-ligand binding or polymer formation.\cite{Christ2009, Hansen2014, Cournia2020, Armacost2020} 
@@ -75,27 +77,31 @@ If the phase-space overlap between the two end states is not sufficient, more ad
 %
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{.45\textwidth}
+	\begin{subfigure}{.85\textwidth}
 		\caption{}
 		\includegraphics[width=\linewidth]{fig/FE_example/freeEnergyPertubation.pdf} 
-	\end{subfigure}
-	\begin{subfigure}{.45\textwidth}
+	\end{subfigure}\\
+	\begin{subfigure}{.85\textwidth}
 		\caption{}
 		\includegraphics[width=\linewidth]{fig/FE_example/linear_coupled.pdf} 
 	\end{subfigure}
-	\newline
-	\begin{subfigure}{.45\textwidth}
-		\caption{}
-		\includegraphics[width=\linewidth]{fig/FE_example/EDS_sampling.pdf} 
-	\end{subfigure}
-	\begin{subfigure}{.45\textwidth}
-		\caption{}
-		\includegraphics[width=\linewidth]{fig/FE_example/hlEDS_sampling.pdf} 
-	\end{subfigure}
-	\caption{Illustration of different free-energy methods implemented in Ensembler. (a) For FEP\cite{Zwanzig1954} and BAR\cite{Bennett1976}, the two end states (grey and black) are sampled separately (green and blue). (b) To increase the phase-space overlap, the two end states can be coupled as a linear combination of their Hamiltonians using a coupling parameter $\lambda$. This allows the generation of intermediate states (grey to black) and sampling of those (colored points). (c) An alternative method is EDS,\cite{Christ2007, Christ2008, Christ2009} where a reference-state Hamiltonian (blue line) is sampled (blue points), which envelopes the end states. By setting the reference-state parameters to $s$~=~0.3 and energy offsets~=~[0,0], all relevant phase-space regions can be sampled. (d) A recently developed approach called $\lambda$-EDS\cite{Koenig2020} introduces a $\lambda$-dependence in the EDS method (blue, orange and green line). Colored points indicate sampling. The reference-state parameters were set to $s$~=~0.3 and energy offsets~=~[0,0], and three different lambda values 0.25,0.5, 0.75 were chosen.}
+	\caption{Illustration of different free-energy methods implemented in Ensembler (part I). (a) For FEP\cite{Zwanzig1954} and BAR\cite{Bennett1976}, the two end states (grey and black) are sampled separately (green and blue). (b) To increase the phase-space overlap, the two end states can be coupled as a linear combination of their Hamiltonians using a coupling parameter $\lambda$. This allows the generation of intermediate states (grey to black) and sampling of those (colored points).}
 	\label{fig:FE_sampling}
 \end{figure}
 %
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.85\textwidth}
+		\caption{}
+		\includegraphics[width=\linewidth]{fig/FE_example/EDS_sampling.pdf} 
+	\end{subfigure}\\
+	\begin{subfigure}{.85\textwidth}
+		\caption{}
+		\includegraphics[width=\linewidth]{fig/FE_example/hlEDS_sampling.pdf} 
+	\end{subfigure}
+	\caption{Illustration of different free-energy methods implemented in Ensembler (part II). (a) An alternative method is EDS,\cite{Christ2007, Christ2008, Christ2009} where a reference-state Hamiltonian (blue line) is sampled (blue points), which envelopes the end states. By setting the reference-state parameters to $s$~=~0.3 and energy offsets~=~[0,0], all relevant phase-space regions can be sampled. (b) A recently developed approach called $\lambda$-EDS\cite{Koenig2020} introduces a $\lambda$-dependence in the EDS method (blue, orange and green line). Colored points indicate sampling. The reference-state parameters were set to $s$~=~0.3 and energy offsets~=~[0,0], and three different lambda values 0.25,0.5, 0.75 were chosen.}
+	\label{fig:FE_sampling}
+\end{figure}
 %%linear coupling
 One possibility to increase the phase-space overlap is to generate intermediate states as a linear combination of the two end states $A$ and $B$ with the coupling parameter $\lambda$, i.e. $H(\lambda) = (1-\lambda) H_A + \lambda H_B$, such that $H(\lambda=0) = H_A$ and $H(\lambda=1) = H_B$.
 The intermediate states are positioned at discrete $\lambda$-points between 0 and 1 (Figure \ref{fig:FE_sampling}b).\cite{Valleau1972, Straatsma1991} 

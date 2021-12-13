@@ -1,14 +1,5 @@
-In this work, we presented an efficient algorithm for the placement of distance restraints in a linked dual topology approach that can easily be applied or incorporated into pipelines with the provided git repository and a python anaconda environment \cite{anaconda} \textit{\hyperlink{https://github.com/rinikerlab/restraintmaker}{https://github.com/rinikerlab/restraintmaker}}. The algorithm can be used in python scripts or interactively with a representation of the molecules in PyMol 2.0 (or higher). Distance restraint files can be written in GROMOS and GROMACS format, or in an easily accessible and human-readable JSON format that can be parsed by any JSON parser. \cite{DeLano2020}
+This study reports the recent developments for the multistate free-energy method RE-EDS, which omits the definition of alchemical transition paths. The automatic workflow for RE-EDS was improved in robustness, and was applied to estimate the relative binding free energies of five CHK1 inhibitors containing typical core-hopping transformations. This system was investigated previously with FEP+ and QligFEP, allowing for a direct comparison of RE-EDS with state-of-the-art pairwise free-energy methods.
+Using different starting configurations representing all end states (SSM approach) in the parameter optimization of the RE-EDS workflow improved the sampling, convergence, and the accuracy of the resulting free-energy differences. The performance of RE-EDS SSM was found to be comparable with FEP+ and QligFEP, and shows that RE-EDS with a ``dual topology" approach can be readily applied to challenging ligand transformations like ring size change, ring opening/closing, and ring extension.
 
-The presented algorithm is a graph-based approach and can be straightforwardly applied to molecules with a rigid core. With this, the only required user input is the number of restraints assigned to link two molecules.
-
-%%%%%ToyModelFun
-The introduced algorithm was tested, and its time and result performance were analyzed with toy models and compared to brute force approaches. This test found that the algorithm represents a good trade-off between time and algorithmic complexity compared to the brute force approaches.
-
-%%%%%TI
-Relative hydration free energy calculations were presented for pairwise TI approaches, showing the influence of the restraints on the convergence of the simulations, and the sampling behavior of molecules containing a rigid core, like commonly used in pharmaceutical drug discovery, is minimal.
-
-%%%%%%REEDS
-For multistate methods, we expanded our scheme in order to match the requirements of such approaches. It could be shown that the relative hydration free energies obtained with RE-EDS results in a similar accuracy as the pairwise TI calculations, but using a shorter simulation time.
-
-As an outlook, we would like to point out that our future work on multistate methods will be expanding on this work, and we are looking forward to using the approach for more complex systems. Interesting challenges include increasing the number of states significantly or going to larger molecules.
+In terms of computational efficiency, the total production run time with RE-EDS ($3.5$~ns per replica) was about a quarter of that reported for FEP+ with this system. As multiple ligands are simulated simultaneously in a single RE-EDS simulation, this sampling enhancement will increase with increasing number of ligands. 
+However, the pre-processing phase in the RE-EDS workflow currently uses a relatively large amount of simulation time. Making these steps more efficient will be addressed in future work. In addition, further automatization of the dual topology approach with distance restraints is ongoing.

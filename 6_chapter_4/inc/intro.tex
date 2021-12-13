@@ -1,30 +1,46 @@
 %general idea - productivity through digitalization and code
-Digitalization was identified as one of the most promising tools to increase productivity for many aspects of life.\cite{Tuomi2018}
-Over many years, this development is reaching out to chemistry, building up computational chemistry. This field focuses on the estimation of properties of chemicals, conformational behavior, or reactivity. A prominent area of application for computational chemistry is drug design. \cite{Cournia2020} This field requires, besides computational science knowledge, a large amount of chemical and biological knowledge. 
+Digitalization has been identified as one of the most promising tools to increase productivity in a vast array of disciplines.\cite{Tuomi2018}
+Over the last four decades, computational techniques have also become increasingly relevant in chemistry, and  many methods are now routinely used in academia and industry to e.g. predict the physicochemical properties of molecules, their 3D conformation and interactions with other molecules, or their chemical reactivity. A prominent application of computational chemistry is the highly interdisciplinary field of drug discovery, where computational approaches are employed in all stages of the development process.\cite{Chodera2011, Hansen2014, Abel2017, Cournia2017, Cournia2020, Meier2021}
 
 %% Diversification of coding skill 
-With the growth of digitalization in chemistry, more people will have to write and read code. Nevertheless not everyone has and will have the same level of knowledge in coding as not everyone is required to write very efficient code with complex languages like Java or C++. A much more diversified set of coding skills has already evolved, leading to the requirement of convenient-to-use scripting languages and APIs that can be used to rapidly implement solutions to complex problems requiring additional problem-focused specialized knowledge. \cite{ayer2014} 
-
-%% Python and Why Python 
-The scripting language with the largest impact on science is Python. 
-Core features making Python attractive are: 
+With the growing application of computational chemistry in industry, also the fraction of scientists that need to read or write software code increases. Typical tasks do not require writing highly optimized code in low-level languages such as Java\cite{Gosling2000}, Fortran\cite{Backus1957}, or C++\cite{Stroustrup1995}. As a consequence, more advanced concepts such as memory management, parallel programming, or advanced programming paradigms are not always considered during code development, possibly leading to problems later on. In most projects, it is a balance between long-term sustainable code and so-called technical debt\cite{Alfayez2018} to obtain results on the short term. This issue has led to the development of convenient-to-use scripting languages and application programming interfaces (APIs), which can be used to swiftly implement solutions to complex problems with a minimal technical debt. By doing this, time is freed to focus on problems requiring specialized knowledge.\cite{Ayer2014} The scripting language with the highest impact in science is Python. Already in 2011, Python was declared the \textit{de facto} standard language in natural sciences and engineering, and from 2017 to today (2021), Python has remained the highest-ranked language in the \textit{IEEE Spectrum} journal. This ranking reflects the reader interests measured by the internet community Stack Overflow, data available on GitHub, and IEEE Articles. \cite{Millman2011, Vanderwalt2011, Cass2017, Cass2018, Cass2019, Cass2020, Cass2021} 
+%
+Core features identified by Oliphant\cite{Oliphant2007} that make Python attractive to a widespread audience are: 
 \begin{itemize}
-    \item easy to read and learn
-    \item easy integration of other languages (especially for C/C++\cite{Stroustrup1995}, with tools like pybinds or SWIG) \cite{Wenzel2011, Beazley1996}
-    \item large community supporting with high quality packages (e.g., numpy, scipy, matplotlib, pandas and jupyter) \cite{VanDerWalt2011, Virtanen2020, Hunter2007, Mckinney2010, Kluyver2016}
-    \item good tools for environment and package managment (e.g., pip and conda) \cite{pypi2021,anaconda2020}
+    \item Intuitive syntax that is easy to read and learn, and thus allows rapid prototyping.
+    \item Straightforward integration with other programming languages (especially C/C++\cite{Stroustrup1995}, enabled by tools like pybinds\cite{Wenzel2011}, Boost Python\cite{Koranne2011}, SWIG\cite{Beazley1996}, Cython\cite{Behnel2011}, or Numba\cite{Lam2015}).
+    \item Large community supporting high-quality packages (e.g., NumPy\cite{Vanderwalt2011}, SciPy\cite{Virtanen2020}, Matplotlib\cite{Hunter2007}, Pandas\cite{Mckinney2010}, and Jupyter\cite{Kluyver2016})
+    \item High-quality tools for environment and package management (e.g. pip\cite{Pypi2021} and conda\cite{Anaconda2020}).
+    \item Platform independence that allows development on different operating systems and computer architectures.
 \end{itemize}
-\cite{Oliphant2007}
 
 %APIs in Python -> Efficiency as API
-Already in 2011, Python was declared as the de facto standard language in science and engineering, and from 2017 to today (2021), Python is the highest-ranked language in the \textit{IEEE Spectrum} journal. The ranking reflects the reader interests measured by stack overflow, GitHub data, and IEEE Articles. \cite{Millman2011, Cass2017, Cass2018, Cass2019, Cass2020, Cass2021} 
-Despite this boom of Python, one downside of the programming language is its limited performance efficiency. But for the efficiency issues, many different solutions were proposed. One solution is translating the python code during the run-time (just-in-time-compiling) into C code. Tools making this solution accessible are, for example, Cython or Numba. \cite{behnel2011, Lam2015} 
-Prominent packages like SciPy, NumPy, or pandas use a reverse approach and bind C code into the Python layer, where Python 'steers' the code execution.  \cite{VanDerWalt2011, Virtanen2020, Mckinney2010, Oliphant2007} 
-Tools like pybind11 make this approach very easy and allow easy building of python APIs. \cite{Wenzel2017}
-Many packages in computational chemistry use this approach like RDKit, PyMol, PySCF, pyOpenMS, Biopython, Pybel. \cite{landrum2021, DeLano2020, Sun2018, Röst2014, Cock2009, O'Boyle2008}
-The most important Molecular Dynamics (MD) packages follow this trend and offer python APIs. For example, Gromacs provides 'gmxapi', Amber provides the 'ParmEd' package that can serve as a python API, and OpenMM and LAMMPS bring the python API natively with the simulation package. \cite{BERENDSEN199543, Lindahl2001, Irrgang2018, Eastman2017, Case2005, Shirts2017, Thompson2022, Talirz2021}
+Despite the boom of Python, one downside of the programming language is its limited computational performance in a native form, which is related to the dynamic typing concept. To address the efficiency issues of native Python code, many different solutions have been developed. One solution is translating the Python code during run-time (just-in-time-compiling (JIT)) into C code\cite{Kernighan2006} or directly into machine code\cite{Lattner2008}. Tools making this solution accessible are for example Cython\cite{Behnel2011} or Numba\cite{Lam2015}. 
+Prominent packages like SciPy\cite{Vanderwalt2011}, NumPy\cite{Virtanen2020}, or Pandas\cite{Mckinney2010} follow a reverse approach and use Python as a wrapper to bind C\cite{Kernighan2006} or Fortran\cite{Backus1957} code. In this case, Python merely 'steers' the code execution and the user only interacts with the Python layer.\cite{Oliphant2007} 
+Tools like pybind11\cite{Wenzel2017} or Boost Python\cite{Koranne2011} make this approach easy to implement and allow rapid construction of Python APIs. 
+Many packages in computational chemistry make use of this concept, examples are RDKit\cite{Landrum2021}, PyMol\cite{Delano2020}, PySCF\cite{Sun2018}, pyOpenMS\cite{Röst2014}, BioPython\cite{Cock2009}, and Pybel\cite{O'Boyle2008}. The most popular molecular dynamics (MD) packages follow this trend and offer Python APIs. GROMACS \cite{Berendsen1995, Lindahl2001, Vanderspoel2005, Hess2008, Pall2015, Pronk2013, Abraham2015} and AMBER\cite{Case2005} provide for this purpose the packages gmxapi\cite{Irrgang2018} and ParmEd\cite{Shirts2017}, respectively. OpenMM\cite{Eastman2017} and LAMMPS,\cite{Thompson2022} on the other hand, include Python APIs natively.\cite{Talirz2021}
+%Multiple packages from our group follow this concept, for example the vsCNN repository for hierarchical clustering. \cite{Weiß2021}
+Here, we introduce a Python API for the GROMOS software package \cite{Schmid2012} called PyGromosTools.\cite{Lehner2021} This API is a starting point for further development that may ultimately allow to access the entire functionality of GROMOS as well as GROMOS++ \cite{Eichenberger2011} from Python. Currently, PyGromosTools already provides access of the simulation data and to a selection of GROMOS features, together with high perfomance computing (HPC) job queueing, and data analysis functionality. This work presents our rationale behind the design of PyGromosTools and shows examples of how the API can be used.
 
-Other Packages from our group follow this concept like for example, the vsCNN repository for hierarchical clustering. \cite{Weiß2021}
 
-Here we want to introduce PyGromosTools, a python API for GROMOS. \cite{Lehner2021} This API is a starting point for a proper API, integrating the GROMOS Package into PyGromosTools. Currently, PyGromosTools allows making data accessible in Python and allows GROMOS executions, even HPC-Queueing, and data analysis. This work aims to present our rationale behind the API-Design and show examples of how the API can be used.
+\section{Implementation}
+PyGromosTools is a software package that builds on the long history of GROMOS. After initial development phases of the package, its structure and associated usage patterns were established with a perspective on long-term stability in mind. Consequently, the implementation of PyGromosTools was preceded by identification of several design objectives that are in line with state-of-the-art API development: \cite{Henning2009, Blanchette2008, Bloch2006}
+%
+\begin{itemize}
+    \item An API is easy to learn and memorize such that solving problems with it comes naturally. 
+    \item The usage of an API should result in code that is easy to read and maintain.
+    \item A well-designed API is hard to misuse and easy to extend.
+    \item An API is complete and simple. 
+\end{itemize}
+%
+With these considerations in mind, the resulting API should enable fast, reproducible, and expandable simulation setup and execution of MD simulations. Additionally, the API should align with fundamental scientific principles that state that data and code should be easy to access, share, and reproduce. The importance of open and reliable data was already introduced and highlighted in Chapter \ref{ch:freeens}.
 
+\subsection{Coding Style}
+PyGromosTools follows several coding styles. These are not enforced on the users but on the developers who would like to contribute to the API. 
+
+\subsubsection{Code Visibility/Information Hiding}
+Encapsulation is an essential concept in coding of larger projects. Only those layers of the software should be presented to a user, which are required to make the API still understandable or usable. Presenting the entire code basis of larger packages to end users may be overwhelming and hamper usage. Therefore, encapsulating code into functions and classes, or alternatively managing the accessibility of certain variables/functions is vital in code hiding.\cite{Leino2002, Ganney2020} Visible code should be easy to integrate and conveniently to use for writing more complex solutions.
+
+In PyGromosTools, accessibility is managed with methods provided by Python. For example, private variables in the \textit{Gromos\_System} class are assigned with a prefix ``\_'' like the attribute \textit{\_GROMOSPP}. Note that this way of declaring a variable ``private'' still leaves it easily accessible, in contrast to other languages like C++\cite{Stroustrup1995}. If a variable of function should never be used externally, name mangling is employed with the prefix ``\_\_'' (like \textit{\_\_ionDecorator}) as defined in the Python enhancement proposals (PEP) 8 (\url{https://www.python.org/dev/peps/pep-0008/}).
+The second aspect of encapsulating code into functions and classes is achieved though modularization of the code. This concept allows quick construction of more complex structures, and therefore speeds up the development process and readability at the same time.\cite{Ganney2020}
+One example in PyGromosTools is the file structure that is encoded by several classes, which represent the compartments of a GROMOS file (fields $\rightarrow$ blocks $\rightarrow$ file).

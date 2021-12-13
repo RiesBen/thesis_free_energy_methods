@@ -3,26 +3,32 @@
 \makeatother
 \documentclass[../main.tex]{subfiles}
 \begin{document}
-\renewcommand{\path}{3_chapter_1/}
-\chapter[An Algorithmic Graph-Based Approach for Setting up Dual Topology Methods]{Dual Topology and the Challenge how to pick the restraints - Restraintmaker
-    \footnote{\label{footnoteChapter3CopyRight} 
-    Reprinted (adapted) from  Benjamin Ries$^{**}$, Salom\'e Rieder$^{**}$, Clemens Rhiner, Philippe H. H\"unenberger, and Sereina Riniker, 
-    JCTC, \textbf{X}, XX-XX (202X)
-    $^{**}$ equal contribution}
- }
-\chaptermark{Free Energy Calculation}
-\label{ch:feres}
+\renewcommand{\path}{4_chapter_3/}
+\chapter[Path-Free Multistate Methodology for Free Energy Calculations]{Relative Free-Energy Calculations for Scaffold Hopping-Type Transformations with an Automated RE-EDS Sampling Procedure 
+    \footnote{\label{footnoteChapter2CopyRight} 
+    Reprinted (adapted) from  Benjamin Ries, Karl Normak, R. Gregor Wei{\ss}, et al., 
+    JCAMD, textbf{X}, XX-XX (202X) licensed by Creative Commons CC BY}
+}
+\chaptermark{FE: Multistate Method Development}
+\label{ch:fereeds}
 
 \aquote{
-    ""
-}{}
+    „“
+}{— }
 
 
-
-\begin{abstract}
-dual top fun
+\begin{summary}
+The calculation of relative free-energy differences between different compounds plays an important role in drug design to identify potent binders for a given protein target. 
+Most rigorous methods based on molecular dynamics (MD) simulations estimate the free-energy difference between pairs of ligands. 
+Thus, the comparison of multiple ligands requires the construction of a ``state graph'', in which the compounds are connected by alchemical transformations. 
+The computational cost can be optimized by reducing the state graph to a minimal set of transformations.
+However, this may require individual adaptation of the sampling strategy if a transformation process does not converge in a given simulation time. 
+In contrast, path-free methods like replica-exchange enveloping distribution sampling (RE-EDS) allow the sampling of multiple states within a single simulation without the pre-definition of alchemical transition paths.
+To optimize sampling and convergence, a set of RE-EDS parameters needs to be estimated in a pre-processing step.
+Here, we present an automated procedure for this step that determines all required parameters, improving the robustness and ease of use of the methodology.
+To illustrate the performance, the relative binding free energies are calculated for a series of checkpoint kinase 1 (CHK1) inhibitors containing challenging transformations in ring size, opening/closing, and extension, which reflect changes observed in scaffold hopping. The simulation of such transformations with RE-EDS can be conducted with conventional force fields and, in particular, omit the need for soft bond-stretching terms.
 %
-\end{abstract}
+\end{summary}
 
 \clearpage
 \pagebreak
@@ -66,7 +72,7 @@ dual top fun
 \clearpage
 \pagebreak
 
-\bibliography{MendeleyMerge.bib}
+%\bibliography{5_chapter_3/ref/ref.bib}
 
 
 \end{document}

@@ -408,7 +408,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SECTIONS
 
-\newenvironment{abstract}{\begin{quote}}{\end{quote}}
+\newenvironment{summary}{\begin{quote}}{\end{quote}}
 
 \newenvironment{acknowledgement}{\section*{Acknowledgment}}{}
 

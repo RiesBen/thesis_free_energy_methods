@@ -1,127 +1,168 @@
-The here-defined algorithm is based on classical graph algorithms. Its target is to find a suitable placement for distance restraints between two molecules $m_i$ and $m_j$ for a linked dual topology approach.
+\subsection{Enveloping Distribution Sampling (EDS)}
+In EDS, free-energy differences between multiple end states are obtained by sampling a reference-state Hamiltonian, i.e. without the definition of specific alchemical paths \cite{Christ2007,Christ2008,Riniker2011}. 
+Given $N$ end states, the potential energy function $V$ of the EDS reference state $R$ is defined as,
+\begin{equation}
+    V_R(\vec{r}; s, \vec{E}^R)= - \frac{1}{\beta s}\ln \left[ \sum^N_{i=1}{e^{-\beta s \left(V_i(\vec{r})- E_i^R\right) }} \right] ,
+    \label{EQ: Reference EDS}
+\end{equation}
+where $\beta = (k_\mathrm{B} T)^{-1}$ with $k_\mathrm{B}$ being the Boltzmann constant and $T$ the absolute temperature.
+The smoothing parameter $s$ and the energy offsets $\vec{E}^R$ were introduced to enable tuning of the reference state for optimal sampling of all end states \cite{Christ2007, Christ2008}.
 
-The following assumptions are made towards this process:
-\begin{enumerate}
-    \item $m_i$ and $m_j$ strongly overlap in the coordinate space; i.e., are aligned to each other
-    \item optimal restraints placement for an MD simulation fulfills:
-    \begin{enumerate}
-        \item restrained atom pairs are maximally distributed over the two molecules
-        \item restrained atoms have a minimal distance to each other ($d_{\text{res}} <= 1.0~\text{\AA}$)
-        \item restraints are not hindering the molecule sampling
-    \end{enumerate}
-    \item given the number of required restraints $n_{\text{res}}$, it holds that $n_{\text{res}} << n_{\text{atoms}_{m_i}} \wedge~n_{res} << n_{\text{atoms}_{m_j}}$ 
-\end{enumerate}
-As a result of these assumptions, only relatively rigid areas of the molecules, such as ring-atoms, should be selected for the restraint search space. While restraining non ring atoms might be favorable for the distribution of the atoms over the molecules, it will be more likely to negatively affect the sampling behavior of the molecules.
+%% $s$-parameter    
+A smoothness parameter set to $s=1.0$ gives a reference potential-energy landscape that contains all the relevant minima of the end states. However, these might be separated by high barriers.
+For $s < 1$, the energy barriers between different end states $V_i$ are smoothed in the reference potential $V_R$, increasing the transition rates between the different minima (Figure \ref{fig: EDS_potential_behavioura}) \cite{Christ2008}. 
+However, if $s$ is chosen too small, $V_R$ consists of a global unphysical minimum, which does not correspond to any of the end states. 
+In the limit of $s\rightarrow 0$, all end states contribute equally to the potential-energy function of the reference state \cite{Koenig2020}, which can lead to unphysical deformations. The situation with a too small $s$ has been termed ``undersampling'' \cite{Riniker2011}.
 
-\subsection{Assigning distance Restraints  to a pair of molecules}
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{fig/theory/AlgorithmScheme.png}
-    \caption{Algorithm scheme going stepwise through the algorithm}
-    \label{fig:algorithmScheme}
+
+
+%%Eoff
+The energy offsets $\vec{E}^R$ are used to ensure equal weighting of all end states $V_i$ in $V_R$ (Figure \ref{fig: EDS_potential_behaviourb}). 
+Note that the optimal values of $s$ and $\vec{E}^R$ are not independent of each other (as can be seen in Eq. (\ref{EQ: Reference EDS})) \cite{Christ2008}.
+%
+Different schemes have been proposed to determine optimal reference-state parameters \cite{Riniker2011, Christ2009, Hansen2012}, however, these are only applicable to systems with two end states.
+
+\begin{figure}[h]
+    \begin{center}
+    \begin{subfigure}{0.44\columnwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/intro/EDS_parmeters_s.png}
+        \caption{Effect of $s$ on $V_R$}
+        \label{fig: EDS_potential_behavioura}
+    \end{subfigure}
+    \begin{subfigure}{0.44\columnwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/intro/EDS_parmeters_Eoff.png}
+        \caption{Effect of $E_i^R$ on $V_R$}
+        \label{fig: EDS_potential_behaviourb}
+    \end{subfigure}
+    \end{center}
+    \caption{Schematic illustration of the effect of the two types of EDS reference-state parameters. (a) The smoothing parameter $s$ decreases the barriers between the end states. If $s$ is too small, an ``undersampling'' situation occurs with a global unphysical minimum. (b) The energy offsets $\vec{E}^R$ provide equal weighting to all end states in the EDS reference state.  The figure was generated with Ensembler \cite{Ries2021A}.}
+    \label{fig: EDS_potential_behaviour}
 \end{figure}
 
-\subsubsection{Translation of the problem}
-In order to be able to apply the algorithm to a pair of molecules, a set of pre-processing operations is required to translate the problem into a graph problem. 
-The formulated approach is based on a graph representation of the restraint space. To be able to solve the graph problem of selecting a good set of atoms to form distance restrains, it needs to be translated into a graph fulfilling:
+% laws of motion of R
+The force on a particle $k$ in the EDS reference state is calculated as \cite{Christ2008},
 \begin{equation}
-    G(N, E, \omega), E \subseteq \{\{x,y\}\mid x,y\in N\;{\textrm {and}}\;x\neq y\},
-\end{equation}. \cite{}
+    \vec{f}_k(t)=-\frac{\partial V_R(\vec{r}; s, \vec{E}^R)}{\partial \vec{r}_k} = \sum^N_{i=1}\frac{e^{-\beta s(V_i(\vec{r}) -E_i^R)}}{\sum^N_{j=1}{e^{-\beta s (V_j(\vec{r})-E_j^R)}}}  \left( -\frac{\partial V_i(\vec{r})}{\partial \vec{r}_k} \right) \,.
+    \label{eq:laws_of_motion}
+\end{equation}
+%
+For $s$ values close to one, the reference-state forces are dominated by the one end state, for which the current coordinates are most favourable, while the other end states give high energies and therefore contribute little (i.e. ``dummy states'').  
+For small $s$ values (undersampling situation), all end states contribute effectively to the forces, resulting in the global unphysical minimum.
 
-with $N$ as a set of nodes, $E$ as a set of edges, and $\omega$ as a set of weights.
+%% ddFE
+The free-energy difference between two end states $A$ and $B$ can be calculated by employing the Zwanzig equation twice forming a path via the reference state~$R$ \cite{Zwanzig1954,Christ2007,Christ2008},
 
-Here, we start with a molecule pair $mp$ consisting of a molecule $m_i$ and a molecule $m_j$ and their sets of atoms, $A_i$ and $A_j$, respectively, for which the relative free energy shall be determined. 
-
-%%Alignment
-In a first step, which will not be covered here in detail, the two molecules are aligned to each other, such that the overlap of the van der Waals surfaces of both molecules is maximal. This can be achieved using third-party tools such as the RDKit or PyMol. \cite{landrum2021, DeLano2020}
-
-%%Filter
-Next, the sets of possible atoms $A_i$ and $A_j$, that could be selected for the distance restraints are reduced to atoms  $A^{ring}_i$ and  $A^{ring}_j$, that are incorporated in molecule substructures forming a ring. 
-
-%% Restraints with a Distance cutoff
-$A^{ring}_i$ and  $A^{ring}_j$ are used to find potential restraints $R$,  with a user-defined cutoff distance $d_{a_i, a_j} \leq 1.0~\text{\AA}$ between the atoms. 
-A potential restraint, therefore, is a pair of atoms $(a^{ring}_i, a^{ring}_j)$ that fulfills the distance criterion.
-
-%% Building a Graph
-All potential $R$ are used as nodes $N$ to construct a fully connected graph $G$. 
-Each $r$ is represented by the center of geometry (COG) of the two involved atoms.
-The undirected edges of the fully connected graph retrieve a weight as the euclidean distance $d_{\vec{r}_j,\vec{r}_i}=\omega_{ji}$ between two coordinates. 
-
-\subsubsection{Solving the graph problem}
-From the generated fully connected graph, only a selection of restraints is required to fulfill the assumptions. Many different algorithms could be applied to the graph in order to retain a set of restraints. Here, we decided to use a Min-Max decision scheme to build a spanning tree $R_{opt}$ within a greedy Prim-like approach.
-
-%Algorithm Definition
-%%bit more literature research
-%initial move
-The algorithm starts by picking the edge of $G$ with the largest $\omega_{ji}$/distance in the graph, i.e. the two restraints whose centers of geometry are the furthest away from each other. 
-
-%iterate
-%%update min
-After this initial selection of two restraints for $R_{opt}$, the weights of $G$ are updated with the minimal distance of all $r$ in $R_{opt}$ to a respective node $n_i$. Subsequently, all edges and nodes are removed that contain atoms that are already selected in $R_{opt}$.
-
-%% select max
-After the edge update, the $e$ with maximal $\omega_{ji}$, and not connecting two nodes already in $R_{opt}$,  is added to  $R_{opt}$.
-
-%%termination
-This procedure is repeated till either all present nodes are connected or $|R_{opt}| = n_{res}$. 
-
-\subsubsection{Mapping back}
-The retrieved set of restraints $R_{opt}$ is translated back, such that the atoms forming the restraints can be selected and used to translate the distance restraints to a format usable for different MD packages like GROMOS or GROMACS. Additionally a JSON format is provided, allowing importing the results with any standardized JSON-Parser. \cite{Schmid2012, Abraham2015}
+%published & constantly cited form by Clara christ:
+%% - \frac{1}{\beta} \ln(\frac{⁡\langle e^{-\beta (V_B-V_R)}\rangle_R}{\langle e^{-\beta (V_A-V_R )}\rangle_R})
+\begin{align} \nonumber
+    \Delta G_{\text{BA}} &=  \Delta G_{\text{BR}} + \Delta G_{\text{RA}} \\ 
+    &=-\frac{1}{\beta}\left(\ln \langle e^{-\beta (V_B-V_R)}\rangle_R - \ln \langle e^{-\beta (V_A-V_R )}\rangle_R\right) \\ 
+    &= -\frac{1}{\beta} \ln \frac{\langle e^{-\beta (V_B-V_R)}\rangle_R}{\langle e^{-\beta (V_A-V_R)}\rangle_R}.
+    \label{EQ: Free Energy calculation via reference state}
+ \end{align}
 
 
-\subsubsection{Tie-Breaker}
-Due to numerical accuracy and non-perfect alignment, small absolute differences in the priority calculation for the picking step were observed, leading to suboptimal results. These practical problems were solved by adding a tie-breaker that detects if multiple priorities in one iteration are within a range of $0.2$~\AA. 
-Such a tie is broken by calculating the COG for all present restraints and using the distance to all current possible restraints as a secondary criterion. This distance should be maximal.
+\subsection{Replica-Exchange EDS (RE-EDS)}
+The recently introduced RE-EDS method \cite{Sidler2016,Sidler2017} is a type of Hamiltonian replica exchange \cite{Hansmann1997,Sugita2000} with the smoothness parameter $s$ as the exchange dimension ($1 \geq s > 0$), which was inspired from constant pH simulations by Lee \textit{et al.} \cite{Lee2014,Lee2015}. The approach is shown schematically in Figure \ref{fig:RE-EDS_Scheme}.
+RE-EDS does not require a single (optimal) $s$-value. Instead enhanced sampling is achieved by exchanging between the replicas with different smoothness levels. This simplifies the parameter choice problem and thus, the method can be applied to systems with more than two end states \cite{Sidler2016,Sidler2017}.
 
+%Exchange criterium
+For the pairwise exchanges between neighboring replicas $k$ and $l$, a Metropolis-Hastings criterion \cite{Hastings1970} is used \cite{Sidler2016,Sugita2000},
+\begin{equation}
+    p_{k,l} = min\left(1, \exp \left[-\beta ((H_{R}(\vec{r}_k; s_l)+H_{R}(\vec{r}_l; s_k))-(H_{R}(\vec{r}_l; s_l)+H_{R}(\vec{r}_k; s_k)) \right] \right) ,
+\end{equation}
+where $H_{R_k}$ and $H_{R_l}$ are the reference-state Hamiltonians of the respective replicas, $\vec{r}_k$ and $\vec{r}_l$ are the current coordinates of the replicas.
 
-\subsection{Assigning distance Restraints to a multistate system}
-In the case of multistate methods such as Replica Exchange Enveloping Distribution Sampling (RE-EDS) or $\lambda$-Dynamics, multiple molecules need to be restrained to each other. \cite{Sidler2016, knight2011} It was decided to form a ring of connecting restraints that links all molecules to two neighboring molecules in our approach.
-
-The approach uses the described pairwise greedy approach to calculate all possible molecule pair restraints. The possible sets of restraints will be compared to each other by calculating the convex hull around the restraint coordinates. The convex hull volume (chv) is used to build up a fully connected graph connecting all molecules. The optimal connections are retrieved by applying a greedy algorithm, inspired by the Kruskal Algorithm, to the graph of ligand pairs (Figure \ref{fig: convexHull}). This algorithm picks the edges providing the largest chvs for chaining the pairs of restraints together. The following rules are applied during this: no node has larger connectivity than two, and no cycles in the generated graph are allowed. The cycle closure is achieved in the end by tying the loose chain ends together.
+Replicas are placed between $s=1.0$ and a lower bound of $s$, where the reference state is in undersampling. The replicas with low $s$ values facilitate the transitions between the low-energy regions of the  different end states. Especially for systems with slowly adapting environments (e.g. protein binding pockets), regions in $s$-space with very low acceptance probability can occur. Thus, to ensure sufficient exchanges between all pairs of replicas, a local variant of the round-trip time optimization algorithm \cite{Katzgraber2006, Nadler2008} was developed to optimally place the replicas in $s$-space \cite{Sidler2017}.
+It was found that a single set of energy offsets can be used for all replicas \cite{Sidler2016}. However, it is important that these energy offsets are chosen well to avoid ``leakage'' effects, resulting in one or more end states not being properly sampled \cite{Sidler2016}.
+The final free-energy differences are estimated from the replica at $s=1.0$, which represents the physical minima of the end states.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{fig/theory/MultistateChainingScheme.png}
-    \caption{Multistate Molecule chaining by maximizing the CHV}
-    \label{fig: convexHull}
+    \includegraphics[width=\columnwidth]{fig/theory/Reeds_scheme_first.png}
+    \caption{Schematic illustration of RE-EDS with three harmonic oscillators as end states ($A$, $B$, and $C$). Each replica differs by the $s$-parameter, generating reference states with a different degree of smoothness. Sampling of each replica is denoted with orange dots. Exchanges between the replicas are indicated with green arrows. The replica graph shows three regions: a ``physical'' region where $s$ is close to 1, a transition region, and the ``undersampling'' region when $s$ approaches zero. The figure was generated with Ensembler \cite{Ries2021A}.}
+    \label{fig:RE-EDS_Scheme}
 \end{figure}
 
-\subsection{Free energy calculation methods}
-In this work, two free energy calculation methods are applied with the linked dual topology approach.
+\subsection{Automatic Parameter Optimization}
+To facilitate the determination of the energy offsets and $s$-parameter distribution, we have extended and further automatized the previous \cite{Sidler2017} RE-EDS workflow (Figure \ref{fig:Workflow}).
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{fig/theory/RE_EDS_Pipeline.png}
+    \caption{The RE-EDS workflow can be split into four steps: (1) Input stage with energy offsets set to $E_i^R=0$ and a set of $s$-parameters logarithmically distributed between $1$ and $10^{-5}$; (2) Parameter exploration to determine the lower bound for $s$, to obtain equilibrated coordinates for each end state, and to estimate initial energy offsets with the PEOE scheme \cite{Sidler2016}; (3) Parameter optimization to improve the $s$-distribution with the N-LRTO algorithm \cite{Sidler2017} and the state sampling with energy offset rebalancing; (4) Production run and calculation of the free-energy differences.}
+    \label{fig:Workflow}
+\end{figure}
 
-\subsubsection{TI-Simulation}
-Thermodynamic integration is a standard method for calculating free energies. It is used to sample a $\lambda$-dependent path between two end states A and B. The potential system energy is constructuted as follows:\cite{Kirkwood1935}
+%
+The initial input for a system with $N$ end states consists of a prepared EDS system (i.e. topology,  perturbation topology, initial coordinates, and distance restraints), a list of energy offsets of length $N$ with $E_i^R = 0; ~ \forall ~ i \in [1,...,N]$, and a list of $s$-parameters, which are logarithmically distributed in the range $s_i \in [1, 10^{-5}]$. Typically, we use 21 initial $s$ values. 
+
+The parameter exploration consists of three substeps: (i) determining the lower bound for the $s$-distribution (newly introduced), (ii) obtaining optimized coordinates within the EDS set-up for each end state (newly introduced), and (iii) estimation of an initial set of energy offsets (as done previously in Ref.~\cite{Sidler2016}).
+
+%%1. initial parameter search
+To enable sampling of all end states at $s=1.0$, some replicas have to be in undersampling to facilitate transitions. However, for efficiency reasons (and numerical stability) the number of replicas $M$ in undersampling should be small and the lowest $s$-value should be as high as possible. From a short simulation with the initial $s$-distribution between $[1, 10^{-5}]$, the highest smoothing parameter $s_{M_\mathrm{us}}$ at which undersampling still occurs is determined and used in the following as a lower bound for the $s$-distribution. The $s$-distribution for the next step is then defined by logarithmically distributed replicas between $s=1.0$ and the automatically determined lower bound.
+
+%%%state optimization
+Optimized coordinates for each end state in the EDS setup can be automatically obtained by short parallel simulations, where one end state in turn is favoured by setting an arbitrarily large energy offset for this state. 
+The optimized coordinates allow the user to start RE-EDS simulations from different end states and are needed for the subsequent parameter optimization. 
+
+ %%% estimate EOFFs:
+In the last substep, $E_{\text{i}}^{\text{R}}$ estimation, the previously developed parallel energy offset estimation (PEOE) \cite{Sidler2016} scheme is used to estimate the initial set of energy offsets. This is done based on a short simulation with the initial parameters. For each replica $k$ in the undersampling region, the energy offsets are extracted using \cite{Sidler2016},
 \begin{equation}
-    V(\vec{r}; \lambda) = (1-\lambda) ~ V_A(\vec{r}) + \lambda ~ V_B(\vec{r})
-    \label{eq: TI-Potential}
+    E_{i}^{R}(new)=-\frac{1}{\beta}\ln \Big < e^{-\beta \big(V_i(\vec{r})-V_R(\vec{r}; s_{k},\vec{E}^{R}(old))\big)}\Big>_{R(s_{k},\vec{E}^{R}(old))} .
+    \label{eq: EoffEstimator}
+\end{equation}
+The energy offsets that were extracted in parallel for the $k$ replicas are subsequently averaged and used as initial set of energy offsets. These energy offsets should provide a first solution that is close to the optimal choice of energy offsets, which leads to an optimal state sampling of all end states in the RE-EDS simulation. As the initial energy offsets are obtained from the replicas in undersampling, they may not be exactly optimal and require fine-tuning in the next phase. 
+
+
+%%2. optimization of parameters
+In the second step of the RE-EDS workflow, first the $s$-distribution is optimized and subsequently the energy offsets are fine tuned.
+%
+%%% s-Optimization:
+The $s$-distribution is improved by minimizing the round-trip time $\tau$ and increasing the number of round-trips, using the multistate local round-trip time optimization (N-LRTO) algorithm \cite{Sidler2017}. The optimization is performed in an iterative manner with short simulations.
+This step is required as exchange bottlenecks between two replicas might occur leading to a very slow round trip time or to no round trips at all. 
+In the N-LRTO algorithm, new replicas are inserted in each iteration by linear interpolation in the $s$-regions with exchange bottlenecks, while the replica positions of the previous iteration are retained. Adding replicas theoretically increases the round-trip time because of a longer path between the top and bottom replicas. However, the addition of intermediate replicas also increases the exchange probability between neighboring replicas, thus reducing the round-trip time. With the optimization algorithm, we aim to determine the balance between the length of the replica path and the likelihood of exchange between replicas for minimal round-trip time. The exchange bottlenecks are identified for each end state separately (i.e. multistate). The number of replicas added can be chosen by the user. The iteration is stopped when the average round-trip time $\overline{\tau}$ converges. 
+The N-LRTO variant is needed for systems for which severe bottlenecks are observed with the initial logarithmic $s$-distribution (e.g. protein binding pockets). For systems with smaller perturbations, the global multistate variant (N-GRTO) \cite{Sidler2017} can be more efficient as this algorithm re-distributes the replicas in $s$-space according to the exchange statistics. %In very severe cases, this can lead to an oscillating behavior, as one bottleneck is fixed, but another appears due to an imbalance of replica shifting.
+%
+In this study, we started with the same number of replicas as used for the PEOE scheme above and added four replica positions per iteration in the N-LRTO algorithm.
+
+%%%% Eoff Rebalancing:
+After optimizing the number of round trips and $\tau$, the distribution of the state sampling is improved. To reach the ideal situation that each end state is sampled to an equal amount, the initial energy offsets need to be fine tuned, while keeping the round trips approximately constant. For this, we introduce here the energy offset rebalancing scheme.
+To avoid overshooting, a correction factor is calculated and applied iteratively,
+\begin{equation}
+    \Delta E^{corr}_i = - \frac{1}{\beta} \ln \left( \frac{f_i^{\text{mc}}+c}{f^{\text{mc,ideal}}_{i}+c} \right),
+    \label{eq: EoffRebalancing}
+\end{equation}
+where $f_i^{\text{mc}}$ is the current sampling fraction (or estimated probability) of an end state contributing to $V_R $, and $f^{\text{mc,ideal}}$ is the ideal sampling fraction (see Section \ref{metrics}). 
+%
+To make the approach more robust, a pseudo count $c$ is introduced to avoid singularities with zero sampling, which is defined as,
+\begin{equation}
+    c = \frac{f^{\text{mc,ideal}}}{x},
+    \label{eq: EoffRebalancingPseudoCount}
+\end{equation}
+with the intensity factor $x$.
+The default of the pseudo count was chosen to result in a maximal correction of $\Delta E^{corr}_i=8.43$~kJ/mol, corresponding to a minimum 30-fold reduced sampling compared to the expected optimal sampling.
+
+%%% 3. production run
+After optimizing the RE-EDS parameters, the production run is performed for a chosen length. 
+The free-energy differences are subsequently calculated using the replica at $s=1.0$ with Eq.~(\ref{EQ: Free Energy calculation via reference state}).
+
+\subsubsection{Starting State Mixing}
+The sampling in RE-EDS simulations can be further improved by using starting coordinates for the replicas corresponding to the different end states (i.e. replica 1 starts in a low-energy configuration for end state 1, replica 2 in a low-energy configuration for end state 2, etc.). This technical approach is called ``starting state mixing'' (SSM) in the following and is also used for Hamiltonian replica-exchange TI calculations (see e.g. \cite{Graf2016, Hahn2020}). The optimized coordinates obtained in the parameter exploration step can be used for SSM. We compare RE-EDS simulations with SSM and with a single set of starting coordinates (abbreviated as 1SS).  
+
+\subsubsection{Analysis}
+\label{metrics}
+Three types of metrics were used to quantify the sampling in RE-EDS simulations. The first metric determines for each end state $i$ the sampling fraction where it is maximally contributing to the reference state, i.e. $f_i^{\text{mc}}$. A maximally contributing state is defined as the end state with the lowest potential energy minus its energy offset in a frame. As can be seen in  Eq.~\eqref{eq:laws_of_motion}, maximally contributing end states have the largest impact on the reference-state sampling at a given time point.
+
+%
+Optimal sampling in a RE-EDS system is achieved when all end states are sampled as maximally contributing states to an equal extent at $s=1.0$, i.e. 
+\begin{equation}
+f_{i}^{\text{mc,ideal}} = \frac{1}{N} ~, \forall ~ i~\in~ \{1, ..., N\}
+\label{eq: optimalDominationSamplingDist}
 \end{equation}
 
-In a simulation, state A is represented if $\lambda = 0$, and state B if $\lambda = 1$. Usually, the free energy is calculated as a path over multiple intermediate state simulations, in between the two extreme $\lambda$ values 0 and 1:
-\begin{equation}
-    \Delta F = \int^{1}_{0} \left< \frac{\delta V(\lambda)}{\delta \lambda} \right>_{\lambda} \,d\lambda
-    \label{eq: TI-Integration}
-\end{equation}
+The second metric is the estimated sampling fraction of ``physical occurrence'' of an end state $i$, i.e. $f_i^{\text{occur}}$. As a result of phase-space overlap with the current maximal contributing end state, other end states in the EDS system might be sampled simultaneously. An end state is counted as ``occurred'' when its potential energy is below the threshold $V_i \leq T_{i}^{\text{phys}}$ at a time point $t$. 
+These thresholds are estimated during the second substep of the parameter exploration phase. If end states show no phase-space overlap, $f_i^{\text{occur}}$ will be (nearly) the same as $f_i^{\text{mc}}$. 
 
-\subsubsection{RE-EDS}
-%% Hamiltonian Construction
-RE-EDS is a combination of Hamiltonian replica exchange (H-RE) and enveloping distribution sampling (EDS).\cite{Hansmann1997,Sugita2000, Christ2007, Sidler2016,Sidler2017,Ries2021} In EDS, a reference state Hamiltonian $V_R$ is sampled.\cite{Christ2007} $V_R$ combines $N$ end states as
-\begin{align}
-    V_R\left(\vec{r};s,\vec{E}^R\right) = -\frac{1}{\beta s}\ln\left[\sum\limits_{i=1}^N e^{-\beta s\left(V_i(\vec{r})-E_i^R\right)}\right]
-\end{align}
-with the smoothness parameter $s$ and a set of energy offsets $E_i^R$. 
-
-The force on a particle $k$ can be calculated as \cite{Christ2008}
-
-\begin{align}
-    \vec{f}_k(t)=-\frac{\partial V_R(\vec{r}; s, \vec{E}^R)}{\partial \vec{r}_k} = \sum^N_{i=1}\frac{e^{-\beta s(V_i(\vec{r}) -E_i^R)}}{\sum^N_{j=1}{e^{-\beta s (V_j(\vec{r})-E_j^R)}}}  \left( -\frac{\partial V_i(\vec{r})}{\partial \vec{r}_k} \right) \,.
-\end{align}
-
-For high $s$ values, the sampling of the reference state is dominated by the state with the lowest $(V_i(\vec{r}) - E_i^R)$, whereas for low $s$ values, all states actively contribute to the system sampling resulting in the so called 'undersampling'. \cite{Riniker2011} 
-
-EDS allows the calculation of the relative free energy difference of any end state pair in the system from a single simulation as
-
-\begin{align}
-    \Delta G_{BA} = -\frac{1}{\beta}\ln\frac{\langle e^{-\beta(V_B-V_R)}\rangle_R}{\langle e^{-\beta(V_A-V_R}\rangle_R} \, .
-\end{align}
-
-For EDS, an optimal choice of $s$ is essential to achieving good sampling of all end states in the system. RE-EDS reduces the difficulty of choosing an optimal $s$-value by simulating several replicas with different $s$-values and performing Hamiltonian replica exchanges.\cite{Sidler2016}
+Undersampling is detected with a third metric using the thresholds $T_{i}^{\text{us}}$. These thresholds are determined in the first substep of the parameter exploration phase from the simulation with the lowest $s$-value. If all end states have a potential energy below their respective $V_i - E^R_i \leq T_{i}^{\text{us}}$, the current frame is characterized as undersampling. \cite{Sidler2016} 

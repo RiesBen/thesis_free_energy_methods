@@ -25,13 +25,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Handling of the references - Reference lib	
 \usepackage[sort,super,comma,compress]{natbib}
-%\usepackage{natmove}
-%\bibliographystyle{unsrt}
-
+\usepackage{natmove}
+\bibliographystyle{unsrt}
+ 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Math
 \usepackage{bigdelim}
+\usepackage{amsmath}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Footnotes
@@ -79,40 +80,32 @@
 \begin{document}
 
  \frontmatter
- %\includepdf[pages=-]{0_cover/frontcover.pdf}
- 
- \maketitle
- 
- %\dedication{Here a nice dedication}
+    \includepdf[pages=-]{0_cover/frontcover.pdf}
+     
+    \maketitle
+    %\dedication{Here a nice dedication}
+    \input{1_frontback/acknowledgements.tex}
+    \tableofcontents
 
- %\input{1_frontback/acknowledgements.tex}
+    \input{1_frontback/summary.tex}
+    %\input{1_frontback/zusammenfassung.tex}
+    \input{1_frontback/publications.tex}
 
- \tableofcontents
+\mainmatter
+    \subfile{2_chapter_intro/content_introduction.tex}
+    %\subfile{3_chapter_1/content_chapter1.tex}
+    %\subfile{4_chapter_2/content_chapter2.tex}
+    %\subfile{5_chapter_3/content_chapter3.tex}
+    %\subfile{6_chapter_4/content_chapter4.tex}
+    %\subfile{7_chapter_5/content_chapter5.tex}
+    \subfile{8_chapter_outlook/content_outlook.tex}
 
- %\input{1_frontback/abstract.tex}
- %\input{1_frontback/zusammenfassung.tex}
- %\input{1_frontback/publications.tex}
-
- \mainmatter
-\subfile{2_chapter_intro/content_introduction.tex}
-%\subfile{3_chapter_1/content_chapter1.tex}
-%\subfile{4_chapter_2/content_chapter2.tex}
-%\subfile{5_chapter_3/content_chapter3.tex}
-%\subfile{6_chapter_4/content_chapter4.tex}
-%\subfile{7_chapter_5/content_chapter5.tex}
-%\input{8_chapter_outlook/content_outlook.tex}
- 
- \backmatter
+\backmatter
+ \input{1_frontback/abbreviations}
  \addcontentsline{toc}{chapter}{References}
- \bibliography{references.bib}
-  %	2_chapter_intro/ref/ref.bib,
-  %	3_chapter_1/ref/ref.bib, 
-  %	4_chapter_2/ref/ref.bib,
-  %	5_chapter_3/ref/ref.bib,
-  %	6_chapter_4/ref/ref.bib,
-  %	7_chapter_5/ref/ref.bib
+ \bibliography{mergedReferences.bib}
 
- %\input{1_frontback/cv.tex}
+ \input{1_frontback/cv.tex}
 
 \end{document}
 

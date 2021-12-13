@@ -1,445 +1,233 @@
-The chosen model system of five inhibitors of CHK1 kinase exemplifies different core-hopping transformations (i.e. ring size change, ring opening/closing, ring extension) and R-group modifications \cite{Wang2017}, increasing the complexity compared to the systems previously studied with RE-EDS. Furthermore, the performance can be directly compared to the results obtained with FEP+ and OPLS3 in Ref.~\cite{Wang2017} as well as with QligFEP results in Ref.~\cite{Jespers2019}.
 
-\subsection{Parameter Exploration and Parameter Optimization}
-The RE-EDS workflow was started by estimating the lower bound for the $s$-distribution. Using the above mentioned undersampling criterion (see Methods section), a lower bound of $s=0.01$ was determined for the protein-ligands complex and $s=0.0056$ for the ligands in water. 
+\subsection{Validation of the Restraint Selection Algorithm}
+As a greedy algorithm, the approach in RestraintMaker might lead to sub-optimal solutions. To test this, the performance of the algorithm was compared with that of two brute-force approaches. One brute-force approach, BF-maxD, maximizes the distance of all selected restraint midpoints to each other, whereas the second brute-force approach, BF-maxCHV, uses the CHV spanned by the selected restraint midpoints as a criterion. Toy systems consisting  of two strongly overlapping particle clouds were constructed, for which four restraints should be selected. The systems varied in the number of randomly placed particles. Each particle mimics an atom of a hypothetical molecule that might be selected to be restrained.
 
-%State Optimizations
-Optimized coordinates were obtained for all five ligands, as verified by comparing the potential-energy distribution from the EDS simulation with the one extracted from a standard MD simulation of the respective ligand (Figure S1 in the Supporting Information). % SUPPL
-From these same steps, the potential-energy thresholds for the occurrence sampling ($T_{i}^{\text{phys}}$) and undersampling ($T_{i}^{\text{us}}$) were estimated.
+The advantage of the greedy algorithm is evident when considering the time complexity as the brute-force approaches scale with $\mathcal O(N^4)$ (where $N$ is the number of atoms), making them unusable for larger molecules (Figure \ref{fig: ToyModels}a). For selecting four restraints in the 20 particles toy system, the BF-maxCHV requires 75~s (single core), and 3325~s for 30 particles. In comparison, the greedy algorithm requires only 0.031~s for the 30 particles.
 
-%Eoff:
-The energy offsets $\vec{E}^R$ were estimated from a short RE-EDS simulation with the PEOE \cite{Sidler2016} scheme and are listed in Table \ref{tab:CHK1_set2_Eoff}.
-For $s=1.0$, the energy offsets should ideally be equal to the free energy of the corresponding state (i.e. $\Delta E^R_{ji} = \Delta G_{ji}$) such that the partition function of the reference state is the sum of the partition functions of the end states \cite{Christ2008}. Therefore, the comparison between the relative estimated energy offsets in water and in complex ($\Delta \Delta E^R_{ji} = \Delta E^R_{ji,\text{complex}} - \Delta E^R_{ji,\text{water}}$) and the relative binding free energy $\Delta \Delta G^\text{bind}_{ji}$ can be used to (roughly) assess the quality of the estimated energy offsets. As shown in Figure S2 in the Supporting Information, % SUPPL
-the energy offsets estimated from the SSM simulations are in better agreement with the experimental relative binding free energies than those estimated from the 1SS simulations.
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}{0.45\columnwidth}
+        \includegraphics[width=\textwidth]{fig/results/algorithm/algorithms_timings.png}
+        \caption{}
+        \label{fig: time_algorithms}
+    \end{subfigure}
+    \begin{subfigure}{0.45\columnwidth}
+        \includegraphics[width=\textwidth]{fig/results/algorithm/restraint_distance_algorithms_norm.png}
+        \caption{}
+        \label{fig: dist_algorithms}
+    \end{subfigure}
+    \begin{subfigure}{0.45\columnwidth}
+        \includegraphics[width=\textwidth]{fig/results/algorithm/restraint_volumes_algorithms_norm.png}
+        \caption{}
+        \label{fig: ch_algorithms}
+    \end{subfigure}\\
+    \begin{subfigure}{0.45\columnwidth}
+        \includegraphics[width=\textwidth]{fig/results/algorithm/punktewolke_6_greedy_annotated.png}
+        \caption{}
+        \label{fig: greedyApproach_6Partikels}
+    \end{subfigure}
+    \begin{subfigure}{0.45\columnwidth}
+        \includegraphics[width=\textwidth]{fig/results/algorithm/punktewolke_15_greedy_annotated.png}
+        \caption{}
+        \label{fig: greedyApproach_15Partikels}
+    \end{subfigure}
+    \caption{Comparison of algorithms to select distance restraints on toy systems. (a): Time complexity as a function of the number of particles in the system for the brute-force approaches BF-maxCHV (red) and BF-maxD (blue), and the greedy algorithm (yellow). (b): Distance metric as a function of the number of particles in the system for the brute-force approaches (red and blue), the greedy algorithm (yellow), and random selection with 100 trials (purple). (c): CHV as a function of the number of particles in the system. (d and e): Final distance restraints selected by the greedy algorithm for 12 (d) and 30 (e) particles. The restrained atoms are colored in green, red, pink and rose, and connected by yellow dashed lines. The two particle clouds are colored in wheat and light blue.}
+    \label{fig: ToyModels}
+\end{figure}
 
-\begin{table}[h]
-\caption{Energy offsets $\vec{E^R}$ estimated from a short RE-EDS simulation using the PEOE \cite{Sidler2016} scheme. The errors indicate the standard deviation over the different replicas in undersampling. All energy offsets were calculated relative to ligand L1. The starting coordinates were selected following the 1SS or the SSM approach (see Theory and Methods sections).}
-\label{tab:CHK1_set2_Eoff}
+Comparison of the sum of all distances between restraint midpoints shows that BF-maxD (optimizing for the maximal distance between all midpoints of the selected restraints) yields the best results with the largest distances (blue line in Figure \ref{fig: ToyModels}b). The second brute-force algorithm BF-maxCHV (optimizing for the CHV defined by the restraint midpoints) and our greedy algorithm give comparable results to BF-maxD. All three approaches are very good at maximizing the distance between the selected restraints. Random selection with 100 trials (negative control), on the other hand, performs significantly worse.
+Second, we compared the approaches based on the CHV generated by the selected restraints (Figure \ref{fig: ToyModels}c). Here, the BF-maxCHV approach yields the best results as expected, while BF-maxD and the greedy algorithm perform similar to each other. The difference in CHV between the latter two approaches and BF-maxCHV increases with increasing number of particles in the toy system. This may be due to the growing number of possible choices, or due to the fact that the distance metric used in BF-maxD and the greedy algorithms is suboptimal. All approaches clearly outperform random selection.
+%
+The greedy algorithm in RestraintMaker can thus be seen as a trade-off between optimizing a metric (distance or CHV) and limiting the required computing time. It is the fastest algorithm among the ones tested and yields comparable results to the brute-force approaches. 
+
+\subsection{Calculation of Relative Hydration Free Energies}
+\subsubsection{Thermodynamic Integration}
+To assess the quality of the selected distance restraints, the greedy algorithm in RestraintMaker was tested with a set of 16 small molecules with experimentally available hydration free energies. First, the relative hydration free energies were calculated between molecule \textbf{12} and the 15 other molecules using TI (Figure \ref{fig: Pairwise_TI_M030_Graph}). 
+%\paragraph{Free Energy Calculation}
+The resulting $\Delta \Delta G_\text{hyd}^\text{TI,indirect}$ agree very well with the experimental values,\cite{Wolfenden1987,Rizzo2006,Nicholls2008,Guthrie2009,Guthrie2014,Mobley2014} with a root-mean-square error (RMSE) of $4.1$~kJ/mol, a mean absolute error (MAE) of $3.1$~kJ/mol (Figure \ref{fig: pairCorr}, left) and a Spearman correlation coefficient $r_{\text{Spearman}}$ of 0.87.
+The numerical values are reported in Table S2 in the Supporting Information, % SUPPL - SITab: FE_M030_Graph
+and the corresponding $\langle \partial V(\lambda)/\partial\lambda \rangle$ curves in water and vacuum in Figures S5 and S6. %SUPPL
+
+For comparison, $\Delta \Delta G_{hyd}^\text{TI,direct}$ values were derived from the calculated absolute hydration free energies reported on the ATB server,\cite{Stroet2018} which were carried out with TI using the same topologies. The $\Delta \Delta G_{hyd}^{TI,direct}$ values deviate a bit more from experiment with an RMSE of $6.7$~kJ/mol, a MAE of $5.5$~kJ/mol and a $r_{\text{Spearman}}$ of 0.84 (Figure \ref{fig: pairCorr}, center).
+Generally, the results of the direct\cite{Stroet2018} and indirect TI calculations agree well with each other (Figure \ref{fig: pairCorr}, right). Note that for the molecule pair \textbf{5} - \textbf{12}, a similarly large deviation from experiment is observed in both types of TI calculations ($10.7$~kJ/mol and $12.1$~kJ/mol, respectively), suggesting either a force-field deficiency or a problematic experimental value.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{fig/results/pairwise/FE/M030_graph_ddG_solv_correlation_ATB_TI.png}
+    \caption{Comparison of the relative hydration free energies $\Delta \Delta G_{hyd}$ (with molecule \textbf{12} as reference) for the 16 small molecules between experiment (exp), the pairwise relative free-energy calculations with TI and linked dual topology (TI, indirect), and the absolute free-energy calculations with TI taken from the ATB server\cite{Stroet2018} (TI, direct). The numerical values are given in Table S2 in the Supporting Information.} % SUPPL
+    \label{fig: pairCorr}
+\end{figure}
+
+%\paragraph{Sampling}
+%Coordinate analysis - Translation
+It is crucial for the linked dual topology approach that the applied distance restraints do not distort the conformational sampling of the molecules. 
+For this, the relative translational motion of the two aligned molecules was analyzed for each $\lambda$-window and molecule pair by calculating the fluctuation of the distance between the COGs of the restrained atoms in the central rings of the two molecules. Figure \ref{fig: pairCOGDist_TIStarMa} shows both the standard deviation and the maximum observed distance between the two COGs. 
+The standard deviation is close to zero for all pairs, indicating that the two cores overlap well given the chosen restraints. Maximum distances are around $0.03~$nm. For the pair \textbf{7} - \textbf{12}, the distances are slightly higher, which results from the fact that molecule \textbf{7} is a bridged bicycle. The force constant of $5000$~kJ$/($mol$\cdot$nm$^2)$ for the distance restraints was found to be a good compromise to ensure a tight overlap of the molecules without significantly perturbing their conformations. Note that the range of reasonable force constants is rather large and only for extremely high values (i.e. 50'000~kJ$/($mol$\cdot$nm$^2)$ or larger), does the restraining affect the free-energy results.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{fig/results/pairwise/sampling/TI_pairwise_dCOG_fluctuations.png}
+    \caption{Standard deviation of the distance distribution (blue) and maximum distance (red) between the COGs of the central rings of the molecule pairs in the TI simulations in water. The COG was calculated for the restrained atoms in the rings. The horizontal axis shows for each molecule pair the different $\lambda$-windows between 0 and 1.}
+    \label{fig: pairCOGDist_TIStarMa}
+\end{figure}
+
+%Coordinate analysis - Rotation
+A similar analysis was carried out for the relative rotational motions of the molecules, considering the restrained atoms in the molecule pairs (Figure \ref{fig: pairMolRotation_TIStarMap}). In terms of the three Euler angles, a maximum relative rotation of $6.3^\circ$ was observed, which is reasonably small for one dimension. The largest fluctuation was again observed for the pair \textbf{7} - \textbf{12}. The rotation around the $z$-axis shows significantly smaller deviations compared to the other dimensions, because the two molecules need to rotate against each other in plane. In contrast, the rotations around the $x$ and $y$-axis correspond to a relative tilt of the molecules, which is easier to realize. 
+ 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{fig/results/pairwise/sampling/TI_pairwise_molecule_rotation.png}
+    \caption{Fraction $f$ of frames in the TI simulations in water, in which the relative rotation around the $x$-axis (yellow), $y$-axis (purple), and $z$-axis (red) of the central rings of the molecule pair exceeds $5^{\circ}$. The horizontal axis shows for each molecule pair the different $\lambda$-windows between 0 and 1.}
+    \label{fig: pairMolRotation_TIStarMap}
+\end{figure}
+
+%Torsion analysis:
+While most of the molecule pairs in Figure \ref{fig: Pairwise_TI_M030_Graph} have the same central benzene core, the transformations from molecule \textbf{12} to molecules \textbf{2} and \textbf{3} involve the change from benzene to cyclohexane or cyclohexene, respectively. To assess whether the applied distance restraints affect the conformational sampling of the aliphatic ring, the distributions of the three pseudo torsional angles (Pickett and Strauss coordinates \cite{Strauss1970}) were monitored in the simulation at $\lambda=1.0$, and compared to plain MD simulations of molecules \textbf{2} and \textbf{3} in vacuum and in water (Figure \ref{fig: TIringTorisions}).
+In both cases, the distributions showed nearly perfect overlap, indicating that the sampling is not affected by the distance restraints in the linked dual topology.
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}{0.85\columnwidth}
+        \includegraphics[width=\textwidth]{fig/results/pairwise/sampling/torsions/TI_O70_rtorsion_ana_partnerM030_singleState_populations_total.png}
+        \end{subfigure}
+    \begin{subfigure}{0.85\columnwidth}
+        \includegraphics[width=\textwidth]{fig/results/pairwise/sampling/torsions/TI_O71_rtorsion_ana_partnerM030_singleState_populations_total.png}
+        \end{subfigure}
+    \caption{Comparison of the normalized torsional angle distributions of the three pseudo torsional angles of the aliphatic ring of molecules \textbf{2} (top) and \textbf{3} (bottom) in the TI calculation at $\lambda=1.0$ (filled) and in plain MD simulations (dark red line) in vacuum (top) and in water (bottom).}
+    \label{fig: TIringTorisions}
+\end{figure}
+
+A similar analysis of the torsional angle distributions was also carried out for the substituents of molecules \textbf{1}, \textbf{6} and \textbf{9} (Figure S8 in the Supporting Information). Again, no major differences are observed between $\lambda=1.0$ and the plain simulations. %%SUPPL
+
+
+\subsection{Ligands}
+
+\begin{table}[H]
+\caption{Identifier of the ATB server\cite{Stroet2018}, IUPAC name, and canonical SMILES for the 16 molecules with experimental hydration free energies.}\label{tab:SI_moleculelist}
+%\scriptsize
 \resizebox{\columnwidth}{!}{%
 \centering
-\begin{tabular}{ l | r r | r r }
- Ligand & \multicolumn{2}{c|}{Water}&\multicolumn{2}{c}{Complex}  \\ 
-  &RE-EDS 1SS [kJ~mol$^{-1}$]&RE-EDS SSM [kJ~mol$^{-1}$]&RE-EDS 1SS [kJ~mol$^{-1}$]&RE-EDS SSM [kJ~mol$^{-1}$]\\ 
- \hline
-     L1 & $0.0$ & $0.0$ & $0.0$ & $0.0$ \\ 
-     L17 & $11.07 \pm 7.61 $ & $17.81 \pm 0.69 $ & $20.03 \pm 5.04 $ & $18.19 \pm 3.43$ \\
-     L19 & $-9.38 \pm 6.85 $ & $ -12.37 \pm 5.23 $ & $-2.09 \pm 1.56 $ & $ 2.4 \pm 1.56$ \\
-     L20 & $-53.15 \pm 2.95 $ & $ -56.01 \pm 13.67 $ & $ -58.73 \pm 4.87 $ & $-52.2 \pm 2.6$\\
-     L21 & $-76.75 \pm 5.79 $& $-69.15 \pm 3.74 $ & $ -77.29 \pm 3.12 $ & $ -77.9 \pm 3.4$\\
+\begin{tabular}{l | l | l | l}
+Ligand & Identifier & IUPAC name & Canonical SMILES (RDKit\cite{Landrum2021})\\
+\hline
+1 & \_O6T & 1,2-dimethoxybenzene & COc1ccccc1OC \\
+2 & \_O70 & (2R,5R)-2-methyl-5-prop-1-en-2-ylcyclohexan-1-one & C=C(C)[C@@H]1CC[C@@H](C)C(=O)C1\\
+3 & \_O71 & (1S,5R)-2-methyl-5-prop-1-en-2-ylcyclohex-2-en-1-ol & C=C(C)[C@@H]1CC=C(C)[C@@H](O)C1\\ 
+4 & \_P8I & cyclopentanone & O=C1CCCC1\\
+5 & 6J29 & 1-amino-4-hydroxyanthracene-9,10-dione & Nc1ccc(O)c2c1C(=O)c1ccccc1C2=O\\
+6 & 6KET & 3-methoxyphenol & COc1cccc(O)c1\\
+7 & 8018 & (1R,2S,3R,4R,6S,7S)-1,3,4,7,8,9,10,10-octachlorotricyclo[5.2.1.02,6]dec-8-ene & ClC1=C(Cl)[C@]2(Cl)[C@H]3C[C@@H](Cl)[C@H](Cl)[C@H]3[C@@]1(Cl)C2(Cl)Cl\\
+8 & E1VB & [1,2,2-Trifluoroethoxy]benzene & FC(F)[C@@H](F)Oc1ccccc1\\
+9 & F313 & 4-methoxyaniline & COc1ccc(N)cc1\\
+10 & G078 & 1,4-dimethylnaphthalene & Cc1ccc(C)c2ccccc12\\
+11 & G277 & cyclohexa-2,5-diene-1,4-dione & O=C1C=CC(=O)C=C1\\
+12 & M030 & 1,3,5-trimethylbenzene & Cc1cc(C)cc(C)c1\\
+13 & M097 & 2-chloroaniline & Nc1ccccc1Cl\\
+14 & M218 & N-methylaniline & CNc1ccccc1 \\
+15 & S002 & bromomethylbenzene & BrCc1ccccc1\\
+16 & TVVS & pyridine-4-carbaldehyde & O=Cc1ccncc1 \\
 \end{tabular}
 }
 \end{table}
 
-%S-Optimization
-The optimization of the $s$-distribution was performed with the N-LRTO \cite{Sidler2017} algorithm, thereby minimizing the average round-trip time $\overline{\tau}$ in the replica graph. For the 1SS complex system, four optimization iterations were used. For the other systems, three iterations were used. 
-
-%
-In the first iteration, the total number of observed round trips was very low or zero for all approaches. In the following iterations, this quantity increased, and the average round-trip time decreased for all simulations (Figure \ref{fig: CHK1_RingOpening_sOptimization}). The number of round trips was generally smaller in the complex than in water due to a more pronounced gap region \cite{Sidler2017}.
-Already after the second iteration, the round-trip time was reduced in all approaches, except for 
-RE-EDS 1SS in the complex, where no round trips occurred during the second iteration. The improvement of the $\overline{\tau}$ over the iterations can also be seen in Figure S3 in the Supporting Information. % SUPPL
-%% s-replica placements
-As can be seen in the third row of Figure \ref{fig: CHK1_RingOpening_sOptimization}, the optimization algorithm increases the density of the replicas around $s = 0.041$, where the major gap region lies.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{fig/results/ringOpening/paramOptimization/S-optimization_ringOpening.png}
-\caption{Optimization steps of the $s$-distribution with the N-LRTO \cite{Sidler2017} algorithm followed by the energy offset rebalancing scheme (start indicated by the red horizontal line). The measured quality criteria were the number of round trips (1. row), the average round-trip time $\overline{\tau}$ (2. row), the placement of the replicas in $s$-space (3. row), and the sampling fractions of maximally contributing states $f_{i}^{\text{mc}}$ (4. row). The light colored bars of $f_{i}^{\text{mc}}$ indicate $s$-optimization iterations, whereas the fully colored bars indicate energy offset rebalancing steps. }
-\label{fig: CHK1_RingOpening_sOptimization}
+\subsection{Selected Distance Restraints}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/results/pairwise/restraintPlacement/Restraints_PairwiseTI_M030Graph.png}
+    \caption{Selected distance restraints (colored spheres) for the 15 pairwise TI calculations with molecule 12 (i.e. 1,3,5-timethylbenzene) as the central molecule (see Main Article Figure 6). For each pair, four distance restraints were determined with the greedy algorithm.}
+    \label{SIfig: Pairwise_TI_M030_Graph}
 \end{figure}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/results/pairwise/restraintPlacement/Restraints_PairwiseTI_reedsaddition.png}
+    \caption{Selected distance restraints (colored spheres) for the TI simulations of subset A (see Main Article Figure 7a). For each pair, four distance restraints were determined with the greedy algorithm.}
+    \label{SIfig:Pairwise_TI_AddRE-EDS_Graph}
+\end{figure}
 
+\clearpage
 
-%% tau converge - Conclusion
-The $s$-optimization was stopped after a sufficiently high number of round trips and low round-trip time was reached. 
-This resulted in 20 replicas for the ligands in water after three $s$-optimization iterations.
-For the protein-ligands complex, the fourth $s$-optimization iteration was chosen for the 1SS approach, and the third iteration for the SSM approach, resulting in 29 and 25 replicas, respectively. 
-The average round-trip time after convergence was $\overline{\tau} = 0.4 \pm 0.2$~ns for all simulations.
+\subsection{Calculation of Relative Hydration Free Energies}
+\subsubsection{TI Calculations for Full Set of 16 Molecules}
 
-After the $s$-optimization, the energy offset rebalancing scheme was applied to improve the state sampling. 
+\begin{table}[H]
+\caption{$\Delta \Delta G_\text{hyd}$ for the 16 small molecules from experiment, the absolute free-energy calculations with TI taken from the ATB server\cite{Stroet2018} (TI, abs), and the pairwise relative free-energy calculations with TI and linked dual topology (TI, rel).
+The uncertainty estimate was calculated via Gaussian error propagation of the provided errors. The experimental uncertainty for molecule 11 was set to a default value of 2.5~kJ/mol\cite{Mobley2014}, as the uncertainty was not reported in the original source\cite{Wolfenden1987}. The RMSE and its uncertainty were estimated with a 100 fold bootstrap approach. The accumulated simulation time is split into preparation (pre-processing, equilibration) and production run. The data is displayed graphically in Main Article Figure 9}
+\begin{center}
+%\resizebox{\columnwidth}{!}{%
+\footnotesize
+\begin{tabular}{ | c c |c |c|c|}
+\hline
+  \multicolumn{2}{|c|}{Ligands} & \multicolumn{1}{c|}{Experiment} &\multicolumn{1}{c|}{$\Delta\Delta G_\text{hyd}^\text{TI,direct}$}&\multicolumn{1}{c|}{$\Delta\Delta G_\text{hyd}^\text{TI,indirect}$}\\ 
+    $i$ & $j$ & [kJ/mol] & [kJ/mol] & [kJ/mol]  \\
+  \hline \hline
+        1 &  12 &  $18.5 ~\pm~ 2.5$ \cite{Guthrie2014,Rizzo2006}&  $26.2 ~\pm~ 0.8$ &  $  17.5 ~\pm~ 0.7$\\
+        2 &  12 &  $11.9 ~\pm~ 2.7$ \cite{Guthrie2014,Rizzo2006}  &  $14.4 ~\pm~ 0.7$ &  $  8.6 ~\pm~ 0.6 $\\
+        3 &  12 &  $14.8 ~\pm~ 3.1$ \cite{Guthrie2014,Rizzo2006}  &  $22.4 ~\pm~ 0.7$ &  $ 15.2 ~\pm~ 0.9 $\\
+        4 &  12 &  $15.9 ~\pm~ 3.5$ \cite{Rizzo2006} &  $15.3 ~\pm~ 0.6$ &  $  9.4 ~\pm~ 0.4 $\\
+        5 &  12 &   $36.1 ~\pm~ 2.8$ \cite{Guthrie2014,Rizzo2006}  &  $48.2 ~\pm~ 0.4$ &  $ 46.9 ~\pm~ 0.8 $\\
+        6 &  12 &   $28.1 ~\pm~ 3.5$ \cite{Rizzo2006}  &  $36.1 ~\pm~ 0.6$ & $  30.5 ~\pm~ 0.5 $\\
+        7 &  12 &   $10.6 ~\pm~ 2.5$ \cite{Guthrie2009,Rizzo2006} &  $22.8 ~\pm~ 0.5$ &  $  9.5 ~\pm~ 0.9 $\\
+        8 &  12 &   $ 1.6 ~\pm~ 3.5$ \cite{Mobley2014,Rizzo2006} &  $ 5.2 ~\pm~ 0.7$ &  $ 3.0 ~\pm~ 1.2 $\\
+        9 &  12 &   $27.5 ~\pm~ 3.5$ \cite{Rizzo2006}  &  $30.2 ~\pm~ 0.6$ &  $ 25.7 ~\pm~ 0.5 $\\
+        10 &  12 &   $ 8.0 ~\pm~ 3.5$ \cite{Rizzo2006}  &  $ 6.5 ~\pm~ 0.6$ &  $  5.9 ~\pm~ 0.5 $\\
+        11 &  12 &   $20.4  ~\pm~ 3.5$ \cite{Wolfenden1987,Rizzo2006}&  $17.0 ~\pm~ 0.6$ &  $ 14.8 ~\pm~ 0.39 $\\
+        12 &  13 &   $16.8 ~\pm~ 3.5$ \cite{Rizzo2006} &  $18.6 ~\pm~ 0.6$ &  $ 16.6 ~\pm~ 0.5 $\\
+        12 &  14 &   $15.9 ~\pm~ 3.5$ \cite{Rizzo2006}&  $24.9 ~\pm~ 0.6$ &  $ 20.5 ~\pm~ 0.5 $\\
+        12 &  15 &    $6.2 ~\pm~ 2.6$ \cite{Rizzo2006, Nicholls2008}  &  $14.9 ~\pm~ 0.7$ &  $ 10.3 ~\pm~ 0.4 $\\
+        12 &  16 &   $25.5 ~\pm~ 3.5$ \cite{Rizzo2006} &  $26.1 ~\pm~ 0.6$ &   $ 24.0 ~\pm~ 0.4 $\\
+  \hline
+        \multicolumn{2}{|c|}{RMSE} &          & $6.7 ~\pm~ 0.3$ & $4.1 ~\pm~ 0.3 $\\
+        \multicolumn{2}{|c|}{MAE} &           & $5.5 ~\pm~ 3.9$ & $3.1 ~\pm~ 2.7$ \\
+        %\multicolumn{2}{c|}{$r_{\text{Pearson}}$} & & 0.90  & 0.93 \\
+        \multicolumn{2}{|c|}{$r_{\text{Spearman}}$} &  & $0.84$ & $0.87$  \\
+        \multicolumn{2}{|c|}{$t_{preparation}$} & & &  $630$~ns \\
+        \multicolumn{2}{|c|}{$t_{production}$} & &$112 - 272~ns$ &  $3150$~ns \\
+        \hline
+% ABFE scale nonbondes, such that mol vanishes.
+%From Alans Answer
+%16* 12+-5; max 30ns
+%ATB: inital: 11 lams * 2envs*(vac: 1.0ns + 1ns/ solv: 0.5ns+0.5ns) when error not below 0.5kJ (on Homepage 1.5kJ....)
+%               min = 66*15 = 990ns minimal!
+%   max?:  18 lams * 2envs*(vac: 1.0ns + 1ns/ solv: 0.5ns+0.5ns) when error not below 0.5kJ (on Homepage 1.5kJ....)
+%               max = 66*15 = 1620ns max!
+% average: 15 lams * 2envs*(vac: 1.0ns + 1ns/ solv: 0.5ns+0.5ns) when error not below 0.5kJ
+%               avg = 66*15 = 1350ns avg!
+%TI:
+% 15edges*21lam*5ns*2envs = 3150 ns / 1890ns (3ns)
+%TI-eq:
+% 15edges*21lam*1ns*2envs = 630 ns
+\end{tabular}
+%}
+\end{center}
+\label{SITab: FE_M030_Graph}
+\end{table}
 
-%RT analysis
-During the rebalancing steps, no further replicas were added to the $s$-distribution. It is essential for the success of the rebalancing scheme that round trips occur. Therefore, the number of round trips and average round-trip time were monitored. In all systems, the number of round trips and $\overline{\tau}$ remained relatively stable over the four rebalancing steps. For the RE-EDS 1SS approach in water, the number of round trips slightly decreased but never dropped to zero.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{fig/SI/dG_convergence/TI_vacuum_lambda_curves.png}
+    \caption{$\left< \frac{\partial V(\lambda)}{\partial \lambda} \right>_{\lambda}$ as a function of $\lambda$ for the 15 pairwise TI calculations in vacuum. The production run was 5~ns per $\lambda$-point.}
+    \label{SIfig:TI_vacuum_curve}
+    \end{figure}
 
-%% states sampling
-Across the optimization steps, also the sampling of the end states as maximally contributing states at $s=1.0$ was monitored.
-During the $s$-optimization, some end states ``vanish'' and are no longer sampled as maximal contributing states. This leakage effect can occur when the initially estimated $E^{\text{R}}$ are not exactly optimal \cite{Sidler2016}. 
-With energy offset rebalancing, the sampling of each end state can be recovered, and the sampling distribution is approaching the ideal case.
-%After the s-optimization the MAE($P^{\text{maxContrib}}$) was for all approaches approximately at $25\%$, with the exception of the 1SS water system, here it was $20\%$. 
-After rebalancing, all end states showed a $f_i^{\text{mc}} > 0$ and the mean absolute deviation of the sampling distribution from ideal decreased from $20-25\%$ to approximately $7-12\%$ (Figure S4 in the Supporting Information). % SUPPL
- 
-\subsection{Free-Energy Calculation}
-After successfully optimizing the RE-EDS parameters, the production runs were performed for $3.5$~ns. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{fig/SI/dG_convergence/TI_water_lambda_curves.png}
+    \caption{$\left< \frac{\partial V(\lambda)}{\partial \lambda} \right>_{\lambda}$ as a function of $\lambda$ for the 15 pairwise TI calculations in water. The production run was 5~ns per $\lambda$-point.}
+    \label{SIfig:TI_water_curve}
+\end{figure}
 
-%%Sampling++
-Both in water and in complex, the potential-energy distributions of the end states generally match well the corresponding distributions from the standard MD simulations of the single end states (Figure \ref{fig:RingOpening_sampling_comparison}). Only in the complex 1SS approach, a deviation can be seen for L17, with a slight shift to higher potential energies. This is due to insufficient sampling of L17 in this case (see below). 
-%
-The analysis of the maximally contributing end states at $s=1.0$ shows that in water all end states were sampled close to the ideal equal distribution (Figure S5 in the Supporting Information). % SUPPL
-In the simulation of the protein-ligands complex, there are still differences in sampling. Especially with the 1SS approach, L19 is generally sampled too much, while L17 is not sampled enough. The situation is improved with the SSM approach.
-Comparing $f_i^{\text{occur}}$ and $f_i^{\text{mc}}$ in Figure S5 indicates that the end states in the CHK1 system are clearly separated (i.e. no phase-space overlap). % SUPPL
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{fig/SI/dG_convergence/ddG_TI_convergence.png}
+    \caption{Convergence of $\Delta \Delta G_\text{hyd}$ as a function of the simulation time per $\lambda$-point for the 15 pairwise TI calculations.}
+    \label{fig: SI_figure df_convergence_TI}
+\end{figure}
+
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\columnwidth]{fig/results/ringOpening/FE/RingClosure_system_final_sampling.png}
-    \caption{Comparison of the Boltzmann reweighted potential-energy distributions obtained from standard MD simulations of a given end state (black) and from the RE-EDS production runs of the 1SS (green) and SSM (turquoise, dashed) approaches.}
-    \label{fig:RingOpening_sampling_comparison}
+    \includegraphics[width=\textwidth]{fig/results/pairwise/sampling/torsions/TI_all_substorsion_ana_partnerM030_singleState_populations_total.png}
+    \caption{Comparison of the normalized torsional angle distributions of the substituents of molecules 9 (blue), 6 (green), and 1 (pink) in the simulation at $\lambda=1.0$ (filled) and in plain MD simulations (dark red line) in vacuum (top) and in water (bottom).}
+    \label{SIfig: TIsubsTorisions}
 \end{figure}
-
-%%Accuracy
-From the replica at $s=1.0$, the free-energy differences were calculated using Eq.~(\ref{EQ: Free Energy calculation via reference state}) and the resulting $\Delta \Delta G^\text{bind}_{ji}$ were compared with the experimental results taken from Ref.~\cite{Huang2012}. The results are shown graphically in Figure \ref{fig:CHK1_set2_FreeEnergyCalculation} and numerically in Table \ref{tab: RE-EDS_FE_RingCycleOpening_ddF}. The individual free-energy differences are given in Table S3 in the Supporting Information. %SUPPL
-The RMSE with RE-EDS 1SS is $4.4$~kJ~mol$^{-1}$ and the MAE is $3.9\pm2.8$~kJ~mol$^{-1}$. 
-%
-%how I calculate the MAE and RMSD:
-%MAE = np.mean(np.abs(ddG_differences))
-%std(MAE) = np.std(np.abs(ddG_differences)) #gives an impression of absolute deviation of all ddG_diffs
-%RMSE = np.sqrt(np.mean(np.square(ddG_differences))
-%
-The main deviations stem from ligand L17 in the RE-EDS 1SS approach, which can be explained by the insufficient sampling of L17 in the complex (see Figure \ref{fig:RingOpening_sampling_comparison} and Figure S5 in the Supporting Information). %SUPPL
-
-The performance was substantially improved using the SSM approach with RE-EDS, giving an RMSE of $3.3$~kJ~mol$^{-1}$ and an MAE of $2.8 \pm 1.7$~kJ~mol$^{-1}$. 
-Only two values (L21-L11) and (L21-L19) deviate more than $4.184$~kJ~mol$^{-1}$ (i.e. $1$~kcal~mol$^{-1}$) from experiment.
-The Spearman correlation coefficient for RE-EDS 1SS is $r^2_{\text{Spearman}}=0.01$ and for RE-EDS SSM $r^2_{\text{Spearman}}=0.69$.
-
-%%Performance:
-Next, we assessed the convergence of the $\Delta G_{ji}$ values as a function of simulation time (Figure S6 in the Supporting Information). % SUPPL
-For the RE-EDS 1SS approach, all free-energy differences appeared converged after $2.5$~ns in water and after $2.7$~ns in the complex. For the RE-EDS SSM approach, convergence was observed after $2.5$~ns in water and after $2.9$~ns in the complex.
-
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}{0.85\columnwidth}
-        \includegraphics[width=\textwidth]{fig/results/ringOpening/FE/RingClosure_system_final_results_4ns_comparison.png}
-        \end{subfigure}
-    \begin{subfigure}{0.85\columnwidth}
-        \includegraphics[width=\textwidth]{fig/results/ringOpening/FE/ddG_bind_paper_comparison_reeds_only_4nsSimulation.png}
-        \end{subfigure}
-    \caption{Free-energy differences estimated from the production run of $3.5$~ns length. (Top): Comparison between the experimental and calculated $\Delta \Delta G^\text{bind}_{ji}$ using RE-EDS 1SS and RE-EDS SSM. The results were calculated with all possible pairwise transformations (forward and backward). (Bottom): Graphical representation of the $\Delta \Delta G^\text{bind}_{ji}$ results with structures, inspired by the one in Ref.~\cite{Wang2017}.}
-    \label{fig:CHK1_set2_FreeEnergyCalculation}
-\end{figure}
-
-%Comparison results with Schroedinger & Jespers
-By applying the RE-EDS methodology to the same system of five CHK1 inhibitors as studied by Wang \textit{et. al.} \cite{Wang2017} and later on also Jespers \textit{et al.} \cite{Jespers2019}, a direct comparison with FEP+ and QligFEP is possible (Table \ref{tab: RE-EDS_FE_RingCycleOpening_ddF}). Note that the quality metrics were calculated over all possible pairs of ligands and in both directions, not only those directly calculated by FEP+ and QligFEP.
-For FEP+, we obtained an RMSE of $2.4$~kJ~mol$^{-1}$ and an MAE of $1.8 \pm 1.2$~kJ~mol$^{-1}$ with a Spearman correlation coefficient of $r^2_{\text{Spearman}}=0.67$.
-Including cycle closure correction (CC) \cite{Wang2017} reduced the RMSE to $2.1$~kJ~mol$^{-1}$ and the MAE to $1.9 \pm 1.0$~kJ~mol$^{-1}$. The Spearman correlation coefficient increased to $r^2_{\text{Spearman}}=0.73$.
-Jespers \textit{et al.} \cite{Jespers2019} reported free-energy differences with QligFEP as an average over ten independent replicas, each with significantly less simulation time per $\lambda$-window than in Ref.~\cite{Wang2017}. For QligFEP, an RMSE of $2.3$~kJ~mol$^{-1}$, an MAE of $2.0 \pm 1.2$~kJ~mol$^{-1}$, and a Spearman coefficient of $r^2_{\text{Spearman}}=0.61$ was obtained.
-
-Overall, the performance of RE-EDS SSM is comparable with the pairwise methods. The results with FEP+ CC and QligFEP showed a slightly higher accuracy compared to experiment, likely due to the different force fields used. The Spearman correlation coefficient is comparable with the other methods for the RE-EDS SSM approach.
-
-\begin{table}[h]
-\caption{Relative binding free energies $\Delta \Delta G^\text{bind}_{ji}$ from experiment and calculated with the RE-EDS 1SS and RE-EDS SSM approaches. For comparison, the results for FEP+ with and without cycle closure (CC) correction taken from Ref.~\cite{Wang2017} and the results for QligFEP taken from Ref.~\cite{Jespers2019} are listed. The free-energy differences of directly simulated paths were used to infer not directly simulated free-energy differences (marked in bold). If multiple indirect paths were possible, their average was used. The errors for QligFEP were determined in Ref.~\cite{Jespers2019} by calculating the standard deviation over ten replicas. For FEP+, the error of the results was taken from the used BAR \cite{Bennett1976} method and the FEP+ CC errors were obtained from the cycle closure analysis. For the RE-EDS approaches, the reported error is based on the statistical uncertainties of the $\Delta G_{ji}^{env}$ values estimated using Gaussian error approximation \cite{Christ2008}. The uncertainty estimate of the RMSE was obtained by a 100-fold bootstrapping approach. }
-\begin{center}
-\footnotesize
-\resizebox{\columnwidth}{!}{%
-\begin{tabular}{ c c |c |c|c|c|c|c}
-  \multicolumn{2}{c|}{Ligands} & \multicolumn{1}{c|}{Exp. \cite{Huang2012}} &\multicolumn{1}{c|}{FEP+ \cite{Wang2017}}&\multicolumn{1}{c|}{FEP+ CC \cite{Wang2017}}&\multicolumn{1}{c|}{QligFEP \cite{Jespers2019}}&\multicolumn{1}{c|}{RE-EDS 1SS}&\multicolumn{1}{c}{RE-EDS SSM}\\ 
-    $i$ & $j$  & [kJ~mol$^{-1}$]  & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$]  \\
-  \hline
-        L17 &  L1 &   0.1 & -3.6 $\pm$ 0.4          & -2.9 $\pm$ 1.0         & -1.6 $\pm$ 1.7                                     &    5.1 $\pm$ 0.8 &  3.0 $\pm$ 2.0 \\
-        L19 &  L1 &  -4.8 & -3.9 $\pm$ 0.3          & -4.0 $\pm$ 0.6         & -1.7 $\pm$ 2.0                                     &    3.0 $\pm$ 1.0 & -5.0 $\pm$ 0.1\\
-        L20 &  L1 &  -2.0 & -2.5 $\pm$ 0.1          & -3.1 $\pm$ 1.0         & -1.3 $\pm$ 1.3                                     &    0.2 $\pm$ 0.9 &  0.5 $\pm$ 0.1\\
-        L21 &  L1 &  -2.3 &\textbf{-3.4} $\pm$ \textbf{0.7}  &\textbf{-3.2} $\pm$ \textbf{1.3} & \textbf{-0.1} $\pm$ \textbf{3.5} &   -1.4 $\pm$ 0.8 &  3.2 $\pm$ 0.1\\
-        L19 &  L17 & -4.9 & -1.4 $\pm$ 0.3          & -1.1 $\pm$ 1.0         & \textbf{0.1} $\pm$ \textbf{2.6}                    &   -2.1 $\pm$ 0.6 & -7.9 $\pm$ 1.9\\
-        L20 &  L17 & -2.1 &  0.3 $\pm$ 0.4          & -0.1 $\pm$ 0.8         & -1.3 $\pm$ 2.3                                     &   -4.9 $\pm$ 0.1 & -2.5 $\pm$ 1.9\\
-        L21 &  L17 & -2.4 & -1.1 $\pm$ 0.4          & -0.9 $\pm$ 0.9         &\textbf{0.7} $\pm$ \textbf{2.6}                     &  -6.5 $\pm$ 0.1 &  0.2 $\pm$ 1.9\\
-        L20 &  L19 & 2.8  &\textbf{0.8} $\pm$ \textbf{0.6}   & \textbf{0.1} $\pm$ \textbf{1.3} & \textbf{-0.4} $\pm$ \textbf{3.7} &  -2.7 $\pm$ 0.6 &  5.4 $\pm$ 0.1\\
-        L21 &  L19 & 2.5  & -0.1 $\pm$ 0.6         &  0.6 $\pm$ 0.1         &  0.6 $\pm$ 4.9                                      &  -4.4 $\pm$ 0.6 &  8.2 $\pm$ 0.1\\
-        L21 &  L20 & -0.3 & -0.3 $\pm$ 0.8         & -0.6 $\pm$ 0.8         &  0.6 $\pm$ 1.1                                    &    -1.6 $\pm$ 0.1 &   -2.7 $\pm$ 0.1\\ 
-    \hline
-        \multicolumn{2}{c|}{RMSE} &                    & 2.4  $\pm$ 0.3           & 2.1  $\pm$ 0.2          &  2.3  $\pm$ 0.38      & 4.4 $\pm$ 0.5         & 3.3  $\pm$ 0.3 \\
-        \multicolumn{2}{c|}{MAE} &                     & 1.8 $\pm$ 1.2 & 1.9 $\pm$ 1.0 & 2.0 $\pm$ 1.2 & 3.9 $\pm$2.8 & 2.8 $\pm$ 1.7 \\
-        %\multicolumn{2}{c|}{$r^2_{\text{Pearson}}$} & & 0.66            & 0.67          & 0.63          & -0.07m          & 0.71 \\
-        \multicolumn{2}{c|}{$r^2_{\text{Spearman}}$} & & 0.67           & 0.73          & 0.61          & 0.01           & 0.69 \\
-        \multicolumn{2}{c|}{$t_{simulation} [ns]$} & & 640          &  640         &  51        & 171.5         & 157.5  \\
-\end{tabular}
-}
-\end{center}
-\label{tab: RE-EDS_FE_RingCycleOpening_ddF}
-\end{table}
-
-% 
-%FEP+: 
-%MAE 1.99 +- 1.4
-%RMSE 2.43
-%r^2 pearson 0.56 	 r^2 spearman 0.56
-%
-%FEP+ CC: 
-%MAE 1.88 +- 1.05
-%RMSE 2.15
-%r^2 pearson 0.66 	 r^2 spearman 0.71
-
-%QLigFEP
-%MAE 1.97 +- 1.2
-%RMSE 2.3
-%r^2 pearson 0.63 	 r^2 spearman 0.61
-
-
-%ComputationalCost
-%FEP: 16 l-windwos*5ns*4 pairs * 2 approaches ==> 640ns
-%QligFEP: 10 repetitions * (eq 131ps + 51lams * 10ps sim) * 4 pairs * 2 approaches ==> 51ns
-%Complex: 
-%	- Optimization: 1ns * 17 Eoff + 0.5ns*17 sopt1 + 1ns*21 sopt2 + 3*0.5ns*25 eoffRB = 84ns
-%	- Production: 25*3.5 = 87.5ns / 29*3.5 =  101.5
-%Water:
-%	- Optimization: 1ns * 12 Eoff + 0.5ns*12 sopt1 + 1ns*16 sopt2 + 3*0.5ns*20 eoffRB = 64ns
-%   - Production: 20 * 3.5maybe = 70ns
-%old reeds line complex - optim: eoff(21*0.8)+sop1(0.4ns*21)+sopt2(0.8ns*25)+sopt3(1.2ns*29)+sopt4(1.2ns*31)+sopt5(1.2ns*35) = 276.4 ns
-%old reeds line complex - prod: 4ns*41 = 164 ns
-%new reeds line complex - optim: eoff(21*0.8)+sop1(0.4ns*21)+sopt2(0.8ns*25)+sopt3(1.2ns*29)+eoffRB(0.5ns*2*29) = 122 ns
-%new reeds line complex - prod: 4ns*29 = 116ns 
-
-In terms of computational cost, the RE-EDS approach (with $3.5$~ns per replica) resulted in about a quarter of the total simulation time (in ns) than reported for the FEP+ calculations in Ref.~\cite{Wang2017} (Table \ref{tab: RE-EDS_FE_RingCycleOpening_ddF}). However the QligFEP approach is the approach with the lowest simulation time consumption. A major advantage of the simultaneous simulation of multiple ligands in a single RE-EDS simulation is that all $N(N-1)/2$ transformations are sampled directly, leading to low statistical errors and removing the need of a state graph. This advantage increases with increasing number of ligands. The current workflow of RE-EDS uses a relatively large amount of simulation time for parameter optimization. Future work will focus on further optimization of the workflow to reduce the pre-processing time. 
-
-From the calculated relative binding free energies, $\Delta G_{i}^{\text{bind}}$ can be obtained by using one experimental value as anchor point. This allows us to generate a ranking of the five ligands. To avoid any bias from the selected experimental anchor point, all possibilities were calculated and the resulting values averaged (Table \ref{tab:RE-EDS_FE_RingCycleOpening_absoluteShiftDF}). While the RMSE is generally low for all approaches ($<$ 1 kcal mol$^{-1}$ = 4.184 kJ mol$^{-1}$), the ranking of the ligands as measured by $r^2_{\text{Spearman}}$ is not very good. 
-%A strong correlation with experiment is of interest in drug design approaches, as the ranking of ligands in virtual screening is important to suggest the most promising drug candidates to be synthesized.
-This observation is not uncommon for ligand series with small differences in binding free energy \cite{wang2015,schindler2020}.
-Note that the uncertainties of the individual values have increased compared to the relative binding free energies due to the anchoring and averaging procedure.
-
-\begin{table}[h]
-\caption{Absolute binding free energies $\Delta G_{i}^{\text{bind}}$ and ranking of the ligands derived from the relative binding free energies. The values were calculated from the relative binding free energies using an experimental binding free energy as anchor point, and then averaged over the five possibilities. The errors are standard deviations over the possible outcomes. For comparison, the results for FEP+ with and without cycle closure (CC) correction taken from Ref.~\cite{Wang2017} and the results for QligFEP taken from Ref.~\cite{Jespers2019} are shown (calculated with the same procedure). The uncertainty estimate of the RMSE was obtained by a 100-fold bootstrapping approach.}
-\begin{center}
-\footnotesize
-\resizebox{\columnwidth}{!}{%
-\begin{tabular}{ c |c |c|c|c|c|c}
-  Ligands & \multicolumn{1}{c|}{Exp. \cite{Huang2012}} &\multicolumn{1}{c|}{FEP+ \cite{Wang2017}}&\multicolumn{1}{c|}{FEP+ CC \cite{Wang2017}}&\multicolumn{1}{c|}{QligFEP \cite{Jespers2019}}&\multicolumn{1}{c|}{RE-EDS 1SS}&\multicolumn{1}{c}{RE-EDS SSM}\\ 
-    Molecule & [kJ~mol$^{-1}$]  & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$] & [kJ~mol$^{-1}$]  \\
-  \hline
-        L1 &   -40.7 & -41.7 $\pm$ 1.7         & -41.7 $\pm$ 0.9         & -38.5 $\pm$ 1.5 &   -40.0 $\pm$ 3.4 &    -38.0 $\pm$ 2.0 \\
-        L17 &  -40.8 &  -38.0 $\pm$ 1.0         & -38.2 $\pm$ 1.1         & -38.6 $\pm$ 1.3 &    -33.7 $\pm$ 1.3 & -41.7 $\pm$ 2.3 \\
-        L19 &  -35.9  & -38.1 $\pm$ 0.9         & -38.3 $\pm$ 1.8         & -38.3 $\pm$ 1.0 &   -37.6 $\pm$ 3.3 &  -33.0 $\pm$ 2.0 \\
-        L20 &  -38.6 & -38.6  $\pm$ 1.6         & -38.3 $\pm$ 1.4         & -39.2 $\pm$ 1.7 &    -40.4 $\pm$ 3.3 & -39.1 $\pm$ 2.3 \\
-        L21 &  -38.4 & -37.7  $\pm$ 1.4         & -37.8 $\pm$ 1.3         & -39.4 $\pm$ 1.9 &    -42.4 $\pm$ 2.9 &    -42.5 $\pm$ 1.4 \\
-    \hline
-        RMSE &                    & 1.7  $\pm$  0.4        & 1.7   $\pm$ 0.4        & 1.7 $\pm$ 0.4          & 3.8 $\pm$ 1.3         & 2.6 $\pm$ 0.6 \\
-        MAE &                     & 1.3 $\pm$ 1.0  & 1.4 $\pm$ 0.9 & 1.4 $\pm$ 0.9 & 3.0 $\pm$ 2.3 & 2.2 $\pm$ 1.6 \\
-        $r^2_{\text{Spearman}}$ &  & 0.20           & 0.10          & -0.21         &  -0.40           & 0.30 \\
-\end{tabular}
-}
-\end{center}
-\label{tab:RE-EDS_FE_RingCycleOpening_absoluteShiftDF}
-\end{table}
-
-
-\section{Parameter Exploration}
-A fast transition of the initial maximally contributing end state to the desired maximally contributing end state was observed by monitoring the maximally contributing end state over time.
-The transition occurred latest after $0.5$~ns, and the system remained in the biased end state for the rest of the simulation time.
-In both water and complex simulations, the desired end state was sampled about $~99\%$ of the simulation time with the exception of L19 in water (Table \ref{SItab:RingCycleOpenin_sampling_fraction_optimizedStates}).
-To inspect if the optimized state simulations' results sufficiently represent the target states, a comparison between the target state obtained potential-energy distributions in the EDS simulations with MD simulations consisting of only the target state was conducted (Figure \ref{fig:CHK1_set2_stateOptimization_EnergyDistribution}). 
-
-\begin{table}[H]
-\centering
-\caption{Fraction of the simulation time $f_i^{\text{mc}}$ (in \%) that the desired end state was sampled as the maximally contributing state during the EDS simulation to optimize the coordinates for a desired end state.}
-\label{SItab:RingCycleOpenin_sampling_fraction_optimizedStates}
-\begin{tabular}{ l | c c }
- Ligand & Water  & Complex \\ 
- \hline
-     L1 & 99.84 & 99.97 \\ 
-     L17 & 99.99 & 99.97\\
-     L19 & 36.07 &  99.98\\
-     L20 & 99.99 & 100\\
-     L21 & 100 & 99.97 \\
-\end{tabular}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Potential thresholds for occurrence sampling ($T_{i}^{\text{phys}}$) and undersampling ($T_{i}^{\text{us}}$) determined during the parameter exploration (in kJ~mol$^{-1}$).}
-\label{SItab:RingCycleOpenin_PotentialTresholds}
-\begin{tabular}{ l | c c |c c| }
- Ligand &\multicolumn{2}{c|}{Water} & \multicolumn{2}{c|}{Complex}\\ 
-  & \multicolumn{1}{c}{$T^{\text{phys}}$}& \multicolumn{1}{c|}{$T^{\text{us}}$}&  \multicolumn{1}{c}{$T^{\text{phys}}$}& \multicolumn{1}{c|}{$T^{\text{us}}$} \\ 
- \hline
-     L1  & -582.96 & -436.05 & -737.37 & -516.41\\ 
-     L17 & -572.41 & -419.16 & -717.95 & -492.83\\
-     L19 & -579.13 & -415.91 & -738.95 & -483.78\\
-     L20 & -636.00 & -492.75 & -759.01 & -549.35\\
-     L21 & -656.22 & -488.43 & -805.30 & -539.78\\
-\end{tabular}
-\end{table}
-
-\begin{figure}[H]
-\centering
-     \includegraphics[width=0.8\textwidth]{fig/results/ringOpening/paramExploration/single_state_energy_sampling.png}
-    \caption{Comparison of the potential-energy distribution obtained from a standard MD simulation of a given end state (black) and from an EDS simulation with the given end state favoured (colored) from the first step of the RE-EDS workflow.}
-     \label{fig:CHK1_set2_stateOptimization_EnergyDistribution}
-\end{figure}
-
-\newpage
-\section{Energy Offset Estimation}
-The relative energy offsets $\Delta \Delta E^R_{ji}$ are compared with the experimental relative binding free energies $\Delta \Delta G^\text{bind}_{ji}$ in Figure \ref{SIfig:Eoff_experiment_corr_RingOpening}. 
-The root mean squared error (RMSE) between $\Delta \Delta E^R_{ji}$ obtained with RE-EDS 1SS and $\Delta \Delta G^\text{bind}_{ji}$ is $12.6$~kJ~mol$^{-1}$. Outliers are mainly related to L19.
-With the RE-EDS SSM approach, the RMSE was reduced to $7.0$~kJ~mol$^{-1}$. No clear outliers were observed in this case. Thus, the use of the SSM approach is recommended for RE-EDS simulations.
-
-%The energy offsets obtained with the SSM approach are shown as a function of the replica ($s$-value) in Figure \ref{SIfig:Eoff-perreplica}. 
-
-\begin{figure}[H]
-\centering
-  \includegraphics[width=0.8\textwidth]{fig/results/ringOpening/paramOptimization/RingClosure_system_Eoff_final_results.png}
-\caption{Comparison of the relative energy offsets $\Delta \Delta E^R_{ji}$ in water and complex with the experimental relative binding free energies $\Delta \Delta G^\text{bind}_{ji}$. The energy offsets were estimated from RE-EDS simulations using the 1SS (green) or SSM (blue) approach to select the starting configurations of the replicas.} \label{SIfig:Eoff_experiment_corr_RingOpening}
-\end{figure}
-
-\newpage
-\section{Optimization of the $s$-Distribution and the energy offsets}
-\begin{figure}[h]
-\centering
-\includegraphics[width=\linewidth]{fig/results/ringOpening/paramOptimization/RingOpening_optimization_RTstat.png}
-\caption{Average round-trip time as a function of the optimization steps $i$ ($\overline{\tau}_i$) on a logarithmic scale. The red line indicates the switch from $s$-optimization to energy offset rebalancing.}
-\label{SIfig:CHK1_RingOpening_soptimization_efficiency}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\linewidth]{fig/results/ringOpening/paramOptimization/RingOpening_optimization_fractOptSampMAE.png}
-\caption{Mean absolute deviation (MAE, in percentage) of the observed state sampling $f_i^{\text{mc}}$ from the ideal equal distribution $f_i^{\text{mc,ideal}}$ during the short optimization simulations. The red line indicates the switch from $s$-optimization to energy offset rebalancing.}
-\label{SIfig:CHK1_RingOpening_optimization_fractOptSampMAE}
-\end{figure}
-
-\newpage
-\section{Free-Energy Calculation}
-\begin{table}[H]
-\caption{Free-energy differences in water and in complex calculated from the production run of 3.5~ns of length with the RE-EDS 1SS and RE-EDS SSM approaches.}
-\begin{center}
-\begin{tabular}{ c c |c c |c c}
-  \multicolumn{2}{c|}{Ligand} & \multicolumn{2}{c|}{RE-EDS 1SS} &\multicolumn{2}{c}{RE-EDS SSM}\\ 
-  J & I  & water [kJ~mol$^{-1}$] & complex [kJ~mol$^{-1}$]  & water [kJ~mol$^{-1}$] & complex [kJ~mol$^{-1}$] \\
-  \hline
-        L17 &         L1 &       11.9 $\pm$ 0.0&       12.4 $\pm$ 0.5&   17.0 $\pm$ 0.8&   9.4 $\pm$ 1.9\\
-        L19 &         L1 &        2.7 $\pm$ 0.0&        3.1 $\pm$ 0.0&    5.7 $\pm$ 1.0&   8.0 $\pm$ 0.0\\
-        L20 &         L1 &      -47.8 $\pm$ 0.0&      -47.7 $\pm$ 0.0& -47.6 $\pm$ 0.9&  -48.1 $\pm$ 0.0\\
-        L21 &         L1 &      -61.7 $\pm$ 0.06&     -61.7 $\pm$ 0.0& -63.1 $\pm$ 0.8&  -64.8 $\pm$ 0.0\\
-        L19 &         L17 &      -9.2 $\pm$ 0.0&       -9.3 $\pm$ 0.5& -11.3 $\pm$ 0.6&   -1.4 $\pm$ 1.9\\
-        L20 &         L17 &     -59.6 $\pm$ 0.0&      -60.1 $\pm$ 0.5& -64.5 $\pm$ 0.1&  -57.6 $\pm$ 1.9\\
-        L21 &         L17 &     -73.6 $\pm$ 0.0&      -74.1 $\pm$ 0.5& -80.1 $\pm$ 0.1&  -74.3 $\pm$ 1.9\\
-        L20 &         L19 &     -50.5 $\pm$ 0.0&      -50.7 $\pm$ 0.0& -53.2 $\pm$ 0.6&  -56.2 $\pm$ 0.0\\
-        L21 &         L19 &     -64.4 $\pm$ 0.0&      -64.7 $\pm$ 0.0& -68.8 $\pm$ 0.6&  -72.9 $\pm$ 0.0\\
-        L21 &         L20 &     -13.9 $\pm$ 0.0&      -14.0 $\pm$ 0.0& -15.5 $\pm$ 0.18& -16.7 $\pm$ 0.0 \\
-\end{tabular}
-\end{center}
-\label{SItab: RE-EDS_FE_RingCycleOpening_dFs}
-\end{table}
-
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\linewidth]{fig/results/ringOpening/FE/Reeds_RingOpening_production_sampling_s1.png}
-\caption{Sampling of the end states in the final production run at replica $s=1.0$. Sampling was assessed by monitoring the maximally contributing end state (top panels) and by counting all end states a potential energy below $T_{i}^{phys}$ (see Table \ref{SItab:RingCycleOpenin_PotentialTresholds}) (bottom panels). Ideally, the sampling fraction as maximally contributing end state should be 1/$N$ (Eq. (8) in the main text) for all end states, indicated as a black horizontal line.}
-\label{SIfig:CHK1_RingOpening_soptimization_final_Sampling_s1}
-\end{figure}
-
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\linewidth]{fig/results/ringOpening/FE/dF_RingOpening_Convergence.png}
-\caption{Convergence analysis of the RE-EDS production runs (total 3.5~ns): The free-energy results are plotted as a function of the simulation time. The vertical lines indicate when a particular $\Delta G_{ji}$ value was found to be converged (deviation below 1~kJ~mol$^{-1}$).}
-\label{SIfig:CHK1_RingOpening_dF_convergence}
-\end{figure}
-
-
-
-\section{Parameter Exploration}
-A fast transition of the initial dominating end state to the desired dominating end state was observed by monitoring the dominating end state over time.
-The transition occurred latest after $0.5$~ns, and the system remained in the biased end state for the rest of the simulation time.
-In both water and complex simulations, the desired end state was sampled about $~99\%$ of the simulation time with the exception of L19 in water (Table \ref{SItab:RingCycleOpenin_sampling_fraction_optimizedStates}).
-To inspect if the optimized state simulations' results sufficiently represent the target states, a comparison between the target state obtained potential energy distributions in the eds simulations with MD simulations consisting of only the target state was conducted (Figure \ref{fig:CHK1_set2_stateOptimization_EnergyDistribution}). 
-
-\begin{table}[h]
-\centering
-\caption{Fraction of the simulation time (in \%) that the desired end state was sampled as the dominating state during the EDS simulation to optimize the coordinates for a desired end state.}
-\label{SItab:RingCycleOpenin_sampling_fraction_optimizedStates}
-\begin{tabular}{ l | c c }
- Ligand & Water  & Complex \\ 
- \hline
-     L1 & 99.84 & 99.97 \\ 
-     L17 & 99.99 & 99.97\\
-     L19 & 36.07 &  99.98\\
-     L20 & 99.99 & 100\\
-     L21 & 100 & 99.97 \\
-\end{tabular}
-\end{table}
-
-\begin{table}[h]
-\centering
-\caption{Potential thresholds for occurrence sampling ($T_{i}^{\text{phys}}$) and undersampling ($T_{i}^{\text{us}}$) determined during the parameter exploration (in kJ~mol$^{-1}$).}
-\label{SItab:RingCycleOpenin_PotentialTresholds}
-\begin{tabular}{ l | c c |c c| }
- Ligand &\multicolumn{2}{c|}{Water} & \multicolumn{2}{c|}{Complex}\\ 
-  & \multicolumn{1}{c}{$T^{\text{phys}}$}& \multicolumn{1}{c|}{$T^{\text{us}}$}&  \multicolumn{1}{c}{$T^{\text{phys}}$}& \multicolumn{1}{c|}{$T^{\text{us}}$} \\ 
- \hline
-     L1  & -582.96 & -436.05 & -737.37 & -516.41\\ 
-     L17 & -572.41 & -419.16 & -717.95 & -492.83\\
-     L19 & -579.13 & -415.91 & -738.95 & -483.78\\
-     L20 & -636.00 & -492.75 & -759.01 & -549.35\\
-     L21 & -656.22 & -488.43 & -805.30 & -539.78\\
-\end{tabular}
-\end{table}
-
-\begin{figure}[h]
-\centering
-     \includegraphics[width=0.8\textwidth]{fig/results/ringOpening/paramExploration/single_state_energy_sampling.png}
-    \caption{Comparison of the potential-energy distribution obtained from a standard MD simulation of a given end state (black) and from an EDS simulation with the given end state favoured (colored) from the first step of the RE-EDS workflow.}
-     \label{fig:CHK1_set2_stateOptimization_EnergyDistribution}
-\end{figure}
-
-
-\section{Energy Offset Estimation}
-The relative energy offsets $\Delta \Delta E^R_{ji}$ are compared with the experimental relative binding free energies $\Delta \Delta G^\text{bind}_{ji}$ in Figure \ref{SIfig:Eoff_experiment_corr_RingOpening}. 
-The root mean squared error (RMSE) between $\Delta \Delta E^R_{ji}$ obtained with RE-EDS 1SS and $\Delta \Delta G^\text{bind}_{ji}$ is $12.6$~kJ~mol$^{-1}$. Outliers are mainly related to L19.
-With the RE-EDS SSM approach, the RMSE was reduced to $7.0$~kJ~mol$^{-1}$. No clear outliers were observed in this case. Thus, the use of the SSM approach is recommended for RE-EDS simulations.
-
-The energy offsets obtained with the SSM approach are shown as a function of the replica ($s$-value) in Figure \ref{SIfig:Eoff-perreplica}. 
-
-\begin{figure}[h]
-\centering
-  \includegraphics[width=0.8\textwidth]{fig/results/ringOpening/paramOptimization/RingClosure_system_Eoff_final_results.png}
-\caption{Comparison of the relative energy offsets $\Delta \Delta E^R_{ji}$ in water and complex with the experimental relative binding free energies $\Delta \Delta G^\text{bind}_{ji}$. The energy offsets were estimated from RE-EDS simulations using the 1SS (green) or SSM (blue) approach to select the starting configurations of the replicas.} \label{SIfig:Eoff_experiment_corr_RingOpening}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-  \includegraphics[width=1.0\textwidth]{fig/results/ringOpening/paramOptimization/CHK1_shuffle_eoffs.png}
-\caption{Energy offsets (relative to the average energy offset $\overline{E}^R_i$) estimated from the simulation with the SSM approach in water (left) and in complex (right) as a function of the replica ($s$-value).} \label{SIfig:Eoff-perreplica}
-\end{figure}
-
-
-
-
-\newpage
-
-\section{Free-Energy Calculation}
-\begin{table}[h]
-\caption{Free-energy differences in water and in complex calculated from the production run of 4~ns of length with the RE-EDS 1SS and RE-EDS SSM approaches.}
-\begin{center}
-\begin{tabular}{ c c |c c |c c}
-  \multicolumn{2}{c|}{Ligand} & \multicolumn{2}{c|}{RE-EDS 1SS} &\multicolumn{2}{c}{RE-EDS SSM}\\ 
-  I & J  & water [kJ~mol$^{-1}$] & complex [kJ~mol$^{-1}$]  & water [kJ~mol$^{-1}$] & complex [kJ~mol$^{-1}$] \\
-  \hline
-        L17 &         L1 &       15.22 $\pm$ 0.15&       16.44 $\pm$ 0.22&  -13.61 $\pm$ 0.11&  16.63 $\pm$ 0.19\\
-        L19 &         L1 &        6.73 $\pm$ 0.13&       -7.24 $\pm$ 0.16&   -1.95 $\pm$ 0.18&  -7.98 $\pm$ 0.19\\
-        L20 &         L1 &      -48.59 $\pm$ 0.22&      -45.99 $\pm$ 0.21& -48.09 $\pm$ 0.13& -49.27 $\pm$ 0.35\\
-        L21 &         L1 &      -67.83 $\pm$ 0.326&     -69.48 $\pm$ 0.20& -69.48 $\pm$ 0.16& -72.60 $\pm$ 0.85\\
-        L19 &         L17 &      -8.49 $\pm$ 0.12&      -23.68 $\pm$ 0.25& -15.56 $\pm$ 0.18& -24.60 $\pm$ 0.13\\
-        L20 &         L17 &     -63.81 $\pm$ 0.22&      -62.42 $\pm$ 0.19& -61.69 $\pm$ 0.14&  65.89 $\pm$ 0.33\\
-        L21 &         L17 &     -83.05 $\pm$ 0.31&      -85.92 $\pm$ 0.29& -83.09 $\pm$ 0.17& -89.22 $\pm$ 0.84\\
-        L20 &         L19 &     -55.32 $\pm$ 0.21&       38.75 $\pm$ 0.33& -46.13 $\pm$ 0.20& -41.29 $\pm$ 0.32\\
-        L21 &         L19 &     -74.56 $\pm$ 0.31&      -62.24 $\pm$ 0.29& -67.52 $\pm$ 0.21& -64.62 $\pm$ 0.84\\
-        L21 &         L20 &     -19.24 $\pm$ 0.35&      -23.50 $\pm$ 0.31& -21.39 $\pm$ 0.18& -23.33 $\pm$ 0.88\\
-\end{tabular}
-\end{center}
-\label{SItab: RE-EDS_FE_RingCycleOpening_dFs}
-\end{table}
-
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\linewidth]{fig/results/ringOpening/FE/Reeds_RingOpening_production_sampling_s1.png}
-\caption{Sampling of the end states in the final production run at replica $s=1.0$. Sampling was assessed by monitoring the dominant end state (top panels) and by counting all end states a potential energy below $T_{i}^{phys}$ (see Table \ref{SItab:RingCycleOpenin_PotentialTresholds}) (bottom panels). Ideally, the sampling fraction as dominating end state should be 1/$N$ (Eq. (8) in the main text) for all end states, indicated as a black horizontal line.}
-\label{SIfig:CHK1_RingOpening_soptimization_final_Sampling_s1}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\linewidth]{fig/results/ringOpening/FE/dF_RingOpening_Convergence.png}
-\caption{Convergence analysis of the RE-EDS production runs (total 4~ns): Free-energy differences relative to the final free-energy results after 4~ns are plotted as a function of the simulation time. The vertical lines indicate when a particular $\Delta G_{ji}$ value was found to be converged (deviation below 0.25~kJ~mol$^{-1}$).}
-\label{SIfig:CHK1_RingOpening_dF_convergence}
-\end{figure}
-
-%\bibliography{manual_ref.bib}
-
- 

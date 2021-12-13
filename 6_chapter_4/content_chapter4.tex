@@ -4,22 +4,21 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 \renewcommand{\path}{3_chapter_1/}
-\chapter[PyGromosTools an API making development of scientific projects faster, more reproducibile and shareable]{PyGromosTools:  A modern, fast, flexible API for the MD simulation package GROMOS enhancing reproducibility and shareability of science}
-\chaptermark{Software Development}
+\chapter[PyGromosTools:  A Fast and Flexible API for the Molecular Dynamics Software Package GROMOS]{PyGromosTools:  A Fast and Flexible API for the Molecular Dynamics Software Package GROMOS}
+\chaptermark{PyGromosTools}
 \label{ch:pyGrom}
 
 \aquote{
-"Another way of passing the buck is to sacrifice usability on the altar of efficiency."
+    "The determined Real Programmer can write FORTRAN programs in any language."
 }
-{M. Henning,  \cite{Henning2009}}
+{Ed Post\cite{Post1982}}
 
 
 
 
-\begin{abstract}
-Let's see if I have something here
-%
-\end{abstract}
+\begin{summary}
+Making data accessible and reducing the complexity of process execution are key aspects of an application programming interface (API). Additionally, APIs reduce code duplication through code encapsulation and therefore increase code readability and re-usability. We have developed PyGromosTools to make the molecular dynamics (MD) software package GROMOS accessible in Python and facilitate its usage. PyGromosTools provides users with file classes and simulation functionality. In this chapter, we will discuss design aspects, code structure, and example usage of PyGromosTools. The code is open source and available on GitHub \url{https://github.com/rinikerlab/PyGromosTools}.
+\end{summary}
 
 \clearpage
 \pagebreak
@@ -34,13 +33,13 @@ Let's see if I have something here
 \input{6_chapter_4/inc/intro.tex}
 
 %================================================================================
-\section{Computational Details}
+\section{Implementation}
 %================================================================================
 
 \input{6_chapter_4/inc/implementation.tex}
 
 %================================================================================
-\section{Results and Discussion}
+\section{Applications and Examples}
 %================================================================================
 
 \input{6_chapter_4/inc/examples.tex}
@@ -49,7 +48,7 @@ Let's see if I have something here
 \newpage
 
 %================================================================================
-\section{Conclusion}
+\section{Conclusion and Outlook}
 %================================================================================
 
 \input{6_chapter_4/inc/conclusion.tex}
@@ -57,7 +56,7 @@ Let's see if I have something here
 \clearpage
 \pagebreak
 
-\bibliography{MendeleyMerge.bib}
+%\bibliography{6_chapter_4/ref/ref.bib}
 
 
 \end{document}
