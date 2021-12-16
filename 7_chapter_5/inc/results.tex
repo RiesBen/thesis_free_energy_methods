@@ -1,4 +1,4 @@
-From the PAMPA and Caco-2 assays performed by our collaborators, a large ``permeability cliff''  between Nleu-5R and 5S could be identified (Figure \ref{fig:permAssays}). Permeability cliffs were also observed between some other pairs of epimers, but to a lesser extent (e.g., Nala-4R vs 4S with $−log(P_e)$~=~$7.6$ and $6.6$, Nphe-2R vs 2S with $−log(P_e)$~=~$7.2$ and $6.3$, and Nphe-3R vs 3S with $−log(P_e)$~=~$7.5$ and $6.5$). 
+From the PAMPA and Caco-2 assays performed by our collaborators,\cite{Comeau2021} a large ``permeability cliff''  between Nleu-5R and 5S could be identified (Figure \ref{fig:permAssays}). Permeability cliffs were also observed between some other pairs of epimers, but to a lesser extent (e.g., Nala-4R vs 4S with $−log(P_e)$~=~$7.6$ and $6.6$, Nphe-2R vs 2S with $−log(P_e)$~=~$7.2$ and $6.3$, and Nphe-3R vs 3S with $−log(P_e)$~=~$7.5$ and $6.5$). 
 Extensive MD simulations were carried out in a polar and apolar environment (i.e., water and chloroform) to study the influence of the stereocenter change on the conformational behavior of the molecules. As a negative control group, we used the molecule pair Nleu-2R and 2S. 
 
 \FloatBarrier
@@ -30,8 +30,7 @@ ALA-O PHE-NH           & 24           & 7            & 21 & 19 \\
 
 \begin{table}[h!]
 \centering
-\caption{Percentage of starting conformations with zero, one, or two hydrogen bonds for
-Nleu-5R, Nleu-5S, Nleu-2R, and Nleu-2S.}
+\caption{Percentage of starting conformations with zero, one, or two hydrogen bonds for Nleu-5R, Nleu-5S, Nleu-2R, and Nleu-2S.}
 \label{tab: SIhbondAmountRatios}
   \begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{llll}
@@ -130,8 +129,8 @@ Molecule                  & Cluster & Size $[\%]$ & Molecule                  & 
 The cis-trans isomerization represents a very slow process in the simulations, which occurred only rarely (Table \ref{tab: SICisTransTrans}). Due to the low number of transitions, the process could not be modeled robustly. Therefore, the clusters with the cis- and trans-peptoid bond are analyzed separately in the following.
 \begin{table}[h!]
 \centering
-\caption{ Occurrence  of  cis-trans  isomerization  of  the  peptoid  bond  during  the  MD 
-simulations (25 μs in water and chloroform, respectively}
+\caption{Occurrence of cis-trans isomerization of the peptoid bond during the MD 
+simulations (25~$\mu$s in water and chloroform, respectively.}
 \label{tab: SICisTransTrans}
 \begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{r|cc|cc}
@@ -150,18 +149,18 @@ simulations (25 μs in water and chloroform, respectively}
 \FloatBarrier
 %-------------------------------------------
 
-\subsection{NMR validations}
-The NMR experiments in chloroform-d showed that the four compounds adopt at least two different conformations in solution. \cite{Comeau2021}
+\subsection{NMR Validation}
+The NMR experiments in chloroform-d (CDCl$_3$) showed that the four compounds adopt at least two different conformations in solution. \cite{Comeau2021}
 The major conformer was identified with all amides in trans conformation. 
-It was not possible to assign the minor conformers due to signal overlap and low intensity. In the case of Nleu-5R and Nleu-5S, a third conformer could be identified based on exchange spectroscopy (EXSY) cross-peaks in the nuclear Overhauser enhancement spectroscopy (NOESY) spectrum, which is barely detectable in the 1H spectrum. The corresponding conformer ratios are listed in Table \ref{tab: nmrConfRatios}.  
+It was not possible to assign the minor conformers due to signal overlap and low intensity. In the case of Nleu-5R and Nleu-5S, a third conformer could be identified based on exchange spectroscopy (EXSY) cross-peaks in the nuclear Overhauser enhancement spectroscopy (NOESY) spectrum, which is barely detectable in the $^1$H spectrum. The corresponding conformer ratios are listed in Table \ref{tab: nmrConfRatios}.  
 
 \begin{table}[h!]
     \centering
-    \caption{Ratios of Conformer Population Observed in NMR Spectra (CDCl3)}
+    \caption{Ratios of conformer population observed in the NMR spectra (CDCl$_3$).}
     \label{tab: nmrConfRatios}
     \begin{adjustbox}{max width=\textwidth}
     \begin{tabular}{cc}
-    compound & ratio \\
+    Compound & Ratio \\
     \hline
     Nleu-2R &	100:8 \\
     Nleu-2S &   100:3 \\
@@ -172,50 +171,49 @@ It was not possible to assign the minor conformers due to signal overlap and low
     \end{adjustbox}
 \end{table}
 
-The results from the MD simulations are compared to the NMR data of the major conformer. From the data, the $^3J_{HN–H\alpha}$ coupling constants and nuclear Overhauser effect (NOE)-derived distances, given in Tables \ref{fig: SINOE violations Nleu-5R} and \ref{fig: SINOE violations Nleu-2SII} are then used to validate the simulation results.
+The results from the MD simulations were compared to the NMR data of the major conformer, in particular the $^3J_{HN–H\alpha}$ coupling constants and the NOE-derived interproton distances (Tables \ref{fig: SINOE violations Nleu-5R} and \ref{fig: SINOE violations Nleu-2SII}).
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{7_chapter_5/fig/results/j3NMRConfClusterAna.png}
-    \caption{ Root-mean-square deviation (RMSD, in hertz) between $^3$J$_{\text{HN–H}\alpha}$ coupling constants in chloroform from NMR measurements and from MD simulations. Clusters with the peptoid bond in trans conformation are shown in green.}
+    \caption{Root-mean-square deviation (RMSD, in hertz) between $^3$J$_{\text{HN–H}\alpha}$ coupling constants in chloroform from NMR measurements and from MD simulations. Clusters with the peptoid bond in trans conformation are shown in green.}
     \label{fig: j3NMRConfClusterAna}
 \end{figure}
 
-
-The clusters with all amides in trans conformation are in good agreement with the  $^3J_{\text{HN–H}\alpha}$ coupling constants (Figure \ref{fig: j3NMRConfClusterAna}), whereas the clusters containing the cis-peptoid bond deviate significantly from the experimental values. For Nleu-2R, the $^3J_{\text{HN–H}\alpha}$ coupling analysis is missing as we could not determine the $^3J_{\text{HN–H}\alpha}$ couplings reliably due to line broadening in the spectrum. The NOE upper distance bounds are also generally reproduced in these clusters (Figures \ref{fig: SINOE violations Nleu-5S} -\ref{fig: SINOE violations Nleu-2SII}). Based on these findings, we focus the analysis in the following on those clusters, which have a reasonable agreement with the NMR data (i.e., clusters 1 and 4 for Nleu-5R, clusters 1, 5, and 6 for Nleu-5S, cluster 1 for Nleu-2R, and clusters 1 and 2 for Nleu-2S).
+The clusters with all amides in trans conformation are in good agreement with the  $^3J_{\text{HN–H}\alpha}$ coupling constants (Figure \ref{fig: j3NMRConfClusterAna}), whereas the clusters containing the cis-peptoid bond deviate significantly from the experimental values. For Nleu-2R, the $^3J_{\text{HN–H}\alpha}$ coupling analysis is missing as we could not determine the $^3J_{\text{HN–H}\alpha}$ couplings reliably due to line broadening in the spectrum. The NOE-derived upper distance bounds are also generally reproduced in these clusters (Figures \ref{fig: SINOE violations Nleu-5S} -\ref{fig: SINOE violations Nleu-2SII}). Based on these findings, we focused the analysis in the following on those clusters, which have a reasonable agreement with the NMR data (i.e., clusters 1 and 4 for Nleu-5R, clusters 1, 5, and 6 for Nleu-5S, cluster 1 for Nleu-2R, and clusters 1 and 2 for Nleu-2S).
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{7_chapter_5/fig/results/NMR_5R.png}
-    \caption{Violations  of  the  experimental  NOE  upper  distance  bounds  of  Nleu-5R  in chloroform by the clusters identified in the simulations in chloroform. Distances between residues across the backbone ring are colored. Distances between neighboring residues S22 are shown in black. The dashed line indicates the expected uncertainty of the NOE upper bounds.}
+    \caption{Violations of the NOE-derived upper distance bounds of Nleu-5R in chloroform by the clusters identified in the simulations in chloroform. Distances between residues across the backbone ring are colored. Distances between neighboring residues are shown in black. The dashed line indicates the expected uncertainty of the experimental upper bounds.}
     \label{fig: SINOE violations Nleu-5R}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{7_chapter_5/fig/results/NMR_5S.png}
-    \caption{ Violations  of  the  experimental  NOE  upper  distance  bounds  of  Nleu-5S  in chloroform by the clusters identified in the simulations in chloroform. Distances between residues across the backbone ring are colored. Distances between neighboring residues are shown in black. The dashed line indicates the expected uncertainty of the NOE upper bounds.}
+    \caption{Violations of the NOE-derived upper distance bounds of Nleu-5S in chloroform by the clusters identified in the simulations in chloroform. Distances between residues across the backbone ring are colored. Distances between neighboring residues are shown in black. The dashed line indicates the expected uncertainty of the experimental upper bounds.}
     \label{fig: SINOE violations Nleu-5S}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{7_chapter_5/fig/results/NMR_2R.png}
-    \caption{Violations  of  the  experimental  NOE  upper  distance  bounds  of  Nleu-2R  in chloroform by the clusters identified in the simulations in chloroform. Distances between residues across the backbone ring are colored. Distances between neighboring residues are shown in black. The dashed line indicates the expected uncertainty of the NOE upper bounds.}
+    \caption{Violations of the NOE-derived upper distance bounds of Nleu-2R in chloroform by the clusters identified in the simulations in chloroform. Distances between residues across the backbone ring are colored. Distances between neighboring residues are shown in black. The dashed line indicates the expected uncertainty of the experimental upper bounds.}
     \label{fig: SINOE violations Nleu-2R}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{7_chapter_5/fig/results/NMR_2R.png}
-    \caption{Violations  of  the  experimental  NOE  upper  distance  bounds  of  Nleu-2S  in chloroform by clusters 1–6 identified in the simulations in chloroform. Distances between residues across the backbone ring are colored. Distances between neighboring residues are shown in black. The dashed line indicates the expected uncertainty of the NOE upper bounds.}
+    \caption{Violations of the NOE-derived upper distance bounds of Nleu-2S in chloroform by clusters 1–6 identified in the simulations in chloroform. Distances between residues across the backbone ring are colored. Distances between neighboring residues are shown in black. The dashed line indicates the expected uncertainty of the experimental upper bounds.}
     \label{fig: SINOE violations Nleu-2S}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{7_chapter_5/fig/results/NMR_2Sb.png}
-    \caption{Violations  of  the  experimental  NOE  upper  distance  bounds  of  Nleu-2S  in chloroform by clusters 7–12 identified in the simulations in chloroform. Distances between residues across the backbone ring are colored. Distances between neighboring residues are shown in black. The dashed line indicates the expected uncertainty of the NOE upper bounds.}
+    \caption{Violations of the NOE-derived upper distance bounds of Nleu-2S in chloroform by clusters 7–12 identified in the simulations in chloroform. Distances between residues across the backbone ring are colored. Distances between neighboring residues are shown in black. The dashed line indicates the expected uncertainty of the experimental upper bounds.}
     \label{fig: SINOE violations Nleu-2SII}
 \end{figure}
 
@@ -229,11 +227,11 @@ Therefore, we first analyzed the hydrogen-bonding patterns in the clusters in ch
 
 \begin{table}[h!]
     \centering
-    \caption{Percentage of Sampled Conformations with Zero, One, or Two Hydrogen Bonds in Chloroform. Analysis was restricted to the clusters with the trans-peptoid bond.}
+    \caption{Percentage of sampled conformations with zero, one, or two hydrogen bonds in chloroform. Analysis was restricted to the clusters with the trans-peptoid bond.}
     \label{tab: hbondsratio}
     \begin{adjustbox}{max width=\textwidth}
     \begin{tabular}{lccc}
-    number of hydrogen bonds [\%] &	0 &	1 &	2 \\
+    Number of hydrogen bonds [\%] &	0 &	1 &	2 \\
     \hline
     Nleu-5R  &	8	& 63	& 30 \\
     Nleu-5S  &	25	& 68	& 7  \\
@@ -244,14 +242,14 @@ Therefore, we first analyzed the hydrogen-bonding patterns in the clusters in ch
     \end{adjustbox}
 \end{table}
 
-Analysis was restricted to the clusters with the trans-peptoid bond.
-For a given molecule in an apolar environment, having access to conformations in which polar groups are shielded—such as by H-bonding—should be energetically favorable. 
+%Analysis was restricted to the clusters with the trans-peptoid bond.
+For a given molecule in an apolar environment, having access to conformations in which polar groups are shielded -- such as by H-bonding -- should be energetically favorable. 
 To assess this effect, we extracted the potential energy of the peptides (i.e., intramolecular and peptide-solvent contributions) from the trajectories. 
 The normality of each potential-energy distribution was confirmed by the Shapiro–Wilk test \cite{Shapiro1965} (Table \ref{tab: SIstatTestingNorm}). 
 
 \begin{table}[h!]
 \centering
-\caption{ Average potential energy of the peptides  (i.e. sum of the intramolecular $\langle \text{V} \rangle$ contributions  and  the  peptide–solvent  contributions)  together  with  the  p-value  of  the Shapiro-Wilk test for the simulations in chloroform and water, respectively. The significance limit for the p-value was 0.05.}
+\caption{Average potential energy of the peptides (i.e., sum of the intramolecular $\langle \text{V} \rangle$ contributions and the peptide–solvent contributions)  together with the $p$-value of the Shapiro-Wilk test for the simulations in chloroform and water, respectively. The significance limit for the $p$-value was 0.05.}
 \label{tab: SIstatTestingNorm}
 \begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{r|cc|cc}
@@ -269,8 +267,7 @@ The normality of each potential-energy distribution was confirmed by the Shapiro
 
 \begin{table}[h!]
 \centering
-\caption{Results of the Fisher t-test to validate the significance of the deviations in the 
-average potential energy of the peptides. The significance limit for the p-value was 0.05}
+\caption{Results of the Fisher t-test to validate the significance of the deviations in the average potential energy of the peptides. The significance limit for the $p$-value was 0.05.}
 \label{tab: SIstatTestingDiff}
 \begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{lcc}
@@ -283,36 +280,34 @@ Nleu-2R - Nleu-2S & $\sim$0.0  & $2.7*10^{-77}$\\
 \end{adjustbox}
 \end{table}
 
-
 The Fisher t-test \cite{Kotz1998} was employed to determine if the means of the distributions differ statistically significantly ($p < 0.05$). 
 This was found to be the case for each pair of distributions (Table \ref{tab: SIstatTestingDiff}). 
-On average, the potential energy of Nleu-5R is $9~$kJ/mol lower (i.e., more favorable) in chloroform compared to Nleu-5S, whereas the difference in the average potential energy between Nleu-2R and Nleu-2S is $6~$ kJ/mol. In many studies in the literature, it was found that the three-dimensional (3D) polar surface area (3D-PSA) is a good measure for the degree of polar shielding in conformations. \cite{Roux2020, Sebastiano2018, Vorherr2018, Peraro2018} 
+On average, the potential energy of Nleu-5R is $9$~kJ/mol lower (i.e., more favorable) in chloroform compared to Nleu-5S, whereas the difference in the average potential energy between Nleu-2R and Nleu-2S is $6$~kJ/mol. In many studies in the literature, it was found that the 3D-PSA is a good measure for the degree of polar shielding in conformations. \cite{Roux2020, Sebastiano2018, Vorherr2018, Peraro2018} 
 However, for the present set of four peptides, no correlation was observed between the 3D-PSA and the potential energy (Figure \ref{fig: SI3DPSAANA}). 
+The ring strain in the relatively small backbone cycle of the peptides affects the geometry of the intramolecular H-bonds, which is likely not reflected appropriately in the 3D-PSA calculation. 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{7_chapter_5/fig/results/3dPSA.png}
-    \caption{Correlation between the 3D-PSA and the potential energy of the corresponding conformation (i.e. sum of intramolecular contributions and peptide–solvent 
-        contributions) for Nleu-5R and Nleu-5S in chloroform. The 100 structures closest to the cluster  center  were  taken  for  the  clusters  with  the  trans-peptoid  bond.  The  trend  for  an expected  linear  correlation  is  shown  as  gray  line.  The  legend  contains  the  cluster population in percentage and the Spearman correlation coefficient r}
+    \caption{Correlation between the 3D-PSA and the potential energy of the corresponding conformation (i.e., sum of intramolecular contributions and peptide–solvent contributions) for Nleu-5R and Nleu-5S in chloroform. The 100 structures closest to the cluster center were taken for the clusters with the trans-peptoid bond. The trend for an expected linear correlation is shown as gray line. The legend contains the cluster population in percentage and the Spearman correlation coefficient $r$.}
     \label{fig: SI3DPSAANA}
 \end{figure}
 
-
-The ring strain in the relatively small backbone cycle of the peptides affects the geometry of the intramolecular H-bonds, which is likely not reflected appropriately in the 3D-PSA calculation. 
 In summary, the ranking Nleu-5R $<$ Nleu-2S $<$ Nleu-2R $<$ Nleu-5S, which was found in terms of both hydrogen-bonding patterns and potential energies, matches well with the experimental permeability data.
 The findings described above indicate that the change in stereochemistry of the methyl group in position $5$ between Nleu-5R and Nleu-5S leads to different conformational behavior. 
-A detailed analysis of the H-bonds showed that only Nleu-5S forms a H-bond between Ala-O and the tether-NH with an occurrence of $24\%$ in chloroform (Table 3). 
+A detailed analysis of the H-bonds showed that only Nleu-5S forms a H-bond between Ala-O and the tether-NH with an occurrence of $24\%$ in chloroform (Table \ref{tab: hbondsrationCLCH3}). 
 This H-bond across the ring of Nleu-5S prevents the formation of other H-bonds (Figure \ref{fig: HbondExamples}B).
 Such a conformation with a single H-bond is likely less favorable (compared to one with more H-bonds) in chloroform because less polar groups are shielded. In the dominant conformation of Nleu-5R, on the other hand, two H-bonds can be formed across the ring (Figure \ref{fig: HbondExamples}A).
+
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{fig/results/ExampleHbonds.png}
-    \caption{Snapshots of Nleu-5R (A) and Nleu-5S (B) from MD simulations in chloroform. Hydrogen bonds are shown with their percentage of the absolute occurrence in chloroform in the trans-peptoid clusters. Pictures were generated with PyMol. \cite{Delano2020}}
+    \caption{Snapshots of Nleu-5R (\textbf{A}) and Nleu-5S (\textbf{B}) from MD simulations in chloroform. Hydrogen bonds are shown with their percentage of the absolute occurrence in chloroform in the trans-peptoid clusters. Pictures were generated with PyMol. \cite{Delano2020}}
     \label{fig: HbondExamples}
 \end{figure}
 
 \begin{table}[h!]
     \centering
-    \caption{Hydrogen Bond Occurrence in Percentage for the Sampled Conformations in Chloroform. Analysis was restricted to the clusters with the trans-peptoid bond.}
+    \caption{Hydrogen bond occurrence in percentage for the sampled conformations in chloroform. Analysis was restricted to the clusters with the trans-peptoid bond.}
     \label{tab: hbondsrationCLCH3}
     \begin{adjustbox}{max width=\textwidth}
     \begin{tabular}{lcccc}
@@ -327,13 +322,13 @@ Such a conformation with a single H-bond is likely less favorable (compared to o
     \end{adjustbox}
 \end{table}
 
-Analysis was restricted to the clusters with the trans-peptoid bond.
-Next, we analyzed the torsional-angle distributions in the backbone ring of the peptides. The change in stereochemistry of the methyl group at position 5 leads to a shift in the torsional-angle distributions of the tether units for Nleu-5S compared to Nleu-5R (Figure \ref{fig: dihedralDist}A). This shift results in a bent conformation of the ring (Figure 9B), which allows only one H-bond to form between Ala-O and tether-NH (Figure \ref{fig: dihedralDistSubst}). There is also a shift in the backbone torsional-angle distributions between Nleu-2R and Nleu-2S, however, to a much smaller extent (Figure \ref{fig: SITorsion2RS}).
+%Analysis was restricted to the clusters with the trans-peptoid bond.
+Next, we analyzed the torsional-angle distributions in the backbone ring of the peptides. The change in stereochemistry of the methyl group at position 5 leads to a shift in the torsional-angle distributions of the tether units for Nleu-5S compared to Nleu-5R (Figure \ref{fig: dihedralDist}A). This shift results in a bent conformation of the ring (Figure \ref{fig: dihedralDist}B), which allows only one H-bond to form between Ala-O and tether-NH (Figure \ref{fig: dihedralDistSubst}). There is also a shift in the backbone torsional-angle distributions between Nleu-2R and Nleu-2S, however, to a much smaller extent (Figure \ref{fig: SITorsion2RS}).
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{7_chapter_5/fig/results/dihedral_dist.png}
-    \caption{(A) Torsional-angle distributions of the tether in Nleu-5R (blue) and Nleu-5S (orange) in chloroform. The analysis was restricted to the clusters with the trans-peptoid bond. (B) Torsional angles of the tether (shown in cyan and orange) corresponding to the peaks of the distributions. Pictures were generated with PyMol. \cite{Delano2020} The change in the stereocenter also affects the χ1-angle of the phenylalanine residue as the tether conformation hinders the rotation around this torsion due to a steric clash with the carbonyl group that is facing out of the backbone ring (Figure \ref{fig: dihedralDistSubst}).
+    \caption{(\textbf{A}) Torsional-angle distributions of the tether in Nleu-5R (blue) and Nleu-5S (orange) in chloroform. The analysis was restricted to the clusters with the trans-peptoid bond. (\textbf{B}) Torsional angles of the tether (shown in cyan and orange) corresponding to the peaks of the distributions. Pictures were generated with PyMol. \cite{Delano2020} The change in the stereocenter also affects the $\chi_1$-angle of the phenylalanine residue as the tether conformation hinders the rotation around this torsion due to a steric clash with the carbonyl group that is facing out of the backbone ring (Figure \ref{fig: dihedralDistSubst}).
     }
     \label{fig: dihedralDist}
 \end{figure}
@@ -341,14 +336,14 @@ Next, we analyzed the torsional-angle distributions in the backbone ring of the 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{7_chapter_5/fig/results/dihedral_dist.png}
-    \caption{(A) Torsional-angle distributions of the χ1 torsional angle of the phenylalanine residue in Nleu-5R (blue) and Nleu-5S (orange) in chloroform. Analysis was restricted to the clusters with the trans-peptoid bond. (B) χ1 torsional angle of the phenylalanine residue (shown in purple) corresponding to the peaks of the distributions. The backbone carbonyl interferes with the rotation around this torsion is highlighted with a red circle. Pictures were generated with PyMol. \cite{Delano2020}}
+    \caption{(\textbf{A}) Torsional-angle distributions of the $\chi_1$ torsional angle of the phenylalanine residue in Nleu-5R (blue) and Nleu-5S (orange) in chloroform. Analysis was restricted to the clusters with the trans-peptoid bond. (\textbf{B}) $\chi_1$ torsional angle of the phenylalanine residue (shown in purple) corresponding to the peaks of the distributions. The backbone carbonyl interferes with the rotation around this torsion is highlighted with a red circle. Pictures were generated with PyMol. \cite{Delano2020}}
     \label{fig: dihedralDistSubst}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{7_chapter_5/fig/results/dihedral_dist_Wat.png}
-    \caption{Torsional-angle distributions of the tether in Nleu-2R (blue) and Nleu-2S  (orange)  in  chloroform.  Analysis  was  restricted  to  the clusters  with  the  trans-peptoid bond. The distribution density is plotted as a function of the torsional angle, with a bin size of $0.5~\text{deg}$}
+    \caption{Torsional-angle distributions of the tether in Nleu-2R (blue) and Nleu-2S (orange) in chloroform. Analysis was restricted to the clusters with the trans-peptoid bond. The distribution density is plotted as a function of the torsional angle, with a bin size of $0.5~\text{deg}$.}
     \label{fig: SITorsion2RS}
 \end{figure}
 
@@ -358,13 +353,11 @@ Next, we analyzed the torsional-angle distributions in the backbone ring of the 
 
 \begin{table}[h!]
     \centering
-    \caption{Percentage of sampled conformations with zero, one, or two hydrogen bonds
-for Nleu-5R, Nleu-5S, Nleu-2R, and Nleu-2S in water. Analysis was restricted to the
-clusters with the trans-peptoid bond}
+    \caption{Percentage of sampled conformations with zero, one, or two hydrogen bonds for Nleu-5R, Nleu-5S, Nleu-2R, and Nleu-2S in water. Analysis was restricted to the clusters with the trans-peptoid bond.}
     \label{tab: hbondsratiowater}
     \begin{adjustbox}{max width=\textwidth}
     \begin{tabular}{lccc}
-    number of hydrogen bonds [\%] &	0 &	1 &	2 \\
+    Number of hydrogen bonds [\%] &	0 &	1 &	2 \\
     \hline
     Nleu-5R  &	87	& 12	& 1 \\
     Nleu-5S  &	74	& 26	& 0  \\
@@ -375,32 +368,28 @@ clusters with the trans-peptoid bond}
     \end{adjustbox}
 \end{table}
 
-The analysis of the hydrogen-bonding patterns in water showed a significant decrease for the intramolecular hydrogen bond populations, as they competed with the intermolecular hydrogen bonds to the water. Specifically, molecule Nleu-5R has a higher percentage (about $10\%$) of conformers with no H-bonds compared to Nleu-2R, Nleu-2S, and Nleu-5S (Table \ref{tab: hbondsratiowater}). The conformations containing two intramolecular hydrogen bonds nearly vanished.
-The positions of the intramolecular hydrogen bonds are mainly focused on the NLEU-O tether-NH position (Table \ref{tab: SIhbondRatiosWater}).
-Nevertheless, it could be observed that the ALA-O tether-NH, which was unique to the Nleu-5S in the apolar environment, is again most present in water for Nleu-5S in contrast to the other possible intramolecular hydrogen-bonds. 
-
+The analysis of the hydrogen-bonding patterns in water showed a significant decrease for the intramolecular H-bond populations, as they competed with the intermolecular H-bonds to the water. Specifically, Nleu-5R has a higher percentage (about $10\%$) of conformers with no H-bonds compared to Nleu-2R, Nleu-2S, and Nleu-5S (Table \ref{tab: hbondsratiowater}). The conformations containing two intramolecular H-bonds nearly vanished.
+The positions of the intramolecular H-bonds are mainly focused on the Nleu-O and tether-NH position (Table \ref{tab: SIhbondRatiosWater}).
+Nevertheless, it could be observed that the Ala-O and tether-NH, which was unique to Nleu-5S in the apolar environment, is again most present in water for Nleu-5S in contrast to the other possible intramolecular H-bonds. 
+In general, however, no significant differences between the peptides could be observed in water.
 
 \begin{table}[h!]
 \centering
-\caption{Hydrogen bond occurrence in percentage for the sampled conformations in
-water for Nleu-5R, Nleu-5S, Nleu-2R, and Nleu-2S. The analysis was restricted to the
-clusters with the trans-peptoid bond.}
+\caption{Hydrogen-bond occurrence in percentage for the sampled conformations in
+water for Nleu-5R, Nleu-5S, Nleu-2R, and Nleu-2S. The analysis was restricted to the clusters with the trans-peptoid bond.}
 \label{tab: SIhbondRatiosWater}
   \begin{adjustbox}{max width=\textwidth}
   \begin{tabular}{lcccc}
 Hydrogen bond {[}\%{]} & Nleu-2R      & Nleu-2S      & Nleu-5R      & Nleu-5S      \\
 \hline
-NLEU-O tether-NH       & 14.5       & 18.3       &  12           & 9.75        \\
-ALA-O tether-NH        & 5.5        & 3.6        & \textless{}1  & 15.25 \\
-PHE-O Ala-NH           & \textless{}1 & \textless{}1 & \textless{}1  & 1 \\
-ALA-O PHE-NH           & 2            & 1            & \textless{}1  & \textless{}1 \\
+Nleu-O tether-NH       & 14.5       & 18.3       &  12           & 9.75        \\
+Ala-O tether-NH        & 5.5        & 3.6        & \textless{}1  & 15.25 \\
+Phe-O Ala-NH           & \textless{}1 & \textless{}1 & \textless{}1  & 1 \\
+Ala-O Phe-NH           & 2            & 1            & \textless{}1  & \textless{}1 \\
     \hline
 \end{tabular}%
 \end{adjustbox}
 \end{table}
-
-In general, however, no significant differences between the peptides could be observed in water.
-
 
 
 \FloatBarrier

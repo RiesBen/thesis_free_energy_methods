@@ -15,7 +15,7 @@ Translational motion of the center of mass of the simulation box was removed eve
 Trajectory analysis was performed with PyEmma \cite{Scherer2015} and MDTraj \cite{Mcgibbon2015}. 
 The selection of features for the structural clustering consisted of the distances between all pairs of polar atoms and the backbone torsional angles, resulting in total $57$ features. 
 This selection was reduced to three to five dimensions (depending on the peptide) with TICA \cite{Molgedey1994} using a cumulative variance of $0.9$ as criterion and a TICA correlation lag time of $50$~ps. 
-Based on these TICs, the frames were clustered with a common nearest neighbor (CNN) algorithm \cite{Keller2010, Weiß2021} using a cutoff of $0.2$ and a similarity of $20$. 
+Based on these TICs, the frames were clustered with a common nearest neighbor (CNN) algorithm \cite{Keller2010, Weiss2021} using a cutoff of $0.2$ and a similarity of $20$. 
 Comparison of selected clusters with NMR experiments was performed with the GROMOS++ package of programs. \cite{Eichenberger2011}
 The coefficients for the Karplus curve were taken from Vögeli \textit{et al.} \cite{Voegeli2015}
 Analysis of hydrogen bonds and torsional angles was performed with MDTraj. 
