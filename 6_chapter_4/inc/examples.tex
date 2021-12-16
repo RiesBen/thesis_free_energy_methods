@@ -1,42 +1,48 @@
 \subsection{Gromos System and Simulation Modules}
-Figure \ref{fig: GROMOSSystemExample} shows how PyGromosTools can be used to perform the simulation set-up of a short peptide in solution, following the example from the official GROMOS tutorial \cite{Lier2020}. The set-up steps include (i) generating a topology file for the given peptide residue sequence, (ii) generating a GROMOS coordinate file, (iii) solvating the peptide in water, and (iv) adding two Na+ ions to the system to neutralize the overall charge. In this procedure, all actions on files contained in the Gromos system are directly accessed and stored in the Gromos system, leading to a simplified function call of the GROMOS++ functions. 
-%The function call change can be visualized by inspecting the function signature of, for example, make\_top called from GROMOSPP and called from GROMOS system. This modification results in the simplified code, and the user does not need to think about the file management of GROMOS++ functions while building systems. (see Figure \ref{fig: GROMOSSystemExample} vs Figure \ref{fig: GROMOSWrappers})
-
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{fig/ApplicationExamples/codeExample_GROMOSSystemSolvBoxTut.png}
-    \caption{PyGromosTools code to perform the simulation set-up the pentapeptide in water from the GROMOS tutorial\cite{Lier2020}. The Gromos system is the central object for the system generation, and all functions can be called from there. The visualization of the start structure is called in the last line of code. The function rebase\_files() triggers an automatic file management function writing out all functions, that are part of the system.}
+    \caption{PyGromosTools code to perform the simulation set-up the pentapeptide in water from the GROMOS tutorial\cite{Lier2020}. The \textit{Gromos\_System} is the central object for the system generation, and all functions can be called from there. The visualization of the start structure is called in the last line of code. The function \textit{rebase\_files()} triggers an automatic file management function writing out all functions, that are part of the system.}
     \label{fig: GROMOSSystemExample}
 \end{figure}
 
-After the system generation, the Gromos system can be combined with the simulation module to carry out multiple simulations. For standard simulations, the default settings provided in the simulation block can be used. An example is shown in Figure \ref{fig: GROMOSSystemSimulationExample} for the energy minimization and production run. If a more complex set-up is required, the user can manually set a simulation parameter file (.imd) in the Gromos system and modify it as required. An important feature of the simulation block is that the given Gromos system will not be modified by the function (immutability principle). Only the returned system will be a modified version of the initial input. This immutability approach for Gromos systems in simulation blocks avoids confusion when the system state changes during scripting. 
+Figure \ref{fig: GROMOSSystemExample} shows how PyGromosTools can be used to perform the simulation set-up of a short peptide in solution, following the example from the official GROMOS tutorial \cite{Lier2020}. The set-up steps include (i) generating a topology file for the given peptide residue sequence, (ii) generating a GROMOS coordinate file, (iii) solvating the peptide in water, and (iv) adding two Na+ ions to the system to neutralize the overall charge. In this procedure, all actions on files contained in the \textit{Gromos\_System} are directly accessed and stored in the \textit{Gromos\_System}, leading to a simplified function call of the GROMOS++ functions. 
+%The function call change can be visualized by inspecting the function signature of, for example, make\_top called from GROMOSPP and called from GROMOS system. This modification results in the simplified code, and the user does not need to think about the file management of GROMOS++ functions while building systems. (see Figure \ref{fig: GROMOSSystemExample} vs Figure \ref{fig: GROMOSWrappers})
+
+
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{fig/ApplicationExamples/codeExample_GROMOSSystemSimulation.png}
-    \caption{PyGromosTools code to perform an energy minimization (emin) and MD simulation using the default settings (top left). After the simulation, the output coordinates can be visualized in the Jupyter notebook (top right), and the energy trajectory can be directly analyzed (bottom left). The simulation approach is realized with automatic file management in the background that is easy to understand (bottom right).}
+    \caption{PyGromosTools code to perform an emin and MD simulation using the default settings (top left). After the simulation, the output coordinates can be visualized in the Jupyter notebook (top right), and the energy trajectory can be directly analyzed (bottom left). The simulation approach is realized with automatic file management in the background that is easy to understand (bottom right).}
     \label{fig: GROMOSSystemSimulationExample}
 \end{figure}
 
+After the system generation, the \textit{Gromos\_System} can be combined with the \textbf{simulation} module to carry out multiple simulations. For standard simulations, the default settings provided in the simulation block can be used. An example is shown in Figure \ref{fig: GROMOSSystemSimulationExample} for the energy minimization and production run. If a more complex set-up is required, the user can manually set a simulation parameter file (.imd) in the \textit{Gromos\_System} and modify it as required. An important feature of the \textit{simulation} function is that the given \textit{Gromos\_System} will not be modified by the function (immutability principle). Only the returned system will be a modified version of the initial input. This immutability approach for \textit{Gromos\_System} in simulation blocks avoids confusion when the system state changes during scripting. 
 
-To perform longer simulations on a HPC cluster, the simulation can be split into multiple parts, which are submitted by changing the number of \textit{simulation\_runs} (Figure \ref{fig: GROMOSSystemSimulationHPCExample}). This parameter controls how often the simulation with the given parameters is executed. To submit the jobs to the queue, only the submission\_system parameter needs to be changed from \textit{LOCAL} to \textit{LSF}.
-
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{fig/ApplicationExamples/codeExample_GROMOSSystemHPCSimulation.png}
     \caption{PyGromosTools code to perform a longer MD simulation on a HPC cluster in three parts (\textit{simulation\_runs}=3). The adaptation of the code is minimal, as only a submission system has to be changed to \textit{LSF}.}
     \label{fig: GROMOSSystemSimulationHPCExample}
 \end{figure}
 
+To perform longer simulations on a HPC cluster, the simulation can be split into multiple parts, which are submitted by changing the number of \textit{simulation\_runs} (Figure \ref{fig: GROMOSSystemSimulationHPCExample}). This parameter controls how often the simulation with the given parameters is executed. To submit the jobs to the queue, only the \textit{submission\_system} parameter needs to be changed from \textit{LOCAL} to \textit{LSF}.
 
-\subsection{Example of File Handling}
+
+
+%--------------------------------
+\FloatBarrier
+
+\subsection{Further Examples}
+\subsubsection{Example of File Handling}
 %The power of the PyGromosTools file module lies in making data directly accessible in the Python environment with the correct type. 
 The PyGromosTools package allows to read/write GROMOS files, exchange parameter values, or use output files to perform further analysis. In Figure \ref{fig: GROMOSSystemSimulationExample}, a code example is given where the template simulation parameter file (.imd) from PyGromosTools is modified by the user to change the number of time steps and set the temperature to $600~K$. Finally, the parameter file is written out, for example for a GROMOS simulation started in the command shell. 
 %In addition, functions can be defined that support the user by adapting dependent attributes at the same time, like, for example, the force group number while changing the force groups in the \textit{FORCE} block (see Figure \ref{fig: FileHandlingExampleIMD}). Other files like the energy trajectory (\textit{tre}) can give direct access to the simulation data and can be used for further analysis or plotting (see Figure \ref{fig: GROMOSSystemSimulationExample}).
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{fig/ApplicationExamples/codeExample_GROMOSFiles.png}
+    \includegraphics[width=0.8\textwidth]{fig/ApplicationExamples/codeExample_GROMOSFiles.png}
     \caption{PyGromosTools code to modify the template system parameter file (.imd) as desired (e.g. changing the number of time steps or setting the temperature). The different parameters can be directly accessed and modified via their GROMOS name. Afterwards, the object can be easily written out.}
     \label{fig: FileHandlingExampleIMD}
 \end{figure}
@@ -47,8 +53,11 @@ The GROMOS API provides users with many functions from the GROMOS environment, i
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{fig/ApplicationExamples/codeExample_GROMOSWrapper.png}
+    \includegraphics[width=0.8\textwidth]{fig/ApplicationExamples/codeExample_GROMOSWrapper.png}
     \caption{The GROMOS and GROMOS++ wrappers facilitate the usage of GROMOS functionality from Python. After constructing the GROMOS wrapper classes, the programs of GROMOS++ and GROMOS are accessible as a function of the object. Note that the GROMOS 54A7 force-field parameters are taken directly from the data module inside the package.}
     \label{fig: GROMOSWrappers}
 \end{figure}
 
+
+%--------------------------------
+\FloatBarrier

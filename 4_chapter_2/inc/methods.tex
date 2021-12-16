@@ -4,7 +4,7 @@ To assess the performance of the greedy algorithm for selecting optimal distance
 
 \subsection{Molecules with Hydration Free Energies}
 The algorithm was applied for the calculation of relative hydration free energies $\Delta \Delta G_{\text{hyd}}$ (Figure \ref{fig:thermodynamic_cycle}).
-A set of 16 molecules with experimentally available hydration free energies\cite{Wolfenden1987,Rizzo2006,Nicholls2008,Guthrie2009,Guthrie2014,Mobley2014} were selected (Table S1 in the Supporting Information). % SUPPL tab:SI_moleculelist
+A set of 16 molecules with experimentally available hydration free energies\cite{Wolfenden1987,Rizzo2006,Nicholls2008,Guthrie2009,Guthrie2014,Mobley2014} were selected (Table \ref{tab:SI_moleculelist}). 
 The topologies for these molecules were taken from the ATB server.\cite{Stroet2018} The selected molecules are small and possess a ring core. The corresponding pairwise transformations are nevertheless relatively complex, and involve R-group and ring-size changes as well as scaffold hopping-type transformations (e.g. benzene to cyclohexane).
 
 \begin{figure}[h!]
@@ -15,11 +15,40 @@ The topologies for these molecules were taken from the ATB server.\cite{Stroet20
     \label{fig:thermodynamic_cycle}
 \end{figure}
 
+\begin{table}[H]
+\caption{Identifier of the ATB server\cite{Stroet2018}, IUPAC name, and canonical SMILES for the 16 molecules with experimental hydration free energies.}\label{tab:SI_moleculelist}
+%\scriptsize
+\resizebox{\columnwidth}{!}{%
+\centering
+\begin{tabular}{l | l | l }
+Ligand & Identifier & IUPAC name \\
+\hline
+1 & \_O6T & 1,2-dimethoxybenzene \\
+2 & \_O70 & (2R,5R)-2-methyl-5-prop-1-en-2-ylcyclohexan-1-one\\
+3 & \_O71 & (1S,5R)-2-methyl-5-prop-1-en-2-ylcyclohex-2-en-1-ol \\ 
+4 & \_P8I & cyclopentanone \\
+5 & 6J29 & 1-amino-4-hydroxyanthracene-9,10-dione \\
+6 & 6KET & 3-methoxyphenol \\
+7 & 8018 & (1R,2S,3R,4R,6S,7S)-1,3,4,7,8,9,10,10-octachlorotricyclo[5.2.1.02,6]dec-8-ene \\
+8 & E1VB & [1,2,2-Trifluoroethoxy]benzene\\
+9 & F313 & 4-methoxyaniline \\
+10 & G078 & 1,4-dimethylnaphthalene \\
+11 & G277 & cyclohexa-2,5-diene-1,4-dione\\
+12 & M030 & 1,3,5-trimethylbenzene \\
+13 & M097 & 2-chloroaniline \\
+14 & M218 & N-methylaniline \\
+15 & S002 & bromomethylbenzene \\
+16 & TVVS & pyridine-4-carbaldehyde\\
+\end{tabular}
+}
+\end{table}
+
+
 Pairwise TI calculations were carried out with a linked dual topology approach for the 16 molecules in a star-like scheme with molecule \textbf{12} as center, resulting in 15 relative hydration free energies (Figure \ref{fig: Pairwise_TI_M030_Graph}).
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{fig/methods/StateGraph_TI_2D_enumerated.png}
-    \caption{Set of 16 molecules with experimental hydration free energies available \cite{Stroet2018,Wolfenden1987,Rizzo2006,Nicholls2008,Guthrie2009,Guthrie2014,Mobley2014}. The black lines indicate the pairs of molecules for which TI calculations were performed. RestraintMaker was used to select pairwise distance restraints between the central molecule and all others (Figure S1 in the Supporting Information).} % SUPPL SIfig: Pairwise_TI_M030_Graph
+    \caption{Set of 16 molecules with experimental hydration free energies available \cite{Stroet2018,Wolfenden1987,Rizzo2006,Nicholls2008,Guthrie2009,Guthrie2014,Mobley2014}. The black lines indicate the pairs of molecules for which TI calculations were performed. RestraintMaker was used to select pairwise distance restraints between the central molecule and all others.} 
     \label{fig: Pairwise_TI_M030_Graph}
 \end{figure}
 
@@ -32,7 +61,22 @@ The simple point-charge (SPC) model\cite{Berendsen1981} was employed for water. 
 
 \subsubsection{Thermodynamic Integration}
 The topologies and coordinate files of the single states were obtained from the ATB server\cite{Stroet2018} and were merged to pairs using PyGromosTools\cite{Lehner2021}. 
-The coordinates of the different single molecules were aligned to each other using the common molecular skeleton of the molecules (only rings), with the \textit{align} function in RDKit\cite{Landrum2021}. After the alignment, RestraintMaker was used to place four restraints with $d_\text{res} = 0.1$~nm (Figures S1 and S2 in the Supporting Information). %SUPPL
+The coordinates of the different single molecules were aligned to each other using the common molecular skeleton of the molecules (only rings), with the \textit{align} function in RDKit\cite{Landrum2021}. After the alignment, RestraintMaker was used to place four restraints with $d_\text{res} = 0.1$~nm (Figures \ref{SIfig: Pairwise_TI_M030_Graph} and \ref{SIfig:Pairwise_TI_AddRE-EDS_Graph}). 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/results/pairwise/restraintPlacement/Restraints_PairwiseTI_M030Graph.png}
+    \caption{Selected distance restraints (colored spheres) for the 15 pairwise TI calculations with molecule 12 (i.e. 1,3,5-timethylbenzene) as the central molecule (see Main Article Figure 6). For each pair, four distance restraints were determined with the greedy algorithm.}
+    \label{SIfig: Pairwise_TI_M030_Graph}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/results/pairwise/restraintPlacement/Restraints_PairwiseTI_reedsaddition.png}
+    \caption{Selected distance restraints (colored spheres) for the TI simulations of subset A (see Main Article Figure 7a). For each pair, four distance restraints were determined with the greedy algorithm.}
+    \label{SIfig:Pairwise_TI_AddRE-EDS_Graph}
+\end{figure}
+
 The computational boxes for the simulations in water were generated with the GROMOS++ \cite{Eichenberger2011} program \textit{simbox} using a minimal solute-to-wall distance of $0.8~$nm, and relaxed by energy minimization. The scripts can be found in the example folder on Github (\textit{https://github.com/rinikerlab/restraintmaker/tree/main/examples/publication/\\b\_ATB\_solvationFreeEnergies}).
 The TI calculations were carried out with 21 evenly spaced $\lambda$-points between 0 and 1, both for the molecules in water and in vacuum. Each $\lambda$-point was equilibrated for 1~ns, followed by a production run of 5~ns. The free-energy differences were calculated using the Simpson integration implemented in the SciPy library.\cite{Virtanen2020}
 

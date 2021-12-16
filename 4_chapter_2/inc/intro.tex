@@ -1,11 +1,6 @@
-
+%General
 Recent methodological developments have improved the statistical robustness and the degree of automation of relative binding free-energy (RBFE) calculations, which are now routinely applied in drug discovery projects in industry. 
-\cite{Cournia2017,Cournia2020, Meier2021, Armacost2020c, Barros2022,
-       Heinzelmann2021, Gapsys2020, Jespers2019, Raman2020,
-       Christ2014, Gao2018, Tielker2021, Loeffler2018}
-       %reviews - FE methods/ usage in industry
-       %Methods - automation, accuracy
-       %FE benchmark - challenges
+\cite{Cournia2017,Cournia2020, Meier2021, Armacost2020, Barros2022,  Heinzelmann2021, Gapsys2020, Jespers2019, Raman2020, Christ2014, Gao2018, Tielker2021, Loeffler2018}
 %
 A free-energy calculation provides information about the relative populations of multiple end-states in equilibrium. Examples are drug design, where the end-states represent the different ligands that bind to a protein, \cite{Christ2009, Riniker2011, Wang2015, Wang2017, Aldeghi2016, Sidler2016,Yu2017, Jespers2019,Jiang2019, Paulsen2020} or protein engineering, where the end-states correspond to the different amino acids considered for one position in the protein.\cite{Shobana2000, Bieler2015B, Jespers2019B}
 Each free-energy calculation involves the choice of a sampling approach, a free-energy estimator (e.g. thermodynamic integration (TI),\cite{Kirkwood1935} the Zwanzig equation,\cite{Zwanzig1954} or Bennett's acceptance ratio (BAR)\cite{Bennett1976}), and a representation of the end-states (i.e., molecules or substructures of molecules) during the simulation.
@@ -15,7 +10,7 @@ Several possible representations have been proposed in the past to build a coord
 Historically, two approaches emerged, which were termed ``single topology'' \cite{Pearlman1991, Pearlman1994} and ``dual topology'' \cite{Pearlman1991, Gao1989}.
 Unfortunately, the terminology is not always clear in the literature and these terms are used ambiguously.\cite{Boresch1999, Rocklin2013, Fleck2021}
 To distinguish the different representation options, we propose here a terminology based on the difference in the respective coordinate space (Figure \ref{fig:Topology Types}). These definitions may differ from the historical ones. The single topology approach contains a single set of coordinates for both end states. In contrast,  the dual topology approach involves a separate set of coordinates for each end state. The two approaches can be seen as opposite extremes. Three sub-variants of the dual topology approach can be found in the literature: linked, separated and unconstrained.
-In addition, a ``hybrid topology'' approach was recently described,\cite{Jiang2019} which presents an intermediate between the single and dual approaches (Figure \ref{fig:Topology Types}). This scheme has been used in many studies for binding free energy calculations before but not called hybrid topology. In protein engineering however Shobana \textit{et al.} used a similar approach called hybrid topology.\cite{Shobana2000} The different representations vary with respect to sampling efficiency and the capability of handling complex transformations.
+In addition, a ``hybrid topology'' approach was recently described,\cite{Jiang2019} which presents an intermediate between the single and dual approaches (Figure \ref{fig:Topology Types}). This scheme has been used in many studies for binding free energy calculations before but not called hybrid topology. In protein engineering, Shobana \textit{et al.} \cite{Shobana2000} called a similar approach hybrid topology.\cite{Shobana2000} The different representations vary with respect to sampling efficiency and the capability of handling complex transformations.
 
 \begin{figure}[h!]
     \centering

@@ -1,77 +1,72 @@
 
-This thesis presented in chapter \ref{ch:feens} - \ref{ch:fereeds} developments of methodology and applications for free energy calculations. In chapter \ref{ch:cycpep} a study of the conformational behavior of macrocyclic peptoids  based on the change of a single stereo-center in context of their lipid-membrane permeability. Additionally did Chapter \ref{ch:feens} and \ref{ch:pyGrom} illuminate aspects of software development in science.
+In Chapters \ref{ch:feens} - \ref{ch:fereeds}, developments of free-energy methodology and its application for binding free energy calculations were presented. Chapter \ref{ch:cycPep} described a study of the conformational behavior of semi-peptidic macrocycles  to connect the change of a single stereocenter with their lipid-membrane permeability. Finally, Chapters \ref{ch:feens} and \ref{ch:pyGrom} illuminated aspects of software development in science.
 
 \section{Development of Scientific Software}
-Software development will be and is an essential concern in computational chemistry.  One reason is that computational chemistry software is getting more complex to boost calculation efficiency or the amount of functionality present. Another reason is that many published studies are hard to reproduce or can not be further developed, as the used source code is unavailable or can not be used on different platforms.\cite{Walters2013, Walters2020} A role model improving this situation could be seen in the open-source movement, which is a great driver of academic sciences.\cite{Walters2020, Oliphant2007} In this sense, many journals started to request non-commercial software of a publication to be open source. \cite{Jcconduct2021, Scienceconduct2021, Natureconduct2021}  Overall, this might also increase the readability and transferability from one hardware setup to another.\cite{Walters2020} The latter problem can be solved by using programming environment tools such as pip or anaconda for Python. \cite{Anaconda2020, Pypi2021}
+Software development is and will be an essential part of computational chemistry for different reasons.  Software in this area becomes steadily more complex in order to increase computational efficiency and the amount of available functionality. Further, many published studies are difficult to reproduce or methods cannot be further developed because the used source code is unavailable or not transferable to different platforms.\cite{Walters2013, Walters2020} The open-source movement, which has become an important driving force of academic sciences, can be considered a role model for improving this situation.\cite{Walters2020, Oliphant2007} In this line, many journals have started to request non-commercial software of a publication to be open source. \cite{Jcconduct2021, Scienceconduct2021, Natureconduct2021}  Overall, these developments will help to increase the readability and transferability of code.\cite{Walters2020} The latter issue can be solved by using programming environment tools such as pip or anaconda for Python. \cite{Anaconda2020, Pypi2021}
 
-All software produced in this thesis is open-source and can be accessed via the rinikerlab GitHub. (except for the produced Gromos code)
+All software packages developed in this thesis are open source and can be accessed via the rinikerlab GitHub repository. %(except for the produced Gromos code)
 
 %PyGromos Tools
-Next, a possible outlook for the PyGromosTools package will be provided. We believe that PyGromosTools shows the potential of combining scripting and programming languages in terms of ease of use and project efficiency and fulfills crucial keystones to modern scientific codes of conduct of scientific journals. 
-A long-term vision is to build from PyGromosTools a PyGROMOS package. On the one hand, it should integrate GROMOS++ \cite{Eichenberger2011} into the Python layer to make it easier and faster to develop its functionality. Efficiency issues could be solved by using Numba or other efficiency-improving tools. On the other hand, the integration of GROMOSXX \cite{Schmid2012} should be integrated tighter with the use of binding tools like pyBinds or SWIG. \cite{Wenzel2011, Beazley1996} These changes would lead to a more future-ready GROMOS environment that provides easier access to GROMOS and could even be shipped in one package and be compiled by the Python package managing tools. 
+Next, an outlook for the PyGromosTools package is provided. In our opinion, PyGromosTools combines scripting and programming languages in a productive way, making the package easy to use and efficient, thus fulfilling key conditions of modern scientific codes of conduct of scientific journals. 
+A long-term vision is to build from PyGromosTools a PyGROMOS package. This package should integrate GROMOS++ \cite{Eichenberger2011} into the Python layer to make it easier and faster to extend its functionality. Efficiency issues could be solved by using Numba or other efficiency-improving tools. In addition, the GROMOS MD engine \cite{Schmid2012} should be integrated tighter with the use of binding tools like pyBinds or SWIG. \cite{Wenzel2011, Beazley1996} These changes are expected to lead to a more ``future-ready'' GROMOS environment that provides easier access to its functionality. The package could be compiled by the Python package managing tools. 
 
 
 %---------------------------------------------------------------------------------------
 
-\section{Free Energy Calculations with RE-EDS}
+\section{Perspectives for RE-EDS}
 %global trends and needs
-In recent years, a trend can be identified for the free energy method development, a substantial amount of publications on path-free multi-state methods appeared. \cite{Donnini2011, Knight2011, Bieler2015, Sidler2016, Perthold2018} One of the attractive aspects of such methods is the simulation time efficiency. This effect results from reasons, first the phase space overlap that allows simultaneous valuable sampling of multiple end-states.  Second, the method does not require predefined paths for the sampling of the end-state transitions, thus enabling the systems to find an optimal spanning tree of the state graph dynamically. Finding a good spanning tree can generate a performance loss for many other methods that rely for efficiency reasons on a minimal set of defined paths.\cite{Jespers2019}
-Nevertheless, robust and accurate metrics are needed to classify each end-state sampling amount and quality as generalized quality control for path-free multi-state methods. Subsequently, the simulation parameters can be adapted according to these metrics to counter sampling deficiencies of the end-state space, as described for RE-EDS in chapter \ref{ch:fereeds}. 
+In recent years, an increasing amount of publications on path-free multi-state methods has appeared. \cite{Donnini2011, Knight2011, Bieler2015, Sidler2016, Perthold2018} An attractive aspect of such methods is their computational efficiency. This effect can be attributed to (i) the phase-space overlap that allows simultaneous sampling of multiple end-states, and (ii) no predefined paths for the sampling of the end-state transitions is required, thus allowing the system to find an optimal spanning tree of the state graph dynamically. 
+Especially (ii) was reported in the literature as a problem that leads to efficiency loss of pairwise path dependent methods.\cite{Jespers2019}
+To assess how well each end-state is sampled, robust metrics are needed for path-free multi-state methods. With such metrics in hand, the simulation parameters can be refined to ensure equal sampling of all end-states, as described for RE-EDS in Chapter \ref{ch:fereeds}. 
 
 %RE-EDS
 \subsection{Method Development}
-%global trends and needs
-In recent years, a trend can be identified for the free energy method development, a substantial amount of publications on path-free multi-state methods appeared. \cite{Donnini2011, Knight2011, Bieler2015, Sidler2016, Perthold2018} One of the attractive aspects of such methods is the simulation time efficiency. This effect results from reasons, first the phase space overlap that allows simultaneous valuable sampling of multiple end-states.  Second, the method does not require predefined paths for the sampling of the end-state transitions, thus enabling the systems to find an optimal spanning tree of the state graph dynamically. Finding a good spanning tree can generate a performance loss for many other methods that rely for efficiency reasons on a minimal set of defined paths.\cite{Jespers2019}
-Nevertheless, robust and accurate metrics are needed to classify each end-state sampling amount and quality as generalized quality control for path-free multi-state methods. Subsequently, the simulation parameters can be adapted according to these metrics to counter sampling deficiencies of the end-state space, as described for RE-EDS in chapter \ref{ch:fereeds}. 
-
-%RE-EDS
-A RE-EDS methodology was established to adapt all sampling defining parameters based on criteria retrieved from the simulation by the defined general metrics. 
-In order to reduce the required optimization time of the pipeline, multiple developments could be tested. 
-First, the provided information from the energy offset information about the RE exchange probability of the replica positions could be used as an initial s-optimization step. 
+A pre-processing pipeline was established to optimize all RE-EDS parameters based on the defined general metrics. 
+In order to reduce the optimization time of the pipeline, multiple options can be explored. 
+First, the information about the replica-exchange gap region included in the initial short simulation to obtain energy offsets could be used to refine the initial $s$-distribution (instead of a logarithmic distribution). 
 
 % Non-Equilibrium Eoff estimation
-Second, it is an interesting question if the initial state optimization process could estimate the free energy offset as the work of the state transformation with the general starting state as a reference and the Jarzynski equality. \cite{Jarzynski1997,  Xiong2006} 
+A second idea is to investigate whether the initial state optimization process could be used to estimate the energy offsets. This could be done by using the Jarzynski equality and the work that is required to change the initial maximally contributing end-state of the system to the desired end-state. \cite{Jarzynski1997,  Xiong2006} 
 \begin{equation}
-	\Delta F_{AB} = -\frac{1}{\beta} \ln\langle e^{-\beta W_{AB}} \rangle_R
+	\Delta F_{BA} = -\frac{1}{\beta} \ln\langle e^{-\beta W_{BA}} \rangle_R ,
 \end{equation}
-Wit the work W as: \cite{Xiong2006}
+where the work $W$ is defined as, \cite{Xiong2006}
 \begin{equation}
-	W_{A \rightarrow B}(t)= \int_{0}^{t} \frac{\partial H(t)}{\partial t} dt .
+	W_{BA}(t)= \int_{0}^{t} \frac{\partial H(t)}{\partial t} dt .
 \end{equation}
-s
+%
 % Use all Data to Estimate dF
-Another significant improvement would be the integration of the information from all replicas in the final free energy estimation, not only from replica $s=1$. 
-Therefore a free energy estimator like M-BAR\cite{Shirts2008} or any other multi-state (here in the sense of replicas) reweighting scheme could be an essential asset to the RE-EDS pipeline in order to further cut the production time. Note that BAR\cite{Bennett1976} was already applied to $\lambda$-EDS in Ref. \citenum{Konig2021}.
+Another significant improvement could be the integration of the information from all replicas in the final free-energy estimation, not only from replica $s=1.0$. 
+For this, a free-energy estimator like M-BAR\cite{Shirts2008} or any other multi-state (here in the sense of replicas) reweighting scheme may be used. Note that BAR\cite{Bennett1976} was already applied to $\lambda$-EDS in Ref.~\citenum{Konig2021}.
 
 %2D-REEDS
-Finally, the sampling of the implemented 2D-RE-EDS approach, exchanging s-parameters and energy offsets, needs to be tested. For conformational studies, it could be of interest to implement a 2D - RE-EDS variant that exchanges s-parameters and temperature to generate a hybrid that explores with enhanced sampling the conformational space.
+Finally, the sampling of the implemented 2D-RE-EDS approach, exchanging both $s$-parameters and energy offsets, needs to be tested. For conformational studies, it may be of interest to develop a 2D - RE-EDS variant that exchanges both $s$-parameters and temperature to enhance sampling further.
 
 %Software
-\subsection{Software Development}
+\subsection{RE-EDS Software Development}
 %%Dynamic Pipelining
-From an implementation point of view, it could be of interest to support the RE-EDS pipeline \cite{Ries2021B} with a dynamic approach that decides by sampling behavior which module of the pipeline is required to be applied in the optimization phase. Such a dynamic module approach could improve the robustness and efficiency of the pipeline to build up a more project-independent methodology.
+From an implementation point of view, the RE-EDS pipeline \cite{Ries2021B} could be made more dynamic such that it is decided on-the-fly which modules of the pipeline are needed to be applied during optimization. Such a dynamic modular approach could improve the robustness and efficiency of the pipeline.
 
 %%PygromosTools update
-On this note, it should be added that a PyGromosTools\cite{Lehner2021} version update should be considered, such that the approach can be made more platform-independent.
+%On this note, it should be added that a PyGromosTools\cite{Lehner2021} version update should be considered, such that the approach can be made more platform-independent.
 
-\subsection{Applications}
+\subsection{RE-EDS Applications}
 %%Towards high-throughput
-Finally, perspectives on possible future applications will be given. 
-In the future, aspects such as the complexity of transformation and the number of end-states will be further investigated. 
-This knowledge could be used to develop a robust high-throughput approach for RE-EDS by deriving metrics that help construct feasible reeds systems from subselections of a ligand database. Such a clustering approach (e.g., k-means) could facilitate the selections, which groups the database of ligands into large simulation systems with one or multiple reference ligands shared by the simulations.  The clustering metric could be based on simple topological and 3D-structure-based criteria or employing molecular dynamic fingerprints (MDFP), including the dynamic ligand behavior into the clustering.\cite{Riniker2017}
+In the future, aspects such as the complexity of transformation and the number of end-states in RE-EDS simulations will be further investigated. 
+This experience gained from these studies could be used to develop a robust high-throughput approach with RE-EDS, where feasible subsets of ligands are selected from databases, e.g. by clustering. The subsets will share one or multiple reference ligands such that all relative binding free energies can be calculated. The clustering metric could be based on simple topological and 3D-structure-based criteria, or employ molecular dynamic fingerprints (MDFP),\cite{Riniker2017} thus including the dynamic ligand behavior into the clustering.
 
 
 %% Docking position validation.
- Another perspective for a novel RE-EDS application could be validating docking results. Docking is a commonly utilized method to generate ligand-protein complex. \cite{Zhao2015, Eberhardt2021, Morris2009} However, often, the validation of such results is tricky, especially as the docking scoring functions are relatively simplistic.\cite{Chen2015} Therefore, MD simulations are usually employed to perform an improved validation with conformational ensembler of the docking results.\cite{Zhao2015, Feng2015, Sokkar2011, Chavda2019} With RE-EDS, a performant approach could be established that investigates the docking results. In this approach, a separated topology approach \cite{Rocklin2013} with weak position restraints could be employed. However, an open question remains: how the undersampling space behaves, containing multiple end-states that are clearly separated in the coordinate space. 
+Another possible RE-EDS application could be to validate docking results. Docking is a commonly utilized method to generate ligand-protein complex. \cite{Zhao2015, Eberhardt2021, Morris2009} However, the validation of such results is often non-trivial, especially as the docking scoring functions are relatively simplistic.\cite{Chen2015} Therefore, MD simulations are usually employed to check the robustness of docking poses.\cite{Zhao2015, Feng2015, Sokkar2011, Chavda2019} With RE-EDS, a performant approach could be established that evaluates the docking results. For this, a separated dual topology approach \cite{Rocklin2013} with weak position restraints could be employed. A challenge might thereby be the undersampling region of the $s$-distribution when the end-states are clearly separated in the coordinate space. 
 
 
 %---------------------------------------------------------------------------------------
 
-\section{Membrane Permeability beyond RO5}
-Cyclic peptides are well experimentally studied molecules beyond the Lipinski rule of 5 (BRO5) and have a complex conformational space. The molecules undergo passive membrane transport, which is one of their fascinating aspects.\cite{Rezai2006, Rezai2006A, Matsson2017,Whitty2016} 
-The chameleonic character of cyclic peptides is based on their conformational behavior allowing them to adapt to apolar and polar environments.\cite{Witek2016, Witek2017, Witek2019, Wang2021} This interesting property might give rise to new concepts in rational drug design for BRO5 molecules.
-Important factors seem to be hiding polar atoms and rigidifying the cycle structure in the permeable conformation.\cite{Witek2019, Wang2021} 
-The ongoing modeling of how cyclic peptides pass through cell membranes could further increase our knowledge on the mechanism of membrane permeation and help identify essential features of the cyclic peptides.
+\section{Membrane Permeability Beyond Rule of 5}
+Cyclic peptides belong to the so-called ``beyond the Lipinski rule-of-5'' (bRo5) class of compounds, and have a complex conformational behavior. Some cyclic peptides are able to passively cross membranes despite their size, which is one of their fascinating aspects.\cite{Rezai2006, Rezai2006A, Matsson2017,Whitty2016} 
+A reason for this is hypothesized to be a chameleonic character in terms of their conformational behavior, which allows them to adapt to apolar and polar environments.\cite{Witek2016, Witek2017, Witek2019, Wang2021} This interesting property might give rise to new concepts in rational drug design for bRo5 molecules.
+Important factors appear to be the shielding of polar atoms and the rigidification of the cyclic structure in the permeable conformation.\cite{Witek2019, Wang2021} 
+The ongoing modeling of how cyclic peptides pass through cell membranes could further increase our understanding of the mechanism of membrane permeation, and help to identify essential structural features of bioavailable cyclic peptides.
 
 
 

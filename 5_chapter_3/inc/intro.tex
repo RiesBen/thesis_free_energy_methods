@@ -13,7 +13,7 @@ If a (large) series of $N$ compounds is investigated, the free-energy difference
 Nevertheless, manual optimizations may sometimes be required to determine the best sampling strategy \cite{Jespers2019}.
 Furthermore, calculating only a subset of the edges leads to a larger uncertainty in the estimated free-energy difference for pairs that are no longer directly connected. As $\Delta \Delta G^\text{bind}_{ji}$ values are often relatively small, the increased uncertainty may negatively impact the usefulness of such calculations in practical applications. 
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\columnwidth]{fig/intro/State_graph.png}
     \caption{State graph to calculate relative binding free energies, where the nodes represent specific compounds $A$ - $E$ in a particular environment (water/protein). 
@@ -31,3 +31,4 @@ In order to enhance sampling further, combinations of EDS with enhanced sampling
 In this study, we present an improved automated workflow for RE-EDS simulations that was restructured into two phases. The first phase aims to automatically estimate method parameters that otherwise had to be provided by the user. The second phase automatically optimizes the estimates from the first phase to retrieve a robust parameter set. The final production phase calculates the relative binding free energies of multiple ligands from a single simulation per environment. 
 The robustness and versatility of the RE-EDS workflow are demonstrated on a series of five inhibitors of human checkpoint kinase 1 (CHK1) \cite{Huang2012}.
 These ligands were selected by Wang \textit{et al.} \cite{Wang2017} as a challenging benchmarking set for FEP calculations since the changes between these ligands exemplify different types of core-hopping transformations (i.e. ring size change, ring opening/closing, and ring extension). Special soft bond-stretching terms were developed to be able to handle these transformations \cite{Wang2017}. In contrast to many other methods, no such special soft bonds are required with RE-EDS as we can use a ``dual topology'' approach \cite{Riniker2011} in a straightforward manner. 
+\FloatBarrier

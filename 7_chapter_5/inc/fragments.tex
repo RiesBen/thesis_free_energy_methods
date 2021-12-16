@@ -23,3 +23,30 @@ Two classes of modifications were implemented on chemotype A: single peptoid rep
 All of the possible combinations of these variations were generated, providing a total of $4 × 9 = 36$ compounds with identical molecular weights (except for non-methylated tether derivatives), nearly identical sequence and identical ring sizes, leaving as little room as possible for confounding factors. 
 The passive permeability of the resulting macrocycles was measured in the parallel artificial membrane permeability assay (PAMPA) and their cellular permeability in the Caco-2 assay.\cite{Di2015}
 We then selected two pairs of diastereomers that differ only by their stereochemistry of the tether methyl group yet either differ greatly in passive permeability or not, and performed molecular dynamics (MD) simulations coupled with solution NMR to rationalize the origin of these differences.\cite{Balazs2019}
+
+
+
+
+
+
+% METHODS NMR
+\subsection{NMR Measurements}
+The selected peptides Nleu-5R, Nleu-5S, Nleu-2R, and Nleu-2S were characterized by NMR in chloroform-d (Cambridge Isotope Laboratories).
+The following spectra were recorded if not stated otherwise: $^1$H NMR, total correlation spectroscopy (TOCSY), double-quantum filtered correlation spectroscopy (COSY), multiplicity edited $^{13}$ heteronuclear single quantum coherence (HSQC), $^{13}$C heteronuclear multiple bond correlation (HMBC), and NOESY.
+All spectra were measured at $25~^\circ$C on a Bruker Avance III HD $600~$MHz spectrometer equipped with a N$_2$-cooled Prodigy triple resonance probe.
+$^{13}$C HSQC and TOCSY spectra were recorded with sensitivity enhancement. TOCSY was run with an $80~$ms DIPSI2 isotropic mixing time.
+The mixing time for the NOESY experiments was set to $300~$ms if not stated otherwise. 
+For compound Nleu-5R, an EASY-ROESY \cite{78} spectrum with $100~$ms mixing time was recorded instead of a NOESY. 
+For all spectra, the time domain in both dimensions was extended to twice its size by zero filling, apodized with a cos2 function, and the baseline of the resulting spectra was corrected with a polynomial of fifth order or using the Whittacker smoother algorithm. \cite{79}
+Processing was done with Bruker TopSpin version 4.0 (Bruker Biospin AG) and MestReNova 12.0 (Mestrelab Research). Resonance assignment and volume integration of the ROESY cross-peaks were performed with SPARKY 3.115. \cite{80}
+The assignments are summarized in Table S1 .
+$^3$J$_\text{\text{HN–H}\alpha}$ coupling constants for compounds Nleu-5R, Nleu-5S, Nleu-2R, and Nleu-2S were extracted directly from the $^1$H spectrum with MestReNova and are summarized in Table S2 .
+Volumes were extracted from NOESY and ROESY spectra by integration of the cross-peaks with a Gaussian function (eq 1).\cite{1}
+$V_{1,2}$ is the volume of the cross-peak between proton 1 and 2, a and b are fitting parameters, and $r_{1,2}$ is the corresponding interatomic distance.
+A two-point calibration was done with the averaged interatomic distance (e.g., on both sides of the diagonal) between the diastereotopic protons NLeu H$\alpha_1$–H$\alpha_2$ ($1.8~$Å) and the distance between H$\alpha$ and H$\beta^*$ in the alanine residue ($2.65~$Å). \cite{81}
+In the second case, the volume was previously divided by 3 to account for the three protons in the methyl group. 
+Cross-peaks integrated on both sides of the diagonal were averaged, and error bonds of $\pm 20\%$ were added to the calculated distance. 
+Since the GROMOS++ programs can do multiplicity correction and averaging over indistinguishable protons automatically, the reported data do not account for that. 
+The volumes and the corresponding distances can be found in Tables S3–S6 .
+
+

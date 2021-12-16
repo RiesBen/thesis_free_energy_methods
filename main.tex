@@ -25,7 +25,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Handling of the references - Reference lib	
 \usepackage[sort,super,comma,compress]{natbib}
-\usepackage{natmove}
+\usepackage{natmove} %should move citations into the correct place
 \bibliographystyle{unsrt}
  
 
@@ -39,8 +39,12 @@
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Tables
-\usepackage{multirow}
+% Tables & Figures
+\usepackage{multirow}  % combine table fields
+\usepackage{adjustbox} %good scaling of tables to pagesize
+\usepackage{longtable} %multipage tables
+\usepackage{graphicx}  %including figures&tables
+\usepackage{placeins}  % floatbarriers
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Special Itemization 
@@ -51,12 +55,11 @@
 % Cover import into the pdf
 \usepackage{pdfpages}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TITLE
 \title{Free Energy Methods: \\Drug-Like Molecules and Macrocycles}
 
-\thesisnumber{?????}
+\thesisnumber{28165}
 \author{\textls{Benjamin Joachim Ries}}
 \birthdate{15.03.1991}
 \citizen{Germany}
@@ -74,30 +77,31 @@
 \examiner{Prof. Dr. Sereina Riniker}
 \coexaminer{Prof. Dr. Philippe H\"{u}nenberger}{Prof. Dr. Niels Hansen}
 
-\date{2019}
+\date{2022}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
  \frontmatter
-    \includepdf[pages=-]{0_cover/frontcover.pdf}
+    %\includepdf[pages=-]{0_cover/frontcover.pdf}
      
     \maketitle
-    %\dedication{Here a nice dedication}
+    \dedication{Here a nice dedication}
+    \setcounter{page}{1}
     \input{1_frontback/acknowledgements.tex}
     \tableofcontents
 
     \input{1_frontback/summary.tex}
-    %\input{1_frontback/zusammenfassung.tex}
+    \input{1_frontback/zusammenfassung.tex}
     \input{1_frontback/publications.tex}
 
 \mainmatter
     \subfile{2_chapter_intro/content_introduction.tex}
-    %\subfile{3_chapter_1/content_chapter1.tex}
-    %\subfile{4_chapter_2/content_chapter2.tex}
-    %\subfile{5_chapter_3/content_chapter3.tex}
-    %\subfile{6_chapter_4/content_chapter4.tex}
-    %\subfile{7_chapter_5/content_chapter5.tex}
+    \subfile{3_chapter_1/content_chapter1.tex}
+    \subfile{4_chapter_2/content_chapter2.tex}
+    \subfile{5_chapter_3/content_chapter3.tex}
+    \subfile{6_chapter_4/content_chapter4.tex}
+    \subfile{7_chapter_5/content_chapter5.tex}
     \subfile{8_chapter_outlook/content_outlook.tex}
 
 \backmatter
