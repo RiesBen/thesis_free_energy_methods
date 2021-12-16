@@ -1,16 +1,18 @@
-From the PAMPA and Caco-2 assays performed by our collaborators, a large ``permeability cliff''  between Nleu-5R and 5S could be identified (Figure \ref{fig:permAssays}). Permeability cliffs were also observed between some other pairs of epimers, but to a lesser extent (e.g., Nala-4R vs 4S with $−log(P_e)$~=~$7.63$ and $6.63$, Nphe-2R vs $2S$ with $−log(P_e)$~=~$7.16$ and $6.31$, and Nphe-3R vs 3S with $7.49$ and $6.49$). 
+From the PAMPA and Caco-2 assays performed by our collaborators, a large ``permeability cliff''  between Nleu-5R and 5S could be identified (Figure \ref{fig:permAssays}). Permeability cliffs were also observed between some other pairs of epimers, but to a lesser extent (e.g., Nala-4R vs 4S with $−log(P_e)$~=~$7.6$ and $6.6$, Nphe-2R vs 2S with $−log(P_e)$~=~$7.2$ and $6.3$, and Nphe-3R vs 3S with $−log(P_e)$~=~$7.5$ and $6.5$). 
 Extensive MD simulations were carried out in a polar and apolar environment (i.e., water and chloroform) to study the influence of the stereocenter change on the conformational behavior of the molecules. As a negative control group, we used the molecule pair Nleu-2R and 2S. 
 
 \FloatBarrier
 %-------------------------------------------
 
-\subsection{Start Configurations} 
-The starting conformations used for simulations were generated with  the macrocycle variant of the OMEGA conformer generator from OpenEye.  \cite{Hawkins2012, Hawkins2010, Poongavanam2018}
+\subsection{Starting Configurations} 
+The starting conformations used for the MD simulations were generated with the macrocycle variant of the OMEGA conformer generator from OpenEye.  \cite{Hawkins2012, Hawkins2010, Poongavanam2018}
 The generated conformers showed similar distributions in terms of hydrogen bonds (H-bonds) and backbone torsional angles for the enantiomer pairs (Tables \ref{tab: SIhbondRatios} and \ref{tab: SIhbondAmountRatios}).
+Therefore, we started the MD simulations for each enantiomer pair from similar starting points.
+In these conformer ensembles, approximately $50\%$ of the structures had a trans-peptoid bond for each molecule, and $50\%$ had a cis-peptoid bond.
 
 \begin{table}[h!]
 \centering
-\caption{Hydrogen bond occurrence in percentage for the starting conformations of Nleu-5R, Nleu-5S, Nleu-2R, and Nleu-2S.}
+\caption{Hydrogen-bond occurrence in percentage for the starting conformations of Nleu-5R, Nleu-5S, Nleu-2R, and Nleu-2S.}
 \label{tab: SIhbondRatios}
   \begin{adjustbox}{max width=\textwidth}
   \begin{tabular}{lcccc}
@@ -28,7 +30,7 @@ ALA-O PHE-NH           & 24           & 7            & 21 & 19 \\
 
 \begin{table}[h!]
 \centering
-\caption{ Percentage of starting conformations with zero, one, or two hydrogen bonds for
+\caption{Percentage of starting conformations with zero, one, or two hydrogen bonds for
 Nleu-5R, Nleu-5S, Nleu-2R, and Nleu-2S.}
 \label{tab: SIhbondAmountRatios}
   \begin{adjustbox}{max width=\textwidth}
@@ -45,20 +47,15 @@ Nleu-5S        & 37             & 51         &  12  \\
 \end{adjustbox}
 \end{table}
 
-Therefore we started the MD-simulations for each enantiomer pair from similar starting points.
-In these distributions approximately $50\%$ of the starting structures had a trans-peptoid bond for each molecule, and $50\%$ had a cis-peptoid bond.
-
 \FloatBarrier
 %-------------------------------------------
 
 \subsection{CNN Clustering} 
-The cumulative $25~\mu s$ simulation data for each peptide and solvent were clustered separately based on the backbone dihedrals and the polar atom distances. The resulting clusters could be structurally classified depending on the conformation of the peptoid bond (i.e., cis or trans; see Tables \ref{tab:SIClusterTransCHCL3} and \ref{tab: SIClusterTransWater}). The number of generated clusters varied but usually the size of the clusters decreased rapldily. In the clustering cis and trans configurations were nicely seperated, into different clusters.
+The cumulative 25~$\mu$s simulation data for each peptide and solvent were clustered separately based on the backbone dihedrals and the polar atom distances. The resulting clusters could be structurally classified depending on the conformation of the peptoid bond (i.e., cis or trans; see Tables \ref{tab:SIClusterTransCHCL3} and \ref{tab: SIClusterTransWater}). The number of generated clusters varied but usually the size of the clusters decreased rapidly. Conformations with a cis or trans-peptoid bond were cleanly separated into different clusters.
 
 \begin{table}[h!]
 \center
-\caption{List  of  clusters  identified  in  the  simulations  in  chloroform  with  the  respective 
-population  (in  percentage).  Clusters  with  the  peptoid  bond  in  trans-conformation  are 
-labeled with *. In the other clusters, the peptoid bond is in cis-conformation.}
+\caption{List of clusters identified in the simulations in chloroform with the  respective population (in percentage). Clusters with the peptoid bond in trans-conformation are labeled with *. In the other clusters, the peptoid bond is in cis-conformation.}
 \label{tab:SIClusterTransCHCL3}
   \begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{c|lc||c|lc}
@@ -96,9 +93,7 @@ Molecule                  & Cluster & Size $[\%]$ & Molecule                  & 
 %SI-tab: 10
 \begin{table}[h!]
 \center
-\caption{ List  of  clusters  identified  in  the  simulations  in  water  with  the  respective 
-population  (in  percentage).  Clusters  with  the  peptoid  bond  in  trans-conformation  are 
-labeled with *. In the other clusters, the peptoid bond is in cis-conformation}
+\caption{List of clusters identified in the simulations in water with the respective population (in percentage). Clusters with the peptoid bond in trans-conformation are labeled with *. In the other clusters, the peptoid bond is in cis-conformation.}
 \label{tab: SIClusterTransWater}
   \begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{c|lc||c|lc}
