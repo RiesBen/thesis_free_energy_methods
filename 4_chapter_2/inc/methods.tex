@@ -66,19 +66,13 @@ The coordinates of the different single molecules were aligned to each other usi
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{fig/results/pairwise/restraintPlacement/Restraints_PairwiseTI_M030Graph.png}
-    \caption{Selected distance restraints (colored spheres) for the 15 pairwise TI calculations with molecule 12 (i.e. 1,3,5-timethylbenzene) as the central molecule (see Main Article Figure 6). For each pair, four distance restraints were determined with the greedy algorithm.}
+    \caption{Selected distance restraints (colored spheres) for the 15 pairwise TI calculations with molecule 12 (i.e. 1,3,5-timethylbenzene) as the central molecule (Figure \ref{fig: Pairwise_TI_M030_Graph}). For each pair, four distance restraints were determined with the greedy algorithm.}
     \label{SIfig: Pairwise_TI_M030_Graph}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{fig/results/pairwise/restraintPlacement/Restraints_PairwiseTI_reedsaddition.png}
-    \caption{Selected distance restraints (colored spheres) for the TI simulations of subset A (see Main Article Figure 7a). For each pair, four distance restraints were determined with the greedy algorithm.}
-    \label{SIfig:Pairwise_TI_AddRE-EDS_Graph}
-\end{figure}
 
 The computational boxes for the simulations in water were generated with the GROMOS++ \cite{Eichenberger2011} program \textit{simbox} using a minimal solute-to-wall distance of $0.8~$nm, and relaxed by energy minimization. The scripts can be found in the example folder on Github (\textit{https://github.com/rinikerlab/restraintmaker/tree/main/examples/publication/\\b\_ATB\_solvationFreeEnergies}).
-The TI calculations were carried out with 21 evenly spaced $\lambda$-points between 0 and 1, both for the molecules in water and in vacuum. Each $\lambda$-point was equilibrated for 1~ns, followed by a production run of 5~ns. The free-energy differences were calculated using the Simpson integration implemented in the SciPy library.\cite{Virtanen2020}
+The TI calculations were carried out with 21 evenly spaced $\lambda$-points between 0 and 1, both for the molecules in water and in vacuum. Each $\lambda$-point was equilibrated for $1$~ns, followed by a production run of $5$~ns. The free-energy differences were calculated using the Simpson integration implemented in the SciPy library.\cite{Virtanen2020}
 
 \subsection{Analysis}
 The analysis of the simulations was carried using GROMOS++ \cite{Eichenberger2011} and PyGromosTools \cite{Lehner2021}. In addition, the following Python packages were employed for the statistical analysis and plotting: Pandas \cite{Mckinney2010}, Matplotlib \cite{Hunter2007}, NumPy \cite{Vanderwalt2011}, SciPy \cite{Virtanen2020}, mpmath \cite{Johansson2013}, and Jupyter notebooks.\cite{Kluyver2016}

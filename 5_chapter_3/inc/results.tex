@@ -4,14 +4,11 @@ The chosen model system of five inhibitors of CHK1 kinase exemplifies different 
 The RE-EDS workflow was started by estimating the lower bound for the $s$-distribution. Using the above mentioned undersampling criterion (see Methods section), a lower bound of $s=0.01$ was determined for the protein-ligands complex and $s=0.0056$ for the ligands in water. 
 
 %State Optimizations
-Optimized coordinates were obtained for all five ligands, as verified by comparing the potential-energy distribution from the EDS simulation with the one extracted from a standard MD simulation of the respective ligand (Figure \ref{SIfig:CHK1_RingOpening_soptimization_efficiency}). 
-From these same steps, the potential-energy thresholds for the occurrence sampling ($T_{i}^{\text{phys}}$) and undersampling ($T_{i}^{\text{us}}$) were estimated.
-%%%VERWURSCHTELN:
-A fast transition of the initial maximally contributing end state to the desired maximally contributing end state was observed by monitoring the maximally contributing end state over time.
-The transition occurred latest after $0.5$~ns, and the system remained in the biased end state for the rest of the simulation time.
+A fast transition of the initial maximally contributing end state to the desired maximally contributing end state was observed in the End State Generation. This process was monitored by the maximally contributing end state over time.
+The transition occurred latest after $1.3$~ns, and the system remained in the biased end state for the rest of the simulation time.
 In both water and complex simulations, the desired end state was sampled about $~99\%$ of the simulation time with the exception of L19 in water (Table \ref{SItab:RingCycleOpenin_sampling_fraction_optimizedStates}).
-
-
+Optimized coordinates were obtained for all five ligands, as verified by comparing the potential-energy distribution from the EDS simulation with the one extracted from a standard MD simulation of the respective ligand (Figure \ref{SIfig:CHK1_RingOpening_soptimization_efficiency}). 
+From these same steps, the potential-energy thresholds for the occurrence sampling ($T_{i}^{\text{phys}}$) and undersampling ($T_{i}^{\text{us}}$) were estimated (Table \ref{RingCycleOpenin_PotentialTresholds}).
 
 \begin{table}[H]
 \centering
@@ -34,7 +31,6 @@ In both water and complex simulations, the desired end state was sampled about $
 To inspect if the optimized state simulations' results sufficiently represent the target states, a comparison between the target state obtained potential-energy distributions in the EDS simulations with MD simulations consisting of only the target state was conducted (Figure \ref{fig:CHK1_set2_stateOptimization_EnergyDistribution}). 
 
 
-%ADDTEXT
 \begin{table}[H]
 \centering
 \caption{Potential thresholds for occurrence sampling ($T_{i}^{\text{phys}}$) and undersampling ($T_{i}^{\text{us}}$) determined during the parameter exploration (in kJ~mol$^{-1}$).}

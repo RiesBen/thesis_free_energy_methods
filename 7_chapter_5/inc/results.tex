@@ -171,7 +171,7 @@ It was not possible to assign the minor conformers due to signal overlap and low
     \end{adjustbox}
 \end{table}
 
-The results from the MD simulations were compared to the NMR data of the major conformer, in particular the $^3J_{HN–H\alpha}$ coupling constants and the NOE-derived interproton distances (Tables \ref{fig: SINOE violations Nleu-5R} and \ref{fig: SINOE violations Nleu-2SII}).
+The results from the MD simulations were compared to the NMR data of the major conformer, in particular the $^3J_{\text{HN–H}\alpha}$ coupling constants and the NOE-derived interproton distances (Tables \ref{fig: SINOE violations Nleu-5R} and \ref{fig: SINOE violations Nleu-2SII}).
 
 \begin{figure}[h!]
     \centering
@@ -242,7 +242,6 @@ Therefore, we first analyzed the hydrogen-bonding patterns in the clusters in ch
     \end{adjustbox}
 \end{table}
 
-%Analysis was restricted to the clusters with the trans-peptoid bond.
 For a given molecule in an apolar environment, having access to conformations in which polar groups are shielded -- such as by H-bonding -- should be energetically favorable. 
 To assess this effect, we extracted the potential energy of the peptides (i.e., intramolecular and peptide-solvent contributions) from the trajectories. 
 The normality of each potential-energy distribution was confirmed by the Shapiro–Wilk test \cite{Shapiro1965} (Table \ref{tab: SIstatTestingNorm}). 
@@ -322,8 +321,7 @@ Such a conformation with a single H-bond is likely less favorable (compared to o
     \end{adjustbox}
 \end{table}
 
-%Analysis was restricted to the clusters with the trans-peptoid bond.
-Next, we analyzed the torsional-angle distributions in the backbone ring of the peptides. The change in stereochemistry of the methyl group at position 5 leads to a shift in the torsional-angle distributions of the tether units for Nleu-5S compared to Nleu-5R (Figure \ref{fig: dihedralDist}A). This shift results in a bent conformation of the ring (Figure \ref{fig: dihedralDist}B), which allows only one H-bond to form between Ala-O and tether-NH (Figure \ref{fig: dihedralDistSubst}). There is also a shift in the backbone torsional-angle distributions between Nleu-2R and Nleu-2S, however, to a much smaller extent (Figure \ref{fig: SITorsion2RS}).
+Next, we analyzed the torsional-angle distributions in the backbone ring of the peptides. The change in stereochemistry of the methyl group at position 5 leads to a shift in the torsional-angle distributions of the tether units for Nleu-5S compared to Nleu-5R (Figure \ref{fig: dihedralDist}A). This shift results in a bent conformation of the ring (Figure \ref{fig: dihedralDist}B), which allows only one H-bond to form between Ala-O and tether-NH (Figure \ref{fig: dihedralDist}B). There is also a shift in the backbone torsional-angle distributions between Nleu-2R and Nleu-2S, however, to a much smaller extent (Figure \ref{fig: SITorsion2RS}). Noteably a longrange effect in the dihedral distribution for the phenylalanine residue was detected. The missing hydrogen bond and the resulting rotation of the carbonyl group seem to hinder the free rotation of the phenylalanine rest (Figure \ref{fig: dihedralDistSubst}).
 
 \begin{figure}[h!]
     \centering
@@ -335,14 +333,14 @@ Next, we analyzed the torsional-angle distributions in the backbone ring of the 
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{7_chapter_5/fig/results/dihedral_dist.png}
+    \includegraphics[width=\textwidth]{7_chapter_5/fig/results/dihedral_dist_subs.png}
     \caption{(\textbf{A}) Torsional-angle distributions of the $\chi_1$ torsional angle of the phenylalanine residue in Nleu-5R (blue) and Nleu-5S (orange) in chloroform. Analysis was restricted to the clusters with the trans-peptoid bond. (\textbf{B}) $\chi_1$ torsional angle of the phenylalanine residue (shown in purple) corresponding to the peaks of the distributions. The backbone carbonyl interferes with the rotation around this torsion is highlighted with a red circle. Pictures were generated with PyMol. \cite{Delano2020}}
     \label{fig: dihedralDistSubst}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{7_chapter_5/fig/results/dihedral_dist_Wat.png}
+    \includegraphics[width=\textwidth]{7_chapter_5/fig/results/dihedral_dist_2RS.png}
     \caption{Torsional-angle distributions of the tether in Nleu-2R (blue) and Nleu-2S (orange) in chloroform. Analysis was restricted to the clusters with the trans-peptoid bond. The distribution density is plotted as a function of the torsional angle, with a bin size of $0.5~\text{deg}$.}
     \label{fig: SITorsion2RS}
 \end{figure}

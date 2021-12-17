@@ -17,7 +17,7 @@ In the following, a user and a developer perspective are provided for the code s
 \subsection{User level}
 %-------------------------------------------------------
  A simulation model in Ensembler consists of a potential class, a sampler class, and a system class wrapping the potential and the sampler (Figure~\ref{fig:UML-Diagramm}), and provides control over the simulation approach. 
-Additionally, multiple condition classes can be added that directly influence the simulation (e.g. periodic boundary condition\cite{Cheatham1995, Leach2001} or  thermostatting\cite{Andersen1980}). 
+Additionally, multiple condition classes can be added that directly influence the simulation (e.g. periodic boundary condition\cite{Cheatham1995, Leach2001} or  thermostating\cite{Andersen1980}). 
 After the construction of the system, the simulation can be started directly with the \textit{simulate} function. 
 The resulting trajectory is in the form of a Pandas data frame.\cite{Mckinney2010} The trajectory is thus easily compatible with other packages like NumPy\cite{Vanderwalt2011} or scikit-learn\cite{Pedregosa2011} and can be stored in different formats, e.g. as .csv or .hf5 file. The system itself can be stored directly via the save function using serialization of the object with the Python package pickle.
 In most cases, only a few additional lines are needed to go from simple simulation technique to more advanced one, as shown below. 
