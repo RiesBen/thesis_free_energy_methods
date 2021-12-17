@@ -75,8 +75,8 @@ For the pairwise exchanges between neighboring replicas $k$ and $l$, a Metropoli
 \begin{equation}
     \begin{split}
     p_{k,l} = min\bigg(1, \exp \Big[
-                &-\beta ((H_{R}(\vec{r}_k; s_l)+H_{R}(\vec{r}_l; s_k))\\
-                &-(H_{R}(\vec{r}_l; s_l)+H_{R}(\vec{r}_k; s_k))  \Big] \bigg) ,
+                &-\beta \big((H_{R}(\vec{r}_k; s_l)+H_{R}(\vec{r}_l; s_k))\\
+                &-(H_{R}(\vec{r}_l; s_l)+H_{R}(\vec{r}_k; s_k))\big)  \Big] \bigg) ,
     \end{split}
 \end{equation}
 where $H_{R_k}$ and $H_{R_l}$ are the reference-state Hamiltonians of the respective replicas, $\vec{r}_k$ and $\vec{r}_l$ are the current coordinates of the replicas.

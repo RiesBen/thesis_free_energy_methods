@@ -4,11 +4,11 @@ The chosen model system of five inhibitors of CHK1 kinase exemplifies different 
 The RE-EDS workflow was started by estimating the lower bound for the $s$-distribution. Using the above mentioned undersampling criterion (see Methods section), a lower bound of $s=0.01$ was determined for the protein-ligands complex and $s=0.0056$ for the ligands in water. 
 
 %State Optimizations
-A fast transition of the initial maximally contributing end state to the desired maximally contributing end state was observed in the End State Generation. This process was monitored by the maximally contributing end state over time.
+A fast transition of the initial maximally contributing end state to the desired maximally contributing end state was observed in the End State Generation. This process was monitored by the maximally contributing end state metric over time.
 The transition occurred latest after $1.3$~ns, and the system remained in the biased end state for the rest of the simulation time.
 In both water and complex simulations, the desired end state was sampled about $~99\%$ of the simulation time with the exception of L19 in water (Table \ref{SItab:RingCycleOpenin_sampling_fraction_optimizedStates}).
 Optimized coordinates were obtained for all five ligands, as verified by comparing the potential-energy distribution from the EDS simulation with the one extracted from a standard MD simulation of the respective ligand (Figure \ref{SIfig:CHK1_RingOpening_soptimization_efficiency}). 
-From these same steps, the potential-energy thresholds for the occurrence sampling ($T_{i}^{\text{phys}}$) and undersampling ($T_{i}^{\text{us}}$) were estimated (Table \ref{RingCycleOpenin_PotentialTresholds}).
+From these same steps, the potential-energy thresholds for the occurrence sampling ($T_{i}^{\text{phys}}$) and undersampling ($T_{i}^{\text{us}}$) were estimated (Table \ref{SItab:RingCycleOpenin_PotentialTresholds}).
 
 \begin{table}[H]
 \centering
@@ -77,7 +77,7 @@ With the RE-EDS SSM approach, the RMSE was reduced to $7.0$~kJ~mol$^{-1}$. No cl
 \end{adjustbox}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
      \includegraphics[width=\textwidth]{fig/results/ringOpening/paramExploration/single_state_energy_sampling.png}
     \caption{Comparison of the potential-energy distribution obtained from a standard MD simulation of a given end state (black) and from an EDS simulation with the given end state favoured (colored) from the first step of the RE-EDS workflow.}
@@ -85,7 +85,7 @@ With the RE-EDS SSM approach, the RMSE was reduced to $7.0$~kJ~mol$^{-1}$. No cl
 \end{figure}
 
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
   \includegraphics[width=0.8\textwidth]{fig/results/ringOpening/paramOptimization/RingClosure_system_Eoff_final_results.png}
 \caption{Comparison of the relative energy offsets $\Delta \Delta E^R_{ji}$ in water and complex with the experimental relative binding free energies $\Delta \Delta G^\text{bind}_{ji}$. The energy offsets were estimated from RE-EDS simulations using the 1SS (green) or SSM (blue) approach to select the starting configurations of the replicas.} \label{SIfig:Eoff_experiment_corr_RingOpening}
@@ -93,6 +93,7 @@ With the RE-EDS SSM approach, the RMSE was reduced to $7.0$~kJ~mol$^{-1}$. No cl
 
 %---------------------------
 \FloatBarrier
+\clearpage 
 
 \subsection{Parameter Optimization}
 %S-Optimization
@@ -140,7 +141,7 @@ After rebalancing, all end states showed a $f_i^{\text{mc}} > 0$ and the mean ab
  
 
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{fig/results/ringOpening/paramOptimization/RingOpening_optimization_fractOptSampMAE.png}
 \caption{Mean absolute deviation (MAE, in percentage) of the observed state sampling $f_i^{\text{mc}}$ from the ideal equal distribution $f_i^{\text{mc,ideal}}$ during the short optimization simulations. The red line indicates the switch from $s$-optimization to energy offset rebalancing.}
@@ -149,6 +150,7 @@ After rebalancing, all end states showed a $f_i^{\text{mc}} > 0$ and the mean ab
 
 %---------------------------
 \FloatBarrier
+\clearpage
 
 \subsection{Free-Energy Calculation}
 After successfully optimizing the RE-EDS parameters, the production runs were performed for $3.5$~ns. 
@@ -212,7 +214,7 @@ The Spearman correlation coefficient for RE-EDS 1SS is $r_{\text{Spearman}}=0.01
 
 %%Performance:
 Next, we assessed the convergence of the $\Delta G_{ji}$ values as a function of simulation time (Figure \ref{SIfig:CHK1_RingOpening_dF_convergence}).
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{fig/results/ringOpening/FE/dF_RingOpening_Convergence.png}
 \caption{Convergence analysis of the RE-EDS production runs (total 3.5~ns): The free-energy results are plotted as a function of the simulation time. The vertical lines indicate when a particular $\Delta G_{ji}$ value was found to be converged (deviation below 1~kJ~mol$^{-1}$).}
@@ -262,10 +264,9 @@ Overall, the performance of RE-EDS SSM is comparable with the pairwise methods. 
         L21 &  L19 & 2.5  & -0.1 $\pm$ 0.6         &  0.6 $\pm$ 0.1         &  0.6 $\pm$ 4.9                                      &  -4.4 $\pm$ 0.6 &  8.2 $\pm$ 0.1\\
         L21 &  L20 & -0.3 & -0.3 $\pm$ 0.8         & -0.6 $\pm$ 0.8         &  0.6 $\pm$ 1.1                                    &    -1.6 $\pm$ 0.1 &   -2.7 $\pm$ 0.1\\ 
     \hline
-        \multicolumn{2}{c|}{RMSE} &                    & 2.4  $\pm$ 0.3           & 2.1  $\pm$ 0.2          &  2.3  $\pm$ 0.38      & 4.4 $\pm$ 0.5         & 3.3  $\pm$ 0.3 \\
+        \multicolumn{2}{c|}{RMSE} &                    & 2.4  $\pm$ 0.3           & 2.1  $\pm$ 0.2          &  2.3  $\pm$ 0.38      & 4.8 $\pm$ 0.5         & 3.3  $\pm$ 0.3 \\
         \multicolumn{2}{c|}{MAE} &                     & 1.8 $\pm$ 1.2 & 1.9 $\pm$ 1.0 & 2.0 $\pm$ 1.2 & 3.9 $\pm$2.8 & 2.8 $\pm$ 1.7 \\
-        %\multicolumn{2}{c|}{$r_{\text{Pearson}}$} & & 0.66            & 0.67          & 0.63          & -0.07m          & 0.71 \\
-        \multicolumn{2}{c|}{$r_{\text{Spearman}}$} & & 0.67           & 0.73          & 0.61          & 0.01           & 0.69 \\
+        \multicolumn{2}{c|}{$r_{\text{Spearman}}$} & & 0.67           & 0.73          & 0.61          & -0.01           & 0.69 \\
         \multicolumn{2}{c|}{$t_{simulation} [ns]$} & & 640          &  640         &  51        & 171.5         & 157.5  \\
 \end{tabular}
 \end{adjustbox}
@@ -305,3 +306,4 @@ Note that the uncertainties of the individual values have increased compared to 
 \end{table}
 
 \FloatBarrier
+\clearpage

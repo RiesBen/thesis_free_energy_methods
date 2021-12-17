@@ -1,11 +1,9 @@
-%\labsec{results}
 %-------------------------------------------------------------------------------------------------------------------------
 \subsection{Simple Simulations}
 %-------------------------------------------------------------------------------------------------------------------------
-
-
-
-\begin{figure}[H]
+In the following, simple code examples are shown to introduce the usage of Ensembler. In addition, an application example is provided to illustrate the use of Ensembler for teaching about free-energy methods. 
+The code for these examples can be found in the GitHub repository \textit{\hyperlink{https://github.com/rinikerlab/Ensembler}{https://github.com/rinikerlab/Ensembler/examples}}.
+\begin{figure}[h!]
 	\centering
 	\begin{subfigure}{0.85\textwidth}
 		\includegraphics[width=\linewidth, height=1.75in]{fig/codeExamples/four_well.pdf} 
@@ -19,12 +17,6 @@
 	\label{fig:code_example_potential}
 \end{figure}
 
-
-
-In the following, simple code examples are shown to introduce the usage of Ensembler. In addition, an application example is provided to illustrate the use of Ensembler for teaching about free-energy methods. 
-The code for these examples can be found in the GitHub repository \textit{\hyperlink{https://github.com/rinikerlab/Ensembler}{https://github.com/rinikerlab/Ensembler/examples}}.
-
-
 In typical applications of Ensembler, the user selects a potential-energy function from the available ones. In the following example, a potential-energy function with four wells is selected and initialized with chosen parameters. 
 To sample this four-well potential-energy function with stochastic dynamics (SD),\cite{Brunger1984} the sampling method is instantiated and passed to the \textit{system class}, which controls the execution of the simulation. 
 The simulation is performed by calling the function \textit{simulate} with the desired number of simulation steps passed as parameter. 
@@ -35,7 +27,7 @@ In this example, local elevation\cite{Huber1994}/metadynamics\cite{Laio2002} is 
 The method adds a time-dependent biasing potential to the system, i.e. it adds a Gaussian biasing potential to positions that were already visited such that they become energetically less favorable. This decreases the likelihood of visiting known positions again. 
 The enhanced sampling technique can be applied by adding a single line of code compared to the previous simulation (Figure \ref{fig:code_example_simulations}c).
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}{\textwidth}
 		\caption{Standard Langevin Simulation}
@@ -59,6 +51,8 @@ The enhanced sampling technique can be applied by adding a single line of code c
 \label{fig:code_example_simulations}
 \end{figure}
 
+\FloatBarrier
+\clearpage
 
 %-------------------------------------------------------------------------------------------------------------------------
 \subsection{Free-Energy Calculation}
@@ -75,7 +69,7 @@ A simple free-energy method is to simulate one end state and estimate the free-e
 Alternatively, one can simulate both end states separately and use BAR\cite{Bennett1976} (Figure \ref{fig:FE_sampling}a), yielding more converged results.\cite{Konig2018}
 If the phase-space overlap between the two end states is not sufficient, more advanced sampling methods are necessary to obtain converged free-energy differences.
 %
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}{.85\textwidth}
 		\caption{}
@@ -89,7 +83,7 @@ If the phase-space overlap between the two end states is not sufficient, more ad
 	\label{fig:FE_sampling}
 \end{figure}
 %
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}{.85\textwidth}
 		\caption{}

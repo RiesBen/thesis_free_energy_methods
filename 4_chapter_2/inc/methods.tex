@@ -61,7 +61,7 @@ The simple point-charge (SPC) model\cite{Berendsen1981} was employed for water. 
 
 \subsubsection{Thermodynamic Integration}
 The topologies and coordinate files of the single states were obtained from the ATB server\cite{Stroet2018} and were merged to pairs using PyGromosTools\cite{Lehner2021}. 
-The coordinates of the different single molecules were aligned to each other using the common molecular skeleton of the molecules (only rings), with the \textit{align} function in RDKit\cite{Landrum2021}. After the alignment, RestraintMaker was used to place four restraints with $d_\text{res} = 0.1$~nm (Figures \ref{SIfig: Pairwise_TI_M030_Graph} and \ref{SIfig:Pairwise_TI_AddRE-EDS_Graph}). 
+The coordinates of the different single molecules were aligned to each other using the common molecular skeleton of the molecules (only rings), with the \textit{align} function in RDKit\cite{Landrum2021}. After the alignment, RestraintMaker was used to place four restraints with $d_\text{res} = 0.1$~nm (Figures \ref{SIfig: Pairwise_TI_M030_Graph}. 
 
 \begin{figure}[H]
     \centering
@@ -71,7 +71,7 @@ The coordinates of the different single molecules were aligned to each other usi
 \end{figure}
 
 
-The computational boxes for the simulations in water were generated with the GROMOS++ \cite{Eichenberger2011} program \textit{simbox} using a minimal solute-to-wall distance of $0.8~$nm, and relaxed by energy minimization. The scripts can be found in the example folder on Github (\textit{https://github.com/rinikerlab/restraintmaker/tree/main/examples/publication/\\b\_ATB\_solvationFreeEnergies}).
+The computational boxes for the simulations in water were generated with the GROMOS++ \cite{Eichenberger2011} program \textit{simbox} using a minimal solute-to-wall distance of $0.8~$nm, and relaxed by energy minimization. The scripts can be found in the example folder on Github (\textit{https://github.com/rinikerlab/restraintmaker/tree/main/examples/\\publication/b\_ATB\_solvationFreeEnergies}).
 The TI calculations were carried out with 21 evenly spaced $\lambda$-points between 0 and 1, both for the molecules in water and in vacuum. Each $\lambda$-point was equilibrated for $1$~ns, followed by a production run of $5$~ns. The free-energy differences were calculated using the Simpson integration implemented in the SciPy library.\cite{Virtanen2020}
 
 \subsection{Analysis}

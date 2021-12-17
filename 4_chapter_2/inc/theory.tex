@@ -146,6 +146,8 @@ For multi-state methods such as EDS\cite{Christ2007,Christ2008}, replica-exchang
 
 In a first step, the pairwise greedy algorithm is used to calculate an optimal set of distance restraints between all possible molecule pairs, building up a fully connected graph (Figure \ref{fig: convexHull}). The possible sets of restraints are subsequently compared to each other by calculating the convex hull around the coordinates of all the restraint midpoints. The convex hull volume (CHV) is then assigned to the edges of the fully connected graph as weight $\omega^\text{CHV}$. The optimal chain of connected molecules is determined by applying another greedy algorithm, inspired by the Kruskal algorithm,\cite{Kruskal1956} which picks the edges with the largest CHVs without forming cycles or branches (Figure \ref{fig: convexHull}). The chain is closed to a ring by tying the loose ends together. This last molecule pair may have a less good set of restraints.
 
+\FloatBarrier
+
 \subsection{Free-Energy Methods}
 Two free-energy methods were tested with the linked dual topology approach.
 

@@ -48,7 +48,7 @@ The resulting $\Delta \Delta G_\text{hyd}^\text{TI,indirect}$ agree very well wi
 The numerical values are reported in Table \ref{SITab: FE_M030_Graph},
 and the corresponding $\langle \partial V(\lambda)/\partial\lambda \rangle$ curves in water and vacuum in Figures \ref{SIfig:TI_vacuum_curve} and  \ref{SIfig:TI_water_curve}. 
 
-\begin{table}[H]
+\begin{table}[h!]
 \caption{$\Delta \Delta G_\text{hyd}$ for the 16 small molecules from experiment, the absolute free-energy calculations with TI taken from the ATB server\cite{Stroet2018} (TI, abs), and the pairwise relative free-energy calculations with TI and linked dual topology (TI, rel).
 The uncertainty estimate was calculated via Gaussian error propagation of the provided errors. The experimental uncertainty for molecule 11 was set to a default value of 2.5~kJ/mol\cite{Mobley2014}, as the uncertainty was not reported in the original source\cite{Wolfenden1987}. The RMSE and its uncertainty were estimated with a 100 fold bootstrap approach. The accumulated simulation time is split into preparation (pre-processing, equilibration) and production run. The data is displayed graphically in Main Article Figure 9}
 \begin{center}
@@ -86,16 +86,16 @@ The uncertainty estimate was calculated via Gaussian error propagation of the pr
 \end{center}
 \label{SITab: FE_M030_Graph}
 \end{table}
+\clearpage
 
-
-\begin{figure}[H]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{fig/SI/dG_convergence/TI_vacuum_lambda_curves.png}
     \caption{$\left< \frac{\partial V(\lambda)}{\partial \lambda} \right>_{\lambda}$ as a function of $\lambda$ for the 15 pairwise TI calculations in vacuum. The production run was 5~ns per $\lambda$-point.}
     \label{SIfig:TI_vacuum_curve}
     \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{fig/SI/dG_convergence/TI_water_lambda_curves.png}
     \caption{$\left< \frac{\partial V(\lambda)}{\partial \lambda} \right>_{\lambda}$ as a function of $\lambda$ for the 15 pairwise TI calculations in water. The production run was 5~ns per $\lambda$-point.}
@@ -104,6 +104,7 @@ The uncertainty estimate was calculated via Gaussian error propagation of the pr
 
 %----------------------------
 \FloatBarrier
+\clearpage
 For comparison, $\Delta \Delta G_{hyd}^\text{TI,direct}$ values were derived from the calculated absolute hydration free energies reported on the ATB server,\cite{Stroet2018} which were carried out with TI using the same topologies. The $\Delta \Delta G_{hyd}^{TI,direct}$ values deviate a bit more from experiment with an RMSE of $6.7$~kJ/mol, a MAE of $5.5$~kJ/mol and a $r_{\text{Spearman}}$ of 0.84 (Figure \ref{fig: pairCorr}, center).
 Generally, the results of the direct\cite{Stroet2018} and indirect TI calculations agree well with each other (Figure \ref{fig: pairCorr}, right). Note that for the molecule pair \textbf{5} - \textbf{12}, a similarly large deviation from experiment is observed in both types of TI calculations ($10.7$~kJ/mol and $12.1$~kJ/mol, respectively), suggesting either a force-field deficiency or a problematic experimental value.
 
@@ -166,13 +167,14 @@ A similar analysis was carried out for the relative rotational motions of the mo
 %Torsion analysis:
 While most of the molecule pairs in Figure \ref{fig: Pairwise_TI_M030_Graph} have the same central benzene core, the transformations from molecule \textbf{12} to molecules \textbf{2} and \textbf{3} involve the change from benzene to cyclohexane or cyclohexene, respectively. To assess whether the applied distance restraints affect the conformational sampling of the aliphatic ring, the distributions of the three pseudo torsional angles (Pickett and Strauss coordinates \cite{Strauss1970}) were monitored in the simulation at $\lambda=1.0$, and compared to plain MD simulations of molecules \textbf{2} and \textbf{3} in vacuum and in water (Figure \ref{fig: TIringTorisions}).
 In both cases, the distributions showed nearly perfect overlap, indicating that the sampling is not affected by the distance restraints in the linked dual topology.
-
+\clearpage
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{fig/results/pairwise/sampling/torsions/TI_all_substorsion_ana_partnerM030_singleState_populations_total.png}
     \caption{Comparison of the normalized torsional angle distributions of the substituents of molecules 9 (blue), 6 (green), and 1 (pink) in the simulation at $\lambda=1.0$ (filled) and in plain MD simulations (dark red line) in vacuum (top) and in water (bottom).}
     \label{SIfig: TIsubsTorisions}
 \end{figure}
+
 A similar analysis of the torsional angle distributions was also carried out for the substituents of molecules \textbf{1}, \textbf{6} and \textbf{9} (Figure \ref{SIfig: TIsubsTorisions}). Again, no major differences are observed between $\lambda=1.0$ and the plain simulations. 
 
 
