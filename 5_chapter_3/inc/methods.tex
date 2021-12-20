@@ -1,28 +1,29 @@
 \subsection{Model System}
-To showcase the performance of RE-EDS, a system of five inhibitors (L1, L17, L19, L20 and L21) of checkpoint kinase 1 (CHK1) taken from Ref.~\cite{Huang2012} was chosen (Figure \ref{fig:Ligands/Protein}). The numbering of the compounds is according to Ref.~\cite{Huang2012}. The same system was studied in Ref.~\cite{Wang2017} as part of a series of scaffold hopping systems. Although the five ligands share a common substructure, they were considered to exemplify different types of core-hopping transformations (i.e. ring size change, ring opening/closing, ring extension) and R-group modifications \cite{Wang2017}.
+\label{ch:3Methods}
+To showcase the performance of RE-EDS, a system of five inhibitors (L1, L17, L19, L20 and L21) of checkpoint kinase 1 (CHK1) taken from Ref.~\citenum{Huang2012} was chosen (Figure \ref{fig:Ligands/Protein}). The numbering of the compounds is according to Ref.~\citenum{Huang2012}. The same system was studied in Ref.~\citenum{Wang2017} as part of a series of scaffold hopping systems. Although the five ligands share a common substructure, they were considered to exemplify different types of core-hopping transformations (i.e. ring size change, ring opening/closing, ring extension) and R-group modifications \cite{Wang2017}.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\columnwidth]{fig/methods/CHK1_ring_opening_system_condense.png}
-    \caption{(Top): 3D depiction of the five CHK1 inhibitors L1, L17, L19, L20, and L21 (numbering according to Ref.~\cite{Huang2012}). The selected locations of the distance restraints are indicated by the silver spheres. (Bottom): CHK1 protein in complex with the ligand bundle (PDB ID:3U9N).}
+    \caption{(Top): 3D depiction of the five CHK1 inhibitors L1, L17, L19, L20, and L21 (numbering according to Ref.~\citenum{Huang2012}). The selected locations of the distance restraints are indicated by the silver spheres. (Bottom): CHK1 protein in complex with the ligand bundle (PDB ID:3U9N).}
     \label{fig:Ligands/Protein}
 \end{figure}
 
-For the protein, the GROMOS 54A7 force field \cite{Schmid2011} was used. For the ligands, topologies were generated using the parametrization by the ATB server \cite{Mark2011} as an initial guess. The bonded terms were manually harmonized and adjusted to match the parameterization of similar functional groups in the GROMOS 54A7 force field. Partial charges were generated with our previous machine learning approach \cite{Bleiziffer2018} ($\epsilon$ = 4) and manually arranged into charge groups. The input files can be retrieved from: \\ https://github.com/rinikerlab/reeds/tree/main/examples/systems.
+For the protein, the GROMOS 54A7 force field \cite{Schmid2011} was used. For the ligands, topologies were generated using the parametrization by the ATB server \cite{Mark2011} as an initial guess. The bonded terms were manually harmonized and adjusted to match the parameterization of similar functional groups in the GROMOS 54A7 force field. Partial charges were generated with our previous machine learning approach \cite{Bleiziffer2018} ($\epsilon$ = 4) and manually arranged into charge groups. The input files can be retrieved from: \url{https://github.com/rinikerlab/reeds/tree/main/examples/systems}.
 
 \subsection{System Preparation}%%initialize
 The crystal structure of CHK1 in complex with ligand L1 (PDB ID:3U9N) was used as starting structure. The initial coordinates for ligands L17, L19, L20, L21 were generated with the {\tt{ConstrainedEmbed()}} functionality in the RDKit \cite{Landrum2021}, where the common part was kept fixed in the crystal conformation. The coordinates of each ligand and those of the protein were subsequently energy minimized in vacuum using the steepest descent \cite{Ruder2016} approach implemented in the GROMOS software package \cite{Schmid2012}. 
 
 %%build eds_system
-The linked dual topology approach was used for the RE-EDS simulations, i.e. each ligand is present in the system separately \cite{Riniker2011}. Thus, each end state comprises of one active ligand and $N-1$ inactive (dummy) ligands. To avoid spatial drifting of the dummy ligands, eight distance restraints per ligand pair were defined within the common substructure (Figure \ref{fig:Ligands/Protein}) to connect all ligands in a ring with the help of the RestraintMaker program (https://github.com/rinikerlab/restraintmaker) (order: -L1-L17-L19-L20-L21-). The reference distance was set to 0.0~nm and the force constant to $1000$~kJ~mol$^{-1}$~nm$^{-2}$.
+The linked dual topology approach was used for the RE-EDS simulations, i.e. each ligand is present in the system separately \cite{Riniker2011}. Thus, each end state comprises of one active ligand and $N-1$ inactive (dummy) ligands. To avoid spatial drifting of the dummy ligands, eight distance restraints per ligand pair were defined within the common substructure (Figure \ref{fig:Ligands/Protein}) to connect all ligands in a ring with the help of the RestraintMaker program (\url{https://github.com/rinikerlab/restraintmaker}) (order: -L1-L17-L19-L20-L21-). The reference distance was set to 0.0~nm and the force constant to $1000$~kJ~mol$^{-1}$~nm$^{-2}$.
 The combined topology file was generated with the program {\tt{prep\_eds}} in the GROMOS++ \cite{Eichenberger2011} package. 
 The EDS system was solvated in a cubic box of SPC \cite{Berendsen1981} water (resulting in 1'848 solvent molecules for the ligands in water and 15'639 solvent molecules for the protein-ligands complex). 
 An energy minimization was carried out with the steepest descent algorithm \cite{Ruder2016}, where all solute atoms were position restrained with a force constant of $25'000$~kJ~mol$^{-1}$~nm$^{-2}$. 
 
 \subsection{Simulation Details}
-All simulations were performed with the GROMOS software package \cite{Schmid2012} (freely available on http://www.gromos.net).
+All simulations were performed with the GROMOS software package \cite{Schmid2012} (freely available on \url{http://www.gromos.net}).
 The equilibrations and production runs were carried out under isothermal-isobaric (NPT) conditions using the leap-frog integration algorithm \cite{Hockney1970} and a time step of $2$~fs. 
-Bond lengths were constrained with SHAKE \cite{Ryckaert1977} using a tolerance of $10^{-4}$. 
+Bond lengths were constrained with SHAKE \cite{Ryckaert1977} using a tolerance of $10^{-4}~$nm. 
 The nonbonded contributions were calculated with a twin-range scheme using a short-range cutoff of $0.8$~nm and a long-range cutoff of $1.4$~nm. 
 The electrostatic nonbonded contributions beyond the long-range cutoff were calculated with the reaction-field \cite{Tironi1995} approach and a dielectric permittivity of 66.7 \cite{Glattli2002} for water. 
 
@@ -32,7 +33,7 @@ Energies were written to file every $20$ steps and coordinates every $5'000$ ste
 In the RE-EDS simulations, replica exchanges was attempted every $20$ steps.
 
 \subsection{RE-EDS Workflow}
-The new Python code to manage the RE-EDS workflow, including the analysis steps, can be retrieved from: https://github.com/rinikerlab/reeds.
+The new Python code to manage the RE-EDS workflow, including the analysis steps, can be retrieved from: \url{https://github.com/rinikerlab/reeds}.
 The workflow starts with the energy-minimized coordinates of the EDS system (all $N$ ligands plus environment, maximally contributing end state is L20) into the parameter exploration step, which is used as equilibration phase.
 A RE-EDS simulation of 0.2~ns length was performed with 21 logarithmically distributed replicas between $s=1.0$ and $10^{-5}$ and all energy offsets set to zero.  
 The thresholds $T_{i}^{\text{us}}$ were estimated from replicas with very low $s$-values.

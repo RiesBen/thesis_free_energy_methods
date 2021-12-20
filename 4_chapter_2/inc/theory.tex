@@ -11,7 +11,7 @@ In the following, we provide the categorization of the different system represen
 %%% single topology
 \subsubsection{Single Topology}
 %%%%Coordinate space
-The single topology approach was first used by Jorgensen \textit{et al.}\cite{Jorgensen1985} to calculate the relative hydration free energies of methanol and ethane. The approach was later termed ``single topology'' by Pearlman \textit{et al.}.\cite{Pearlman1991}
+The single topology approach was first used by Jorgensen \textit{et al.}\cite{Jorgensen1985} to calculate the relative hydration free energies of methanol and ethane. The approach was later termed ``single topology'' by Pearlman \textit{et al}.\cite{Pearlman1991}
 The end-states are represented by the union of the coordinates of the molecules, limiting the possible transformations that can be handled by this method. Usually, perturbations for a single topology approach include both atom types (i.e. van der Waals parameters and/or partial charges) and bonded terms.\cite{Jorgensen1985, Pearlman1991, Pearlman1994, Boresch1999, Boresch1999B, Donnini2011, Donnini2016, Wang2015,  Liu2015, Wang2017, Damodaran2001}
 %
 A single topology approach in this definition is constructed as follows for two end-states $A$ and $B$ with the two molecules $a$ and $b$ (Figure \ref{fig: AtomMapping}),
@@ -48,7 +48,7 @@ Hybrid topology approaches aim a combining the advantages of single and dual top
 
 %%%Dual Topology
 \subsubsection{Dual Topology}
-In a dual topology, two fully separate sets of coordinates are used for the molecules. This approach was first introduced by Gao \textit{et al.},\cite{Gao1989} and termed later on ``dual topology'' by Pearlman \textit{et al.}\cite{Pearlman1991} The atoms of molecule $a$, which are fully interacting in end-state $A$, are transformed to the dummy state in end-state $B$, and vice versa. Importantly, the atoms of the molecules do not interact with each other and only share the same environment.\cite{Riniker2011, Rocklin2013} In such dual topology approaches usually only the non-bonded terms are perturbed.\cite{Riniker2011, Sidler2016, Boresch1999, Michel2010}
+In a dual topology, two fully separate sets of coordinates are used for the molecules. This approach was first introduced by Gao \textit{et al.},\cite{Gao1989} and termed later on ``dual topology'' by Pearlman \textit{et al.}\cite{Pearlman1991} The atoms of molecule $a$, which are fully interacting in end-state $A$, are transformed to the dummy state in end-state $B$, and vice versa. Importantly, the atoms of the molecules do not interact with each other and only share the same environment.\cite{Riniker2011, Rocklin2013} In such dual topology approaches, only the non-bonded terms are usually perturbed.\cite{Riniker2011, Sidler2016, Boresch1999, Michel2010}
 %
 A dual topology approach in this definition can be constructed as follows for the end-states $A$ and $B$ with the two molecules $a$ and $b$ (Figure \ref{fig: AtomMapping}),
 \begin{align*}
@@ -98,7 +98,7 @@ where $N$ is a set of nodes, $E$ a set of edges, and $\omega$ a set of weights.
 
 We consider a molecule pair consisting of the two molecules $m_i$ and $m_j$, with their sets of atoms $A_i$ and $A_j$, respectively. 
 %%Alignment
-In a first step, existing algorithms such as e.g. implemented in the RDKit\cite{Landrum2021} or PyMol\cite{Delano2020} can be used to align the two molecules to each. The alignment can for example be based on the maximum common substructure (MCS), or in the case of scaffold hopping the maximal overlap of the van der Waals volumes of the molecules.
+In a first step, existing algorithms such as e.g. implemented in the RDKit\cite{Landrum2021} or PyMol\cite{Delano2020} can be used to align the two molecules to each other. The alignment can for example be based on the maximum common substructure (MCS), or in the case of scaffold hopping the maximal overlap of the van der Waals volumes of the molecules.
 %%Filter
 Next, the sets of possible atoms $A_i$ and $A_j$ for the distance restraints are reduced to the ring atoms of the respective molecules, $A^\text{ring}_i$ and $A^\text{ring}_j$. 
 %% Restraints with a Distance cutoff
@@ -111,7 +111,7 @@ Each individual restraint $c_\text{res}$ is represented by the midpoint of the t
 The undirected edges of $G$ have as weight $\omega^\text{dist}_{ji}$ the Euclidean distance between the midpoints of the two atom pairs $\omega^{dist}_{ji}=d(c_{\text{res}_j},c_{\text{res}_i})$. \\
 
 \noindent\textit{Solving the graph problem}:
-From the generated graph, only a subset of restraints fulfills the conditions 1-3 listed above.To obtain a relevant subset of restraints, we decided to use a min-max decision scheme inspired by the minimax theorem \cite{Neumann1928} to build a spanning tree (i.e. a subset of restraints, $C_\text{res,opt}$) within a greedy Prim-like approach.\cite{Prim1957}
+From the generated graph, only a subset of restraints fulfills the conditions 1-3 listed above. To obtain a relevant subset of restraints, we decided to use a min-max decision scheme inspired by the minimax theorem \cite{Neumann1928} to build a spanning tree (i.e. a subset of restraints, $C_\text{res,opt}$) within a greedy Prim-like approach.\cite{Prim1957}
 
 %Algorithm Definition
 %%bit more literature research
@@ -135,7 +135,7 @@ For each candidate restraint in an iteration step, the distance to the center of
 
 \subsubsection{Extension to Multiple End-states}
 
-For multi-state methods such as EDS\cite{Christ2007,Christ2008}, replica-exchange EDS (RE-EDS)\cite{Sidler2016,Sidler2017,Ries2021B}, multi-site $\lambda$-Dynamics,\cite{Knight2011} or multi-state $\lambda$-LEUS,\cite{Bieler2015} more than two molecules need to be restrained to each other. Based on our experience with RE-EDS, it is best to apply the distance restraints between multiple molecules in form of a ring, i.e. each molecule is restrained to two neighboring molecules.\cite{Ries2021B} This scheme is used in the following.
+For multi-state methods such as EDS\cite{Christ2007,Christ2008}, replica-exchange EDS (RE-EDS)\cite{Sidler2016,Sidler2017,Ries2021B}, multi-site $\lambda$-dynamics,\cite{Knight2011} or multi-state $\lambda$-LEUS,\cite{Bieler2015} more than two molecules need to be restrained to each other. Based on our experience with RE-EDS, it is best to apply the distance restraints between multiple molecules in form of a ring, i.e. each molecule is restrained to two neighboring molecules.\cite{Ries2021B} This scheme is used in the following.
 
 \begin{figure}[h!]
     \centering
@@ -169,7 +169,7 @@ RE-EDS\cite{Sidler2016,Sidler2017,Ries2021B} is a combination of Hamiltonian rep
 \begin{align}
     V_R\left(\textbf{r};s,\textbf{E}^R\right) = -\frac{1}{\beta s}\ln\left[\sum\limits_{i=1}^N e^{-\beta s\left(V_i(\textbf{r})-E_i^R\right)}\right]
 \end{align}
-where $s$ is the smoothness parameter, $E_i^R$ a set of energy offsets and $\beta=1/(k_B~T)$, where $k_B$ is the Boltzmann constant and $T$ the absolute temperature. 
+where $s$ is the smoothness parameter, $E_i^R$ a set of energy offsets, and $\beta=1/(k_B~T)$, with $k_B$ being the Boltzmann constant and $T$ the absolute temperature. 
 The force on a particle $k$ can be calculated as, \cite{Christ2007,Christ2008}
 \begin{align}
     \textbf{f}_k(t)=-\frac{\partial V_R(\textbf{r}; s, \textbf{E}^R)}{\partial \textbf{r}_k} = \sum^N_{i=1}\frac{e^{-\beta s(V_i(\textbf{r}) -E_i^R)}}{\sum^N_{j=1}{e^{-\beta s (V_j(\textbf{r})-E_j^R)}}}  \left( -\frac{\partial V_i(\textbf{r})}{\partial \textbf{r}_k} \right) \,.
