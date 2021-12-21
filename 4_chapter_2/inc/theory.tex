@@ -135,7 +135,7 @@ For each candidate restraint in an iteration step, the distance to the center of
 
 \subsubsection{Extension to Multiple End-states}
 
-For multi-state methods such as EDS\cite{Christ2007,Christ2008}, replica-exchange EDS (RE-EDS)\cite{Sidler2016,Sidler2017,Ries2021B}, multi-site $\lambda$-dynamics,\cite{Knight2011} or multi-state $\lambda$-LEUS,\cite{Bieler2015} more than two molecules need to be restrained to each other. Based on our experience with RE-EDS, it is best to apply the distance restraints between multiple molecules in form of a ring, i.e. each molecule is restrained to two neighboring molecules.\cite{Ries2021B} This scheme is used in the following.
+For multi-state methods such as EDS\cite{Christ2007,Christ2008}, replica-exchange EDS (RE-EDS)\cite{Sidler2016,Sidler2017,Ries2022}, multi-site $\lambda$-dynamics,\cite{Knight2011} or multi-state $\lambda$-LEUS,\cite{Bieler2015} more than two molecules need to be restrained to each other. Based on our experience with RE-EDS, it is best to apply the distance restraints between multiple molecules in form of a ring, i.e. each molecule is restrained to two neighboring molecules.\cite{Ries2022} This scheme is used in the following.
 
 \begin{figure}[h!]
     \centering
@@ -165,7 +165,7 @@ End-state $A$ is obtained when $\lambda = 0$, and end-state $B$ when $\lambda = 
 
 \subsubsection{Replica-Exchange Enveloping Distribution Sampling}
 %% Hamiltonian Construction
-RE-EDS\cite{Sidler2016,Sidler2017,Ries2021B} is a combination of Hamiltonian replica exchange\cite{Hansmann1997,Sugita2000} and EDS.\cite{Christ2007,Christ2008} In EDS, a reference state Hamiltonian $V_R$ is sampled, which combines $N$ end-states as,
+RE-EDS\cite{Sidler2016,Sidler2017,Ries2022} is a combination of Hamiltonian replica exchange\cite{Hansmann1997,Sugita2000} and EDS.\cite{Christ2007,Christ2008} In EDS, a reference state Hamiltonian $V_R$ is sampled, which combines $N$ end-states as,
 \begin{align}
     V_R\left(\textbf{r};s,\textbf{E}^R\right) = -\frac{1}{\beta s}\ln\left[\sum\limits_{i=1}^N e^{-\beta s\left(V_i(\textbf{r})-E_i^R\right)}\right]
 \end{align}
