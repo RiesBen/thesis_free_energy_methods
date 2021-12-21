@@ -1,5 +1,7 @@
 # Thesis: Free Energy Methods: Drug-Like Molecules and Macrocycles
-In this project, you can find all required latex files and the resulting .pdf files for my thesis.
-Two .pdfs are provided, on containing the cover and one without.
+In this project contains:
+ * The latex project for the dissertation
+ * The Dissertation as .pdf
+ * The Dissertation as .pdf without cover page
 
 ![Not Visible](0_style/frontcover.png)
