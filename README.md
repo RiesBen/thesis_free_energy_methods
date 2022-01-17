@@ -1,7 +1,10 @@
-# Thesis: Free Energy Methods: Drug-Like Molecules and Macrocycles
+# Thesis: Blank Project
 In this project contains:
- * The latex project for the dissertation
- * The Dissertation as .pdf
- * The Dissertation as .pdf without cover page
+ * The main .tex file Disseration\_Blank
+ * all required front and back matter and formatting
+ * a git module for bibtex reference managment
+ * a example folder showing chapter organization
+
+
 
 ![Not Visible](0_style/frontcover.png)
