@@ -61,7 +61,7 @@ The enhanced sampling technique can be applied by adding a single line of code c
 
 Free-energy calculation is an important field in computational chemistry because free-energy differences govern the outcome of processes in nature, e.g. protein-ligand binding or polymer formation.\cite{Christ2009, Hansen2014, Cournia2020, Armacost2020} 
 %
-The calculation of alchemical free-energy differences with Ensembler is exemplified with a mutation of the equilibrium position of a one-dimensional harmonic oscillator (Figure \ref{fig:FE_sampling}A).
+The calculation of alchemical free-energy differences with Ensembler is exemplified with a mutation of the equilibrium position and the force constant of a one-dimensional harmonic oscillator (Figure \ref{fig:FE_sampling}A).
 This mutation corresponds to a change of a covalent bond type at the terminus of a linear molecule and can be calculated analytically (Table \ref{tab:FE_results}).
 In practical applications, however, it is usually not possible to calculate the free-energy difference analytically. In these cases, MD-based simulation techniques can be employed.
 In the following, the sampling of the two end states of the model system and the results of the free-energy calculation with different methods are discussed. For more details, we refer to the Jupyter notebook in the Ensembler GitHub repository.
@@ -103,9 +103,9 @@ The intermediate states are positioned at discrete $\lambda$-points between 0 an
 The free-energy difference can be estimated using FEP\cite{Zwanzig1954} or BAR\cite{Bennett1976} as the path over all intermediates, or with TI\cite{Kirkwood1935} as the integral along $\lambda$. 
 
 %% EDS
-Another elegant free-energy method is EDS,\cite{Christ2007, Christ2008} where a reference-state Hamiltonian $H_r$ is sampled. $H_r$ is constructed as a log-sum of the Hamiltonians of the two (or more) end states, guaranteeing the phase-space overlap of the reference state with all end states,
+Another elegant free-energy method is EDS,\cite{Christ2007, Christ2008} where a reference-state Hamiltonian $H_R$ is sampled. $H_r$ is constructed as a log-sum of the Hamiltonians of the two (or more) end states, guaranteeing the phase-space overlap of the reference state with all end states,
 \begin{equation}
-H_R = - \frac{1}{\beta s} \ln( e^{(- \beta s (H_A - E^R_A)}) +e^{(- \beta s (H_B - E^R_B)}),
+H_R = - \frac{1}{\beta s} \ln( e^{- \beta s (H_A - E^R_A)}) +e^{- \beta s (H_B - E^R_B)}),
 \end{equation}
 where $1/\beta=k_{B}T$, $k_B$ being the Boltzmann constant and $T$ the absolute temperature.
 $H_R$ can be optimized for sampling using two kinds of parameters: The smoothing parameter $s$ lowers the energy barriers between the end states, whereas the energy offsets $E^R$ ensure equal weighting of all end states. In our example, both end states are sampled sufficiently during the EDS simulation with $s=0.3$ and the energy offsets $E^R=[0,0]$ (Figure \ref{fig:FE_samplingb}A). Subsequently, the Zwanzig equation\cite{Zwanzig1954} is used to obtain the free-energy difference between the end states.\cite{Christ2007, Christ2008}
@@ -126,7 +126,7 @@ We refer to the Jupyter notebook in the Ensembler GitHub repository for the sour
 	\label{tab:FE_results}
 	\resizebox{\columnwidth}{!}{%
 		\begin{tabular}{l|r | c| r r}
-			Method & Average $\Delta$F & Deviation from & \multicolumn{2}{c}{Speed (rel. to FEP)}\\
+			Method & Average $\Delta$F & Deviation from & \multicolumn{2}{c}{Duration (rel. to FEP)}\\
 			&      [$k_B T$]  & analytical result [$k_B T$] & Simulation & Analysis \\
 			\hline
 			\textit{analytical} & 1.275 & - & - & -  \\

@@ -5,10 +5,10 @@ For each of these four peptides, $250$ starting coordinates were generated using
 Conformers were energy-minimized for maximum $2000$ steps with the steepest descent \cite{Ruder2016} approach using the GROMOS software package \cite{Schmid2012} with the GROMOS 54A7 force field. \cite{Schmid2011} 
 Each minimized starting conformation was solvated in a cubic box of simple-point-charge (SPC) water \cite{Berendsen1981} (on average, $4172$ solvent molecules) or chloroform \cite{Tironi1994} (on average, $980$ solvent molecules). 
 For each system, an MD simulation of $101~$ns length was performed under isothermal–isobaric (NPT) conditions with the leap-frog integration algorithm \cite{Hockney1970, Gunsteren1988} and a time step of $2$~fs. 
-The first 1 ns was discarded as equilibration. Bond lengths were constrained with SHAKE \cite{Ryckaert1977} and a tolerance of $10^{–4}$~nm. 
+The first 1 ns was discarded as equilibration. Bond lengths were constrained with SHAKE \cite{Ryckaert1977} and a relative tolerance of $10^{–4}$. 
 Nonbonded interactions were calculated using a twin-range scheme with a short-range cutoff of $0.8$~nm and a long-range cutoff of $1.4$~nm. 
 The electrostatic nonbonded contributions beyond the long-range cutoff were calculated with the reaction-field \cite{Tironi1995} approach, setting the dielectric permittivity to 61.0 \cite{Heinz2001} for water, and to 4.8 \cite{Tironi1994} for chloroform. 
-The temperature was kept constant at $300$~K using the weak coupling scheme \cite{Berendsen1984} and a coupling time of $0.1~\text{ps}^{–1}$. 
+The temperature was kept constant at $300$~K using the weak coupling scheme \cite{Berendsen1984} and a coupling time of $0.1~\text{ps}$. 
 The pressure was kept at $1.031$~bar ($1$~atm) with the same type of algorithm, a coupling time of $0.5~\text{ps}^{–1}$, and an isothermal compressibility of $0.001654~\text{bar}^{–1}$ for chloroform and $0.0004575~\text{bar}^{–1}$ for water. 
 Translational motion of the center of mass of the simulation box was removed every $2$~ps. Energies and coordinates were written every $5$~ps.
 

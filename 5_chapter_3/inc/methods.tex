@@ -23,11 +23,11 @@ An energy minimization was carried out with the steepest descent algorithm \cite
 \subsection{Simulation Details}
 All simulations were performed with the GROMOS software package \cite{Schmid2012} (freely available on \url{http://www.gromos.net}).
 The equilibrations and production runs were carried out under isothermal-isobaric (NPT) conditions using the leap-frog integration algorithm \cite{Hockney1970} and a time step of $2$~fs. 
-Bond lengths were constrained with SHAKE \cite{Ryckaert1977} using a tolerance of $10^{-4}~$nm. 
+Bond lengths were constrained with SHAKE \cite{Ryckaert1977} using a relative tolerance of $10^{-4}~$. 
 The nonbonded contributions were calculated with a twin-range scheme using a short-range cutoff of $0.8$~nm and a long-range cutoff of $1.4$~nm. 
 The electrostatic nonbonded contributions beyond the long-range cutoff were calculated with the reaction-field \cite{Tironi1995} approach and a dielectric permittivity of 66.7 \cite{Glattli2002} for water. 
 
-The temperature was kept constant at $300$~K using the weak coupling scheme \cite{Berendsen1984} and a coupling time of $0.1$~ps$^{-1}$. The pressure was kept at $1.031$~bar ($1$~atm) with the same type of algorithm and a coupling time of $0.5$~ps and an isothermal compressibility of $4.575 \cdot 10^{-4}$~(kJ~mol$^{-1}$~nm$^{-3}$)$^{-1}$.
+The temperature was kept constant at $300$~K using the weak coupling scheme \cite{Berendsen1984} and a coupling time of $0.1$~ps. The pressure was kept at $1.031$~bar ($1$~atm) with the same type of algorithm and a coupling time of $0.5$~ps and an isothermal compressibility of $4.575 \cdot 10^{-4}$~(kJ~mol$^{-1}$~nm$^{-3}$)$^{-1}$.
 Rotation and translation of the center of mass of the simulation box were removed every $2$~ps. 
 Energies were written to file every $20$ steps and coordinates every $5'000$ steps.
 In the RE-EDS simulations, replica exchanges was attempted every $20$ steps.
@@ -57,7 +57,7 @@ The simulation length of the first iteration was $0.5$~ns, and subsequently incr
 The iterative optimization of the $f_i^{\text{mc}}$ distribution was carried out with the described scheme.
 The scheme used short $0.5$~ns simulations, and adjusted in each step the energy offsets $E^R$ with a pseudo-count intensity factor $x = 30$.
 
-The optimization was considered converged here when all end states were sampled as maximally contributing states at $s=1.0$, the number of round trips per ns was above zero, and the improvement of the round-trip time was below $\overline{\tau}/nRT < 0.5$~ns.
+The optimization was considered converged here when all end states were sampled as maximally contributing states at $s=1.0$, the number of round trips per ns was larger than zero, and the improvement of the round-trip time was below $\overline{\tau}/(n_RT) < 0.5$~ns.
 
 The production run with constant reference-state parameters was performed for $3.5$~ns.
 

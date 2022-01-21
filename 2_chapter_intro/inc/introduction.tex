@@ -65,8 +65,8 @@ Topological parameters are often inferred from higher-level theoretical approach
 The interaction functions can be split into two classes (Figure \ref{fig:FF_Functions}): (i) the intramolecular bonded terms, and (ii) the nonbonded terms (intramolecular and intermolecular).\cite{Weiner1984, Riniker2018}
 The bonded terms consist of covalent bond-stretching, bond-angle bending, and dihedral-angle rotation.
 Covalent bonds of two atoms are an essential part of chemistry to build up molecules. \cite{Pauling1934} The length of a bond and its stretching impact was famously described by the Morse potential-energy function. \cite{Morse1929, Iozzi2009} In simulations, this bond stretching term is, however, usually approximated with the simpler harmonic oscillator potential-energy function or alternative forms (Figure \ref{fig:FF_Functions}A).\cite{Gunsteren1996} Bond angles are calculated between three bonded atoms. \cite{Pauling1931, Slater1931}
-Again, a harmonic oscillator potential-energy function is typically used to model the bond-angle bending (Figure \ref{fig:FF_Functions}B). 
-The torsion (or dihedral) angle describes the rotation around a covalent bond. \cite{Blondel1996} It is calculated from a set of four bonded atoms, and is an important quantity in chemistry (e.g., cis/trans isomerization \cite{Dugave2003} or ring conformations\cite{Strauss1970}). Dihedral-angle rotation is typically modeled with trigonometric functions (Figure \ref{fig:FF_Functions}C).
+Again, a harmonic oscillator potential-energy function is typically used to model the bond-angle bending (Figure \ref{fig:FF_Functions}A). 
+The torsion (or dihedral) angle describes the rotation around a covalent bond. \cite{Blondel1996} It is calculated from a set of four bonded atoms, and is an important quantity in chemistry (e.g., cis/trans isomerization \cite{Dugave2003} or ring conformations\cite{Strauss1970}). Dihedral-angle rotation is typically modeled with trigonometric functions (Figure \ref{fig:FF_Functions}B).
 Additionally, so-called improper dihedrals are applied to model rotation barriers, for example using harmonic oscillators (Figure \ref{fig:FF_Functions}A).\cite{Blondel1996}
 
 Nonbonded terms describe atom--atom interactions as a function of their spatial distance. Here, two fundamental terms are commonly distinguished.
@@ -105,13 +105,13 @@ Different multi-step integration methods can be used to integrate a force-field 
 %
 The first category consists of optimization algorithms such as the steepest descent \cite{Debye1909}, or conjugated gradient \cite{Hestenes1952}. These algorithms are used to find local minima in the PES, typically to relax the coordinates before starting a MD simulation.\cite{Cazals2015}
 The second category is represented by stochastic approaches like the Monte-Carlo approach or the Metropolis-Hastings integrator\cite{Hastings1970}, which depends on the Metropolis-Monte Carlo criterion\cite{Metropolis1953}. These approaches can be used to sample the PES stochastically. 
-The third and most popular category of integrations schemes is based on Newton's equation of motion\cite{Newton1726, Cohen1999}. 
+The third and most popular category of integration schemes is based on Newton's equation of motion\cite{Newton1726, Cohen1999}. 
 Examples are second-order algorithms like the Verlet and leap-frog algorithms \cite{Hockney1970}, which perform well and provide sufficient accuracy.\cite{Gunsteren1990, Leimkuhler1996}
-The leap-frog algorithm employs the following two basic equations to predict the coordinates of atom $i$ at time $t+ \Delta t$,
+The leap-frog algorithm employs the following two basic equations to calculate the coordinates of atom $i$ at time $t+ \Delta t$,
 \begin{equation}
     \begin{split}
         \textbf{r}_i(t+\Delta t)&=~\textbf{r}_i(t)+\textbf{v}_i(t+\frac{1}{2} \Delta t) \Delta t \\
-        \textbf{v}_i(t+\frac{1}{2} \Delta t)&=~\textbf{v}_i(t - \frac{1}{2} \Delta t)+\textbf{a}_i(t) \Delta t.
+        \textbf{v}_i(t+\frac{1}{2} \Delta t)&=~-\textbf{v}_i(t - \frac{1}{2} \Delta t)+\textbf{a}_i(t) \Delta t.
     \end{split}
 \end{equation}
 The acceleration $\textbf{a}_i(t)$ is calculated from the force acting on atom $i$, $\textbf{a}_i(t) = \textbf{F}_i(\textbf{r}(t))/m_i$, which in turn is derived from the potential energy, $\textbf{F}_i(\textbf{r}(t)) = \partial V(\textbf{r}^N(t))/ \partial \textbf{r}_i(t)$.\cite{Gunsteren1990}
@@ -122,25 +122,25 @@ The acceleration $\textbf{a}_i(t)$ is calculated from the force acting on atom $
 The last aspect focuses on the tools to set specific boundary conditions in MD simulation. 
 Boundary conditions are essential to retrieve correct thermodynamic properties from the simulations at certain physical conditions. Here, we shortly describe two of the most used ensembles in the context of Newtonian integrators.
 
-In the canonical (NVT) ensemble, the number of particles ($N$), the system box volume ($V$), and temperature ($T$) are constant. Keeping $N$ and $V$ constant in a simulation is in most cases trivial. In contrast, thermostatting methods have to be introduced to keep $T$ constant in a simulation.  Various algorithms have been developed for this purpose. The first thermostat was introduced by Berendsen\cite{Berendsen1984} with the weak-coupling approach. Because of the relation between $T$ and the velocity of the particles in a system, the weak-coupling thermostat scales the velocities by a factor $\lambda(t; \tau_T, \Delta t, T_0)$ in order to maintain a constant temperature,  
+In the canonical (NVT) ensemble, the number of particles ($N$), the system box volume ($V$), and the temperature ($T$) are constant. Keeping $N$ and $V$ constant in a simulation is in most cases trivial. In contrast, thermostatting methods have to be introduced to keep $T$ constant in a simulation.  Various algorithms have been developed for this purpose. One of the oldest thermostats for MD simulations was introduced by Berendsen\cite{Berendsen1984} with the weak-coupling approach. Because of the relation between $T$ and the velocity of the particles in a system, the weak-coupling thermostat scales the velocities by a factor $\lambda(t; \tau_T, \Delta t, T_0)$ in order to maintain a constant temperature,  
 \begin{equation}
     \lambda(t; \tau_T, \Delta t, T_0) = \sqrt{1 + \frac{\Delta t}{\tau_{T}} \left( \frac{T_0}{T(t)}-1 \right) },
 \end{equation}
 where $\tau_{T}$ is the coupling time, and $T_{0}$ the reference temperature.\cite{Berendsen1984}
 More sophisticated approaches are the Nos\'e-Hoover\cite{Nose1984, Nose1984A, Hoover1985} and Nos\'e-Hoover chain\cite{Martyna1992} thermostats. Note that stochastic dynamics leads automatically to an NVT ensemble because of the temperature given in the Metropolis-Monte Carlo criterion \cite{Hastings1970}. The NVT ensemble can be used to calculate Helmholtz free energies\cite{Helmholtz1882}.
 
-The second important ensemble is the isobaric-isothermal (NPT) ensemble with constant pressure ($P$). The pressure can be kept constant using barostat algorithms such as the weak-coupling barostat\cite{Berendsen1984} that functions similar to the thermostat, the Parinello-Rahman barostat\cite{Parrinello1981}, or the Nos\'e-Hoover barostat\cite{Nose1983}. From an NPT ensemble, Gibbs free energies can be calculated\cite{Gibbs1879}. This ensemble is often closest to experimental setups with a defined pressure and temperature.
+The second important ensemble is the isobaric-isothermal (NPT) ensemble with constant pressure ($P$). The pressure can be kept constant using barostat algorithms such as the weak-coupling barostat\cite{Berendsen1984} that functions similar to the thermostat, the Parinello-Rahman barostat\cite{Parrinello1981}, Andersen barotstate\cite{Andersen1980}, or the Nos\'e-Hoover barostat\cite{Nose1983}. From an NPT ensemble, Gibbs free energies can be calculated\cite{Gibbs1879}. This ensemble is often closest to experimental setups with a defined pressure and temperature.
 
 \section{Free-Energy Differences}
-Free energy is an fundamental quantity that describes the energy of states. In chemistry, the difference in free energy characterizes for example the spontaneity of reactions, the formation of polymers, or protein-ligand binding.\cite{Kollman1993, Armacost2020, Christ2009, Hansen2014, Cournia2020} 
+Free energy is a fundamental quantity that describes the energy of states. In chemistry, the difference in free energy characterizes for example the spontaneity of reactions, the formation of polymers, or protein-ligand binding.\cite{Kollman1993, Armacost2020, Christ2009, Hansen2014, Cournia2020} 
 
 From thermodynamics, the Helmholtz free energy\cite{Helmholtz1882} for a canonical ensemble can be obtained as, 
 \begin{equation}
     A =  -\frac{1}{\beta} \ln\Big(Q(N, V, T)\Big),
 \end{equation}
-where Q(NVT) is the partition function of the system. \cite{Atkins2014}
+where Q(NVT) is the partition function of the system and $\beta = 1/(k_B T)$. \cite{Atkins2014}
 
-The canonical ensemble is Boltzmann distributed \cite{Boltzmann1872} and thus, the partition function can be formulated as,
+In the canonical ensemble, the occurrence of the possible states is Boltzmann distributed \cite{Boltzmann1872} according to their free energies and thus, the partition function can be formulated as,
 \begin{equation}
     Q =\sum^N_i e^{-\beta E_i} ,
 \end{equation} 
@@ -166,6 +166,6 @@ From this, the Zwanzig equation\cite{Zwanzig1954} can be derived by employing th
 \begin{equation}
         \Delta A_{BA} 
         = -\frac{1}{\beta} \ln\Bigg\langle \frac{e^{-\beta V_B}}{e^{-\beta V_A}}\Bigg\rangle_A
-        = -\frac{1}{\beta} \ln\Bigg\langle e^{-\beta V_B-V_A}\Bigg\rangle_A .
+        = -\frac{1}{\beta} \ln\Bigg\langle e^{-\beta (V_B-V_A)}\Bigg\rangle_A .
 \end{equation}
 In Chapters \ref{ch:feens}-\ref{ch:fereeds}, different free-energy methods will be discussed in detail, further developed, and applied to protein-ligand systems. 
