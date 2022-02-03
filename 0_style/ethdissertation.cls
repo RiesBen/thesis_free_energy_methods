@@ -16,11 +16,11 @@
 
 \DeclareOption{publish}{
     \def\@papersize{a5paper}
-    \def\@linespacing{onehalfspacing}
+    \def\@linespacing{onehalfspacing} %singlespacing 
     \def\@fontsize{8pt}
 }
 
-\ExecuteOptions{handin}
+\ExecuteOptions{publish}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 
 \ProcessOptions \relax
