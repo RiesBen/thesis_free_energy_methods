@@ -6,10 +6,7 @@ In this project contains:
 
 The Dissertation was published via ETH Zurich Research Collection: https://www.research-collection.ethz.ch/handle/20.500.11850/541613
 
-![Not Visible](0_style/frontcover.png)
-
-
-Please Cite:
+**Please Cite**:
 @thesis{Ries2022,
    author = {Benjamin Ries},
    journal = {ETHZ Zurich},
@@ -17,3 +14,8 @@ Please Cite:
    url = {https://doi.org/10.3929/ethz-b-000541613},
    year = {2022},
 }
+
+![Not Visible](0_style/frontcover.png)
+
+
+
