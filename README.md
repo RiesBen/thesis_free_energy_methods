@@ -7,12 +7,12 @@ In this project contains:
 The Dissertation was published via ETH Zurich Research Collection: https://www.research-collection.ethz.ch/handle/20.500.11850/541613
 
 **Please Cite**:
-@thesis{Ries2022,
+@thesis{RiesThesis2022,
+   title = {Free Energy Methods: Drug-Like Molecules and Macrocycles},
    author = {Benjamin Ries},
    publisher = {ETH Zurich},
-   title = {Free Energy Methods: Drug-Like Molecules and Macrocycles},
-   url = {https://doi.org/10.3929/ethz-b-000541613},
    year = {2022},
+   url = {https://doi.org/10.3929/ethz-b-000541613},
 }
 
 ![Not Visible](0_style/frontcover.png)
